@@ -1,5 +1,6 @@
-.container-fluid {
-    max-width: 1200px;
+/* --- Layout ---  */
+.container {
+    max-width: 1000px;
 }
 
 body {
@@ -12,15 +13,9 @@ body {
 }
 
 .site-content {
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 85px);
    
 }
-
-.main {
-    width: 90%;
-    margin: 0 auto;
-}
-
 
 .jumbo-style {
     margin-top: -30px;
@@ -48,7 +43,9 @@ body {
 footer {
     background-color: #0A1612;
     color: white;
-    padding: .75em;
+    padding-left: .75em;
+    padding-right: .75em;
+    width: 100%;
 }
 
 footer p {
