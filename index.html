@@ -1,45 +1,85 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-       <title>Welcome to my Personal Page</title>
-       <link href="styles.css" rel="stylesheet">
-       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </head>
 
-    <body>
-        <div class="site-content">
+<head>
+    <title>Welcome to my Personal Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="site-content">
         <header>
-            <nav class="navigation">
-                
-                <ul class="header-list">
-                    <li><a class="navbar-brand" href="#">GML</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                            </button>
+                        <a class="navbar-brand" href="#">GML</a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav" role: "tablist">
+
+                            <li><a href="#bio">Bio</a></li>
+                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </header>
-        <div class="main">
+
+
+        <article id="intro" class="jumbotron jumbo-style container left-pull">
+            <div class="row">
+                <div class="col-xs-9">
+
+                    <h1 class="lead">Greg Lawrence</h1>
+                    <h6 class="lead" style="font-size: 1.2em;">Nashville Software School Student Cohort 22 / Audio Engineer</h6>
+                </div>
+
+                <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM"
+                        alt="Greg Headshot" width="180">
+                </div>
+            </div>
+        </article> <!-- /end of jumbotron -->
+
+
+        <article id="Bio" class="article container-fluid text-center">
+            I'm Greg and enjoy cycling, recording music and craft beer. I'm learning coding and hope to change careers soon. I have been
+            a freelance audio engineer in Nashville since 2003.
+        </article>
+
+        <!-- /end of main div -->
+    </div>
+    <!-- /end of site-content -->
+
+    <footer id="contact" class="container-fluid">
+            <div class="row">
+              <div class="col-xs-4 pull-left">
+                <br>
+                <p>coded and created by Greg Lawrence</p>
+              </div>
+              <div class="pull-right">
+                <a href="mailto:gregaudio@Fake.com?Hello%20there!"> <i class="fa fa-envelope"></i></a>
+                <a href="https://www.facebook.com/gregaudio" target="_blank"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.twitter.com/gregaudio" target="_blank"><i class="fa fa-twitter"></i></a>
+                
+              </div>
+            </div>
         
-            <h1> I am in NSS Cohort 22</h1>
-            
-            <article id="intro" class="article">
-                I'm Greg and enjoy cycling, recording music and craft beer. I'm learning coding and hope to change careers soon.
-            </article>
+          </footer>
 
-            <article id="history" class="article">
-                I have been a freelance audio engineer in Nashville since 2003. 
-            </article>
-        </div> <!-- /end of main div -->
-        </div>  <!-- /end of site-content -->
 
-        <footer class="footer">
-            <p>created and coded by Greg Lawrence</p>
-        </footer>
-
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
 
 </html>
