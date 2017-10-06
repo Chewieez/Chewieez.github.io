@@ -54,6 +54,9 @@ footer p {
     padding-bottom: .3em;
 }  
 
+.blog-entries-list {
+    font-size: .75em;
+}
 
 .fa {
     font-size: 2em;
@@ -90,4 +93,3 @@ footer p {
 .img-shadow {
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
-
