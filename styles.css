@@ -54,9 +54,10 @@ footer p {
     padding-bottom: .3em;
 }  
 
-.contact-page {
-    max-width: 75%;
+.blog-entries-list {
+    font-size: .75em;
 }
+
 .fa {
     font-size: 2em;
     width: .9em;
