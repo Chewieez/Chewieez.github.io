@@ -54,8 +54,8 @@ footer p {
     padding-bottom: .3em;
 }  
 
-.blog-entries-list {
-    font-size: .75em;
+#blog-entries-list {
+    font-size: .85em;
 }
 
 .fa {
@@ -97,4 +97,15 @@ footer p {
 #bio {
     max-width: 90%;
     font-size: 1.1em;
+}
+
+.blog-subheading {
+    color: rgb(136, 136, 136);
+    font-size: .9em;
+}
+
+.special-text {
+    font-size: .9em;
+    font-style: italic;
+    margin-left: .5em;
 }
