@@ -14,24 +14,38 @@ const linkedInInfo = {
     "icon": "/images/In-2C-54px-R.png",
 }
 
-const emailInfo = {
-    "name": "Greg Lawrence",
-    "emailAddress": "gregaudio@gmail.com",
-    "icon": "/images/logo_gmail_48px.png"
-}
-
 const githubInfo = {
     "socialPlatform": "GitHub",
-    "name": "Chewieez",
+    "username": "Chewieez",
     "url": "https://github.com/Chewieez",
     "icon": "/images/GitHub-Mark-64px.png"    
 }
 
 contactInfo.twitterInfo = twitterInfo;
 contactInfo.linkedInInfo = linkedInInfo;
-contactInfo.emailInfo = emailInfo;
 contactInfo.githubInfo = githubInfo;
 
+// convert data object to string and store in local storage
 let contactInfoString = JSON.stringify(contactInfo);
 localStorage.setItem("contactInfo", contactInfoString);
 
+
+// Pull data from local Storage
+const retreivedContactInfo = JSON.parse(localStorage.getItem("contactInfo", contactInfoString));
+// get element from DOM to place contact data
+let contactDomEl = document.getElementById("contact-list");
+
+
+console.log("retreivedContactInfo", retreivedContactInfo)
+
+// loop through retreived data from local storage
+for (key in retreivedContactInfo) {
+    let individualContactInfo = retreivedContactInfo[key]
+
+    contactDomEl.innerHTML += `
+       
+            <p>${individualContactInfo.socialPlatform}: <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
+       
+    `
+    
+}

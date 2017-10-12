@@ -79,15 +79,9 @@ footer p {
     color: #f7b733;
     transition: all ease 0.3s;
 }
-  
-.contact-table td {
-    padding-left: 1em;
-}
 
-.contact-table th,
-.contact-page td {
-    padding-top: .5em;
-    padding-bottom: .5em;
+.contacts {
+    font-size: 1.2em;
 }
 
 .img-shadow {
