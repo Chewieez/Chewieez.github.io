@@ -44,7 +44,7 @@ for (key in retreivedContactInfo) {
 
     contactDomEl.innerHTML += `
        
-            <p>${individualContactInfo.socialPlatform}: <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
+            <p><img src="${individualContactInfo.icon}" width="50px" alt="${individualContactInfo.socialPlatform} title="${individualContactInfo.socialPlatform}"/> <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
        
     `
     
