@@ -1,0 +1,11 @@
+.caption p {
+    margin-bottom: .1em;
+}
+
+.important-text {
+    font-weight: 500;
+}
+
+h4 {
+    margin: .2em 0;
+}
