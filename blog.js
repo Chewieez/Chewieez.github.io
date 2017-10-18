@@ -10,58 +10,26 @@ let post1 = {
 }
 
 let post2 = {
-    "title": "Test a second blog post",
-    "date": "Sun Oct 13 2017",
+    "title": "Who Is In Charge?",
+    "date": "Wed Oct 18 2017",
     "author": "Greg Lawrence",
-    "tags": "NSS",
-    "content": "<p>Testing where my second blog post will be placed. I changed the database structure to include an array and use shift() to push each new blog post to the beginning of the array so the posts are populated on the page in reverse chonological order.</p>"
+    "tags": "NSS, git, github, teamwork",
+    "content": "<p>This past week and a half we have predominately been working on group projects. We split into groups and created a fictitious company, with products and each team member was responsible for a separate page on the company website. I believe the three big objectives for these exercises were to get more familiar with Git and Github, populating a webpage with data that is stored in a database and working on a team to achieve a unified goal.</p><p>We were introduced to some new concepts right before starting our first group project that were super useful. String templates are one of these concepts that have proved invaluable in our site design. Being able to write html code and use variables to access properties of an object gave us much more power in how we were able to put content inside the html on our page. We could now access some data that is nested inside an array or object which is inside of the larger object/database. With loops we could push that data to our website in an orderly fashion.</p><p>One my first group project I was in charge of the products page. I setup a straight forward database of items to populate the page. We decided to use css grid to layout our pages which meant I needed to read up on how to implement that. We spent a big portion of our time with the white board talking through our ideas for our made-up company, what would be on each page, our overall color theme and fonts. We coded our header and footer together. I setup a screen share on my laptop and coded while other teammates watched on their computers. After laying out our index.html page with our header and footer, each team member could copy and paste that code into their subpage and have a starting template. This sped up the process of giving our site a unified look.</p><p>We were introduced to the github team workflow with this first project. We learned to push our work up to github from our local branches and then use a pull-request to ask to have our code be added to the master version of our project. Another team member would then check our code and a site preview and then give us approval or comments on what to fix. This flow was new since up to this point we have all been working on our personal portfolio website alone. As practice, I have changed the flow of my work on my personal page to include these pull requests.</p><p>On my second group project I was again in charge of products and was able to structure my database of products slightly differently. This let me practice using different extraction methods simultaneously. I was required to populate the Products page header and description with content that did not need a loop to access. I realized during this project, and working on databases on my personal blog page, a big benefit of using arrays to hold objects in a database: controlling the order of the data. On my group project I wanted my products to always be ordered small, medium, large, XL and on my blog page I always wanted my blogs to be shown in reverse chronological order. With my blogs, I placed each blog post into an array and instead of using array.push() to place the blog post in the array, I used array.unshift(). This way each time I wrote a new blog post and needed to place that object into my array of blog posts, array.unshift() placed that new post at the beginning of my array. Then when I loop through my array to push the posts to my blog.html page, the posts were published in reverse chronological order with the most recent blog post showing up first. On my group project, I used array.push() and places my products into the array in order from small to XL.</p><p>On our second group project we gained a better understanding of who was \"in charge\” of our project. That person is the product owner, and in our case that was our instructor Steve. Our team set out to build a Moving Company website with a multipage application to allow the user to get a moving quote. We were going to each have a database object for the content on our site and then let the user put items in a database that we'd as a shopping cart and share amongst all of our pages. When the user tapped \“add to cart\” the item was going to get placed/pushed into the shopping cart object and when the user was finished and tapped to move to the next step, that cart was going to be written into local storage. Then the user was going to be sent to the next page and the cycle would repeat until the user made it to the last page where their cart was going to be totaled. Steve came by and met with us and let us know that this functionality was not a requirement that he, as product owner, gave us and would be too complicated for us to tackle in the time frame. He didn’t want us to use our time working on a feature that was not required, as it would be wasting ‘company’ time and could easily need to be scrapped at any moment. So, after this meeting we did some more planning and decided to stick with our overall website plan, but not attempt to interconnect our individual pages.</p><p>When we came into class on Day 2 of this second group project Steve had an announcement for us. Our product owner had a new requirement and it was now the main priority. This was to paginate our products page and display 20 products on 5 separate pages, each displaying 4 products. This was a big pivot for all the groups and meant that we all needed to stop our current work and move our resources over to this new goal. I think as a group we handled the stress well. I worked to restructure our database for clarity, add 16 new products, and redesign the product layout on the page to be a stacked list of items and not a grid. While I was working on that, Krys started researching methods to get control of the pagination elements and integrate all of that into our products page. As a group we discussed what the overall structure and functionality of the pagination would be. We settled on one approach and went to work designing it and implementing it.</p><p>For this second project I reminded myself frequently to make a minimal viable product, to keep from trying to achieve too much, and then not being able to finish a functioning product on time. There are many things on both of my group projects that I would love to put more time into, but I’m proud that we finished both projects on time and met all the requirements.</p><p>These group projects have been a great way to get to know our classmates better and learn teamwork in a software development environment. This work seems to be a mix of working together and alone and we need to learn how to manage those two spaces. Working with git and github allowed us to merge our individual work and build something with many different individual pieces without all being responsible for every piece. It was fun to merge in my work, view our page and then at a later point merge in a teammate's work and see how our page was coming together, piece by piece.</p><p>Something I would like to learn in the near future is how to limit how much of these blog posts are displayed on my main blog.html layout. After a certain size, I’d like to hide the additional content. Then have the user be able to expand a post to include all of the content, maybe have it display in a popup modal.</p>"
 }
-
+    
+    
 // using .unshift() instead of push() to place each new blog posts at the beginning of the array so the most recent blog post will always be at index 0. Then older posts will be posted in reverse chronological order
 
 blogArray.unshift(post1);
 blogArray.unshift(post2);
 
-// assigning array to a property inside of blogPosts
+// assigning blogArray to a property inside of blogPosts
 blogPosts.blogEntries = blogArray;
 
 // Setting the database in local storage
 localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
 
 
-// selecting the HTML container to place my javascript code and assigning it to a variable
-let blogViewEl = document.getElementById("blog-view");
-let blogEntriesEl = document.getElementById("blog-entries-list"); 
 
-
-let importedBlog = JSON.parse(localStorage.getItem("blogPosts"));
-console.log("importedBlog", importedBlog)
-
-
-// looping over object (importedBlog) to get access to its content
-for (let key in importedBlog) {
-    let blogPostsArray = importedBlog[key];
-
-// looping through the array of blog posts that was extraced from the object (importedBlog) 
-    for (let i = 0; i < blogPostsArray.length; i++) { 
-        let eachBlog = blogPostsArray[i];
-        
-// populating the html container with each blog post data 
-        blogViewEl.innerHTML += `
-        <article  id="${eachBlog.date}">
-                <h4 class="blog-title">${eachBlog.title}</h4>
-                <p class="blog-subheading"><span class="special-text">by:</span> ${eachBlog.author}    <span class="special-text">published on:</span> ${eachBlog.date}</p>
-                <br>
-                <p class="blog-content">${eachBlog.content}</p>
-                <br>
-                <p class="blog-tags">tags: ${eachBlog.tags}</p>
-        </article>
-        `
-
-        blogEntriesEl.innerHTML += `
-        <p><a href="#">${eachBlog.date}</a></p>
-        `
-    } 
-}
 
 
