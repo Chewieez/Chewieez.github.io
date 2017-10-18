@@ -1,7 +1,7 @@
 console.log("controller file loaded: ", "yes")
 
 // pull professionalHistory Database from local storage
-const professionalHistoryD = JSON.parse(professionalHistoryString);
+const professionalHistoryD = JSON.parse(localStorage.getItem("professionalHistoryString"));
 
 // console.log professionHistoryD to check if retrieved and check structure
 console.log("professionalHistoryD", professionalHistoryD);
