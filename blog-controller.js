@@ -26,7 +26,6 @@ for (let key in importedBlog) {
         </article>
         <hr>
         `
-
         blogEntriesEl.innerHTML += `
         <p><a href="#">${eachBlog.published}</a></p>
         `

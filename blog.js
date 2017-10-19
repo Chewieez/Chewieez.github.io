@@ -66,8 +66,3 @@ blogPosts.blogEntries = blogArray;
 
 // Setting the database in local storage
 localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-
-
-
-
-
