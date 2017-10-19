@@ -17,9 +17,9 @@ const blogIdFactory = blogIdGenerator()
 // Factory function to create each blog object and cut down on repetitive typing
 const blogObjectFactory = function (title, entry, author, ...tags) {
     // function to add a space after the , in the collection of tags
-    let spacedTags = function createSpace() {
-        let spacedTags = tags.join(", ");
-        return spacedTags;
+    function spacedTags() {
+        let spacedOutTags = tags.join(", ");
+        return spacedOutTags;
     }
     // factory function will return a function with this format, each prop will be populated with data either passed in as a parameter or created in this function such as Date and blog ID (from generator function)
     return Object.create(null, {
@@ -30,6 +30,7 @@ const blogObjectFactory = function (title, entry, author, ...tags) {
         "tags": { value: spacedTags(), enumerable: true },
         "published": { value: Date.now(), enumerable: true }
     })
+    
 }
 
 // assign a variable to hold my content for blog post 1
@@ -55,16 +56,8 @@ const post10 = blogObjectFactory("Test8 Blog Factory", "Making sure this new met
 
 
 // using .unshift() instead of push() to place each new blog posts at the beginning of the array so the most recent blog post will always be at index 0. Then older posts will be posted in reverse chronological order
-blogArray.unshift(post1);
-blogArray.unshift(post2);
-blogArray.unshift(post3);
-blogArray.unshift(post4);
-blogArray.unshift(post5);
-blogArray.unshift(post6);
-blogArray.unshift(post7);
-blogArray.unshift(post8);
-blogArray.unshift(post9);
-blogArray.unshift(post10);
+blogArray.unshift(post10, post9, post8, post7, post6, post5, post4, post3, post2, post1);
+
 
 
 
