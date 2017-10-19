@@ -2,7 +2,6 @@
 let blogViewEl = document.getElementById("blog-view");
 let blogEntriesEl = document.getElementById("blog-entries-list"); 
 
-
 let importedBlog = JSON.parse(localStorage.getItem("blogPosts"));
 console.log("importedBlog", importedBlog)
 
@@ -17,9 +16,9 @@ for (let key in importedBlog) {
         
 // populating the html container with each blog post data 
         blogViewEl.innerHTML += `
-        <article  id="${eachBlog.date}">
+        <article  id="blogPost-${eachBlog.id}">
                 <h4 class="blog-title">${eachBlog.title}</h4>
-                <p class="blog-subheading"><span class="special-text">by:</span> ${eachBlog.author}    <span class="special-text">published on:</span> ${eachBlog.date}</p>
+                <p class="blog-subheading"><span class="special-text">by:</span> ${eachBlog.author}    <span class="special-text">published on:</span> ${eachBlog.published}</p>
                 <br>
                 <p class="blog-content">${eachBlog.content}</p>
                 <br>
@@ -29,7 +28,7 @@ for (let key in importedBlog) {
         `
 
         blogEntriesEl.innerHTML += `
-        <p><a href="#">${eachBlog.date}</a></p>
+        <p><a href="#">${eachBlog.published}</a></p>
         `
     } 
 }
