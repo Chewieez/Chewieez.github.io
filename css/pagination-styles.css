@@ -1,0 +1,9 @@
+#blogPaginator ul {
+    list-style: none;
+    font-size: 1.4em;
+}
+
+#blogPaginator li {
+    display: inline;
+    font-size: 1.4em;
+}
