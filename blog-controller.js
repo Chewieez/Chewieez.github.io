@@ -40,6 +40,7 @@ function produceBlogs(event) {
     blogViewEl.innerHTML = ""
 
     // Which number did the user click on?
+    // I think this function is creating a new array (or array instance) from content in event.target.classList. Then using the .find function to search for "page-". If that exists, it splits the word into two and places in a new array; "page-" & "1" (whatever number that follows). Then the element (1) at index[1] is converted into an integer with parseInt()
     const pageNumber = parseInt(
         Array.from(event.target.classList)
         .find(clazz => {
@@ -47,6 +48,7 @@ function produceBlogs(event) {
         })
         .split("-")[1]
     )
+    console.log("event.target.classList", event.target.classList)
 
     // Change the class name of the previous arrow
     if ((pageNumber - 1) === 0) {
