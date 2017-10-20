@@ -1,0 +1,14 @@
+#blog-entries-list {
+    font-size: .85em;
+}
+
+.blog-subheading, .blog-tags {
+    color: rgb(136, 136, 136);
+    font-size: .9em;
+}
+
+.special-text {
+    font-size: .9em;
+    font-style: italic;
+    margin-left: .5em;
+}

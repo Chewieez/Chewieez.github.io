@@ -16,11 +16,12 @@ const paginationEl = document.getElementById("blogPaginator")
 
 // Build the DOM string for the pagination links in the footer
 let paginationString = "<ul>"
-paginationString += "<a id='previous' href='#'>&lt;</a>"
+paginationString += "<li><a id='previous' href='#'>&lt;</a></li>"
+
 for (var i = 0; i < numberOfPages; i++) {
     paginationString += ` <li><a class="blogPage page-${i+1}" href="#">${i+1}</a></li>`
 }
-paginationString += " <a id='next' class='page-2' href='#'>&gt;</a>"
+paginationString += "<li><a id='next' class='page-2' href='#'>&gt;</a></li>"
 paginationString += "</ul>"
 
 // Update the DOM with the unordered list we just built

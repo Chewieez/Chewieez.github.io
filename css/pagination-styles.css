@@ -1,9 +1,17 @@
 #blogPaginator ul {
     list-style: none;
-    font-size: 1.4em;
+    margin: 0 0 .4em 30%;
+    font-size: 1.5em;
 }
 
 #blogPaginator li {
     display: inline;
-    font-size: 1.4em;
+    padding: 0 0 0 .2em; 
+    color: rgb(136, 136, 136);
+    /* font-size: 1.3em; */
 }
+ #blogPaginator a {
+    color: rgb(136, 136, 136);
+ }
+ 
+ 
