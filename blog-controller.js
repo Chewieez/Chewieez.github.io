@@ -75,10 +75,12 @@ function produceBlogs(event) {
     // Display a <section> representation of each data object by looping through the array of blog posts that was extraced from the object (importedBlog) 
     for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
+        let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
+        moment().format()
         blogViewEl.innerHTML += `
         <article  id="blogPost-${currentBlog.id}">
                 <h4 class="blog-title">${currentBlog.title}</h4>
-                <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlog.published}</p>
+                <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
                 
                 <p class="blog-content">${currentBlog.content}</p>
                 
