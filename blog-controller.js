@@ -114,9 +114,9 @@ nextEl.addEventListener("click", produceBlogs)
 function fillSideColumnBlogList() {
 for (let i = 0; i < blogPostsArray.length; i++) {
     let currentBlogPost = blogPostsArray[i];
-           
+    let currentBlogPublishDate =  moment(parseInt(currentBlogPost.published)).format("dddd, MMMM Do YYYY")       
     blogEntriesEl.innerHTML += `
-    <p><a href="#">${currentBlogPost.published}</a></p>
+    <p><a href="#">${currentBlogPublishDate}</a></p>
     `
     } 
 }
