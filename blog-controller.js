@@ -21,6 +21,7 @@ paginationString += "<li><a id='previous' href='#'>&lt;</a></li>"
 for (var i = 0; i < numberOfPages; i++) {
     paginationString += ` <li><a class="blogPage page-${i+1}" href="#">${i+1}</a></li>`
 }
+// Go ahead and give the > character a class of page-2 on first page load
 paginationString += "<li><a id='next' class='page-2' href='#'>&gt;</a></li>"
 paginationString += "</ul>"
 
@@ -40,7 +41,7 @@ function produceBlogs(event) {
     blogViewEl.innerHTML = ""
 
     // Which number did the user click on?
-    // I think this function is creating a new array (or array instance) from content in event.target.classList. Then using the .find function to search for "page-". If that exists, it splits the word into two and places in a new array; "page-" & "1" (whatever number that follows). Then the element (1) at index[1] is converted into an integer with parseInt()
+    // This function is creating a new array from dom token content in event.target.classList. Then using the .find function to search each string inside the array for "page-". If that exists, it splits the word into two pieces and places ii in a new array; ["page-", "1"] (whatever number that follows). Then the element at index[1] is converted into an integer with parseInt()
     const pageNumber = parseInt(
         Array.from(event.target.classList)
         .find(clazz => {
@@ -48,21 +49,22 @@ function produceBlogs(event) {
         })
         .split("-")[1]
     )
-    console.log("event.target.classList", event.target.classList)
+
 
     // Change the class name of the previous arrow
+    // Could use .style.visibility = "hidden" or "visible"
     if ((pageNumber - 1) === 0) {
-        previousEl.style.display = "none"
+        previousEl.style.visibility = "hidden"
     } else {
-        previousEl.style.display = "inline"
+        previousEl.style.visibility = "visible"
         previousEl.className = `page-${pageNumber - 1}`
     }
 
     // Change the class name of the next arrow
     if ((pageNumber + 1) > numberOfPages) {
-        nextEl.style.display = "none"
+        nextEl.style.visibility = "hidden"
     } else {
-        nextEl.style.display = "inline"
+        nextEl.style.visibility = "visible"
         nextEl.className = `page-${pageNumber + 1}`
     }
 
@@ -97,9 +99,10 @@ const blogLinks = document.getElementsByClassName("blogPage")
 // Add event listeners to each <a> element in the pagination
 for (let j = 0; j < blogLinks.length; j++) {
     let thisBlogEl = blogLinks[j];
-    thisBlogEl.addEventListener("click", produceBlogs, false);
+    thisBlogEl.addEventListener("click", produceBlogs);
 }
 
+// Initially show page one on first page load
 produceBlogs({
     "target": {
         "classList": ["page-1"]
