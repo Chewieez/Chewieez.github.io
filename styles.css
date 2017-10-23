@@ -1,10 +1,14 @@
+/* -- Style --  */
+
+
 /* --- Layout ---  */
 .container {
     max-width: 1000px;
 }
 
 body {
-    box-sizing: border-box;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    /* box-sizing: border-box;  Already default in Bootstrap */
     padding: 0;
     margin-top: 50px;
     /* position: relative; */
@@ -16,13 +20,18 @@ body {
 }
 
 /* .site-content {
-    min-height: calc(100vh - 105px);
+    /* min-height: calc(100vh - 105px); */
 }  */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    letter-spacing: .1em;
+}
+
 
 .page-header {
     padding: 0;
 }
-
 
 
 header#intro {
@@ -74,17 +83,17 @@ header .header-content-inner hr {
 }
 
 header .header-content .header-content-inner h1 {
-    font-weight: 700;
-    text-transform: uppercase;
+    font-weight: 100;
+    /* text-transform: uppercase; */
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 30px;
+    font-size: 3em;
 }
 
 header .header-content .header-content-inner p {
-    font-weight: 300;
+    /* font-weight: 300; */
     color: rgba(255, 255, 255, 0.7);
-    font-size: 16px;
+    font-size: 2.5em;
     margin-bottom: 50px;
     padding-bottom: 50px;
 }
@@ -111,6 +120,12 @@ header .header-content .header-content-inner p {
   background: #737373;
   transition: all ease 0.8s;
 }
+
+#bio {
+    margin: 2em 0;
+    padding-bottom: 5em;
+}
+
 
 footer {
     background-color: #0A1612;
@@ -171,12 +186,12 @@ footer p {
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-#bio {
+/* #h1 {
     max-width: 1000px;
     width: 90%;
     font-size: 1.1em;
     padding: 50px 10px;
-}
+} */
 
 .blog-subheading {
     color: rgb(136, 136, 136);
