@@ -79,7 +79,8 @@ header .header-content-inner {
   } */
 
 header .header-content-inner hr {
-    margin: .7em 19em;
+    margin: .7em auto;
+    width: 50%;
 }
 
 header .header-content .header-content-inner h1 {
@@ -121,9 +122,12 @@ header .header-content .header-content-inner p {
   transition: all ease 0.8s;
 }
 
+
 #bio {
-    margin: 2em 0;
+    /* width: 80%; Do I need this with .container tag?*/
+    margin: 2em auto;
     padding-bottom: 5em;
+    font-size: 1.2em;
 }
 
 
@@ -205,7 +209,8 @@ footer p {
     margin-left: .5em;
 }
 
-@media screen and (max-width: 430px){
-    
+/* @media screen and (min-width: 250px) and (max-width: 900px){
+    #bio {
+        padding-bottom: 6em;
+    } */
 
-}
