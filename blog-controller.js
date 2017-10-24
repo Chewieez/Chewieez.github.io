@@ -87,7 +87,7 @@ function produceBlogs(event) {
                 `
                 
 
-        if (currentBlog.content.length > 466) {
+        if (currentBlog.content.length > 470) {
             blogViewEl.innerHTML += `
             <div id="blogContent-${currentBlog.id}" class="abridged">
             <p class="blog-content">${currentBlog.content}</p>
