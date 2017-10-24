@@ -1,27 +1,105 @@
+/* -- Style --  */
+
+
 /* --- Layout ---  */
 .container {
     max-width: 1000px;
 }
 
 body {
-    box-sizing: border-box;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    /* box-sizing: border-box;  Already default in Bootstrap */
     padding: 0;
     margin-top: 50px;
-    position: relative;
+    /* position: relative; */
     background-color: #C5C1C0;
     color: #575757;
+    /* Added the below in redesign */
+    height: 100%;
+    width: 100%;
 }
 
-.site-content {
-    min-height: calc(100vh - 105px);
-   
+/* .site-content {
+    /* min-height: calc(100vh - 105px); */
+}  */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Saira Extra Condensed', sans-serif;
+    letter-spacing: .1em;
 }
+
 
 .page-header {
     padding: 0;
 }
 
-.jumbo-style {
+
+header#intro {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 50px);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position: center;
+    background-image: url('/images/header.jpg');
+    text-align: center;
+    color: white;
+    
+} 
+
+header .header-content {
+    position: relative;
+    text-align: center;
+    padding: 13em 15px 13em;
+    width: 100%;
+  }
+
+/* header .header-content {
+    position: relative;
+    height: 100%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0 50px;
+  }
+
+header .header-content-inner {
+    padding-top: 250px;
+} */
+
+/* header .header-content {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0 50px;
+  } */
+
+header .header-content-inner hr {
+    margin: .7em auto;
+    width: 50%;
+}
+
+header .header-content .header-content-inner h1 {
+    font-weight: 100;
+    /* text-transform: uppercase; */
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 3em;
+}
+
+header .header-content .header-content-inner p {
+    /* font-weight: 300; */
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+}
+
+/* .jumbo-style {
     margin-top: -30px;
     padding-left: 1.4em;
     padding-right: 1.4em;   
@@ -30,7 +108,7 @@ body {
     color: #E3E3E3;
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
     width:  
-}
+} */
 
 .navbar-header {
     margin-bottom: 0;
@@ -44,7 +122,38 @@ body {
   transition: all ease 0.8s;
 }
 
+
+#bio {
+    /* width: 80%; Do I need this with .container tag?*/
+    margin: 2em auto;
+    padding-bottom: 4em;
+    font-size: 1.2em;
+}
+
+.footer-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 25%;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    justify-content: space-between;
+    grid-template-areas:
+    "footer-left . . footer-right"
+}
+
+#footer-left {
+    grid-area: footer-left;
+    justify-self: start;
+}
+
+#footer-right {
+    grid-area: footer-right;
+    justify-self: end;
+}
+
+
 footer {
+    
     background-color: #0A1612;
     color: white;
     padding-left: .75em;
@@ -54,8 +163,9 @@ footer {
 
 footer p {
     color:#E3E3E3;
-    padding-top: 0;
-    padding-bottom: .3em;
+    padding-top: .6em;
+    margin-top: .3em;
+    padding-bottom: .1em;
 }  
 
 .fa {
@@ -63,7 +173,7 @@ footer p {
     width: .9em;
     text-align: center;
     text-decoration: none;
-    margin: .5em .1em;
+    margin: .3em .1em;
     color: #E3E3E3;
 }
   
@@ -72,13 +182,14 @@ footer p {
 }
 
 .fa-twitter {
-    margin-right: 1em;;
+    margin-right: .1em;
 }
   
 .fa:hover {
     color: #f7b733;
     transition: all ease 0.3s;
 }
+
 
 .contacts {
     font-size: 1.2em;
@@ -92,8 +203,30 @@ footer p {
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-#bio {
-    max-width: 90%;
+/* #h1 {
+    max-width: 1000px;
+    width: 90%;
     font-size: 1.1em;
+    padding: 50px 10px;
+} */
+
+@media screen and (max-width: 430px){
+    .footer-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+        "footer-right"
+        "footer-left"
+    }
+
+    #footer-left {
+        grid-area: footer-left;
+        justify-self: center;
+    }
+    
+    #footer-right {
+        grid-area: footer-right;
+        justify-self: center;
+    }
 }
 

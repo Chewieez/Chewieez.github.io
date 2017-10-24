@@ -5,14 +5,15 @@
     <title>Welcome to my Personal Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet"> -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Saira+Extra+Condensed:300,400,500" rel="stylesheet">
 </head>
 
 <body>
-    <div class="site-content container">
+    <div class="site-content">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -27,7 +28,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav" role: "tablist">
 
-                        <li><a href="/index.html/#bio">Bio</a></li>
+                        <li><a href="#bio">Bio</a></li>
                         <li><a href="/projects.html">Projects</a></li>
                         <li><a href="/blog.html">Blog</a></li>
                         <li><a href="/resume.html">Resume</a></li>
@@ -38,22 +39,24 @@
         </nav>
         
 
+<!-- classes I removed from header for redesign class="jumbotron jumbo-style left-pull" -->
+        <header id="intro">
+            <div class="header-content">
+                <div class="header-content-inner">
 
-        <header id="intro" class="jumbotron jumbo-style container left-pull">
-            <div class="row">
-                <div class="col-xs-9">
-
-                    <h1 class="lead">Greg Lawrence</h1>
-                    <h6 class="lead" style="font-size: 1.2em;">Nashville Software School Student Cohort 22 / Audio Engineer</h6>
+                    <h1 id= "homeHeading">Greg Lawrence</h1>
+                    <hr>
+                    <h6 class="lead">Web Development Student / Audio Engineer</h6>
+                    <a href="#bio" class="btn btn-primary btn-xl page-scroll">Learn More</a>
                 </div>
 
-                <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM" alt="Greg Headshot" width="180">
-                </div>
+                <!-- <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM" alt="Greg Headshot" width="180">
+                </div> -->
             </div>
         </header> <!-- /end of jumbotron -->
 
 
-        <article id="bio" class="container-fluid">
+        <article id="bio" class="container">
             
             <p>I am currently a student at the Nashville Software School in Nashville TN. I have been in Nashville for over 15 years working in the music business as an audio engineer. I have always enjoyed working with computers, android phones and technology. I've had several side jobs which involved different aspects of using digital tools such as tweaking websites, updating content on websites, editing photos in photoshop and consulting businesses on social media setup and management. I really enjoy problem solving, creating things and working on projects on a team. I am excited to learn as much as possible while attending NSS and transition into a career in Web Development.  </p> 
 
@@ -65,21 +68,19 @@
     </div>
     <!-- /end of site-content -->
 
-    <footer id="footer" class="container-fluid">
-            <div class="row">
-                <div class="col-xs-4 pull-left">
-                    <br>
-                    <p>coded and created by Greg Lawrence</p>
-                </div>
-                <div class="pull-right">
-                    <a href="mailto:gregaudio@gmail.com?Hello%20there!"> <i class="fa fa-envelope" aria-hidden="true"></i></a>
-                    <a href="https://www.linkedin.com/in/gregmlawrence/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    <a href="https://github.com/Chewieez" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
-                    <a href="https://www.twitter.com/gregaudio" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                </div>
-            </div>
-        
-          </footer>
+    
+    <footer id="footer" class="footer-grid">     
+        <div id= "footer-left">
+            <p>coded and created by Greg Lawrence</p>
+        </div>
+   
+        <div id="footer-right">
+            <a href="mailto:gregaudio@gmail.com?Hello%20there!"> <i class="fa fa-envelope" aria-hidden="true"></i></a>
+            <a href="https://www.linkedin.com/in/gregmlawrence/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+            <a href="https://github.com/Chewieez" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+            <a href="https://www.twitter.com/gregaudio" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </div>
+    </footer>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
