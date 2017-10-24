@@ -78,7 +78,7 @@ function produceBlogs(event) {
     for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
         let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
-        moment().format()
+        
         blogViewEl.innerHTML += `
         <article  id="blogPost-${currentBlog.id}">
                 <h4 class="blog-title">${currentBlog.title}</h4>
