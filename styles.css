@@ -133,7 +133,7 @@ header .header-content .header-content-inner p {
 .footer-grid {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 25%;
+    grid-template-columns: 1fr 10%;
     grid-template-rows: 1fr;
     justify-items: center;
     justify-content: space-between;
@@ -210,7 +210,7 @@ footer p {
     padding: 50px 10px;
 } */
 
-@media screen and (max-width: 430px){
+@media screen and (max-width: 441px){
     .footer-grid {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
