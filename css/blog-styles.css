@@ -12,3 +12,18 @@
     font-style: italic;
     margin-left: .5em;
 }
+
+.abridged {
+    height: 9em;
+    overflow: hidden;
+    margin-bottom: .3em;
+}
+
+.expandContentBtn {
+    background-color: rgba(223, 223, 223, 0.623);
+    color: gray;
+    border-radius: 4px;
+    border: none;
+    padding-bottom: 0;
+    font-size: .9em;
+}
