@@ -137,8 +137,9 @@ footer {
 
 footer p {
     color:#E3E3E3;
-    padding-top: 0;
-    padding-bottom: .3em;
+    padding-top: .6em;
+    margin-top: .3em;
+    padding-bottom: .1em;
 }  
 
 #blog-entries-list {
@@ -150,7 +151,7 @@ footer p {
     width: .9em;
     text-align: center;
     text-decoration: none;
-    margin: .5em .1em;
+    margin: .3em .1em;
     color: #E3E3E3;
 }
   
@@ -159,7 +160,7 @@ footer p {
 }
 
 .fa-twitter {
-    margin-right: 1em;;
+    margin-right: .1em;
 }
   
 .fa:hover {
@@ -202,4 +203,9 @@ footer p {
     font-size: .9em;
     font-style: italic;
     margin-left: .5em;
+}
+
+@media screen and (max-width: 430px){
+    
+
 }
