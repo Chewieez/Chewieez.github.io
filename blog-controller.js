@@ -83,12 +83,28 @@ function produceBlogs(event) {
         <article  id="blogPost-${currentBlog.id}">
                 <h4 class="blog-title">${currentBlog.title}</h4>
                 <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
-                <div id="blogContent-${currentBlog.id}" class="abridged">
-                <p class="blog-content">${currentBlog.content}</p>
-                </div>
-                <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
-                <p class="blog-tags">tags: ${currentBlog.tags}</p>
-                <hr>
+                
+                `
+                
+
+        if (currentBlog.content.length > 466) {
+            blogViewEl.innerHTML += `
+            <div id="blogContent-${currentBlog.id}" class="abridged">
+            <p class="blog-content">${currentBlog.content}</p>
+            </div>
+            <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
+            `
+        } else {
+            blogViewEl.innerHTML += `
+            <div id="blogContent-${currentBlog.id}">
+            <p class="blog-content">${currentBlog.content}</p>
+            </div>
+            `
+        } 
+        
+        blogViewEl.innerHTML += `
+        <p class="blog-tags">tags: ${currentBlog.tags}</p>
+        <hr>
         </article>
         `
     }
@@ -151,3 +167,4 @@ function expandContent(event) {
 
 
 blogViewEl.addEventListener("click", expandContent)
+
