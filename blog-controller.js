@@ -139,7 +139,7 @@ function expandContent(event) {
     // parse out the number in the ID of the event that was clicked
     const clickedBtnId = clickedBtn.split("-")[1];
     
-    // check if the ID of event that was clicked starts with "blogContent-". If so, then expand that card
+    // check if the ID of event that was clicked starts with "expandContent-". If so, then expand that blog content
     if (clickedBtn.startsWith("expandContent-")) {
         //assign the Id number of the clicked element to the blog content div to be expanded
         let contentToExpand = document.getElementById("blogContent-" + clickedBtnId)
