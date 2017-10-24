@@ -83,12 +83,13 @@ function produceBlogs(event) {
         <article  id="blogPost-${currentBlog.id}">
                 <h4 class="blog-title">${currentBlog.title}</h4>
                 <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
-                
+                <div id="blogContent-${currentBlog.id}" class="abridged">
                 <p class="blog-content">${currentBlog.content}</p>
-                
+                </div>
+                <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
                 <p class="blog-tags">tags: ${currentBlog.tags}</p>
+                <hr>
         </article>
-        <hr>
         `
     }
 }
@@ -128,3 +129,25 @@ for (let i = 0; i < blogPostsArray.length; i++) {
 
 fillSideColumnBlogList()
 
+
+// const blogViewEl = document.getElementById("blog-view");
+
+function expandContent(event) {
+    console.log("clicked event: ", event)
+    let clickedBtn = event.target.id 
+    
+    // parse out the number in the ID of the event that was clicked
+    const clickedBtnId = clickedBtn.split("-")[1];
+    
+    // check if the ID of event that was clicked starts with "blogContent-". If so, then expand that card
+    if (clickedBtn.startsWith("expandContent-")) {
+        //assign the Id number of the clicked element to the blog content div to be expanded
+        let contentToExpand = document.getElementById("blogContent-" + clickedBtnId)
+        // toggle the abridged class off when click, to then show the full content.
+        contentToExpand.classList.toggle("abridged");
+        
+    }
+}
+
+
+blogViewEl.addEventListener("click", expandContent)
