@@ -19,13 +19,10 @@ body {
     width: 100%;
 }
 
-/* .site-content {
-    /* min-height: calc(100vh - 105px); */
-}  */
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Saira Extra Condensed', sans-serif;
-    letter-spacing: .1em;
+    font-family: 'Josefin Sans', sans-serif;
+    /* letter-spacing: .1em; */
 }
 
 
@@ -115,13 +112,20 @@ header .header-content .header-content-inner p {
     border-radius: 0;
 }
 
+.navbar-brand {
+    font-size: 1.6em;
+}
+
+.navbar-nav {
+    font-size: 1.1em;
+}
+
 .navbar-inverse .navbar-nav>.active> a,
 .navbar-inverse .navbar-nav>.active> a:focus,
 .navbar-inverse .navbar-nav>.active> a:hover {
-  background: #737373;
+  background: #868686;
   transition: all ease 0.8s;
 }
-
 
 #bio {
     /* width: 80%; Do I need this with .container tag?*/
@@ -153,16 +157,15 @@ header .header-content .header-content-inner p {
 
 
 footer {
-    
     background-color: #0A1612;
-    color: white;
+    color: #868686;
     padding-left: .75em;
     padding-right: .75em;
     width: 100%;
 }
 
 footer p {
-    color:#E3E3E3;
+    color:#868686;
     padding-top: .6em;
     margin-top: .3em;
     padding-bottom: .1em;
@@ -174,7 +177,7 @@ footer p {
     text-align: center;
     text-decoration: none;
     margin: .3em .1em;
-    color: #E3E3E3;
+    color: #868686;
 }
   
 .fa-envelope {
