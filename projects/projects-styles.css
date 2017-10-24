@@ -1,0 +1,15 @@
+.site-content {
+    min-height: calc(100vh - 94px);
+}
+
+.caption p {
+    margin-bottom: .1em;
+}
+
+.important-text {
+    font-weight: 500;
+}
+
+h4 {
+    margin: .2em 0;
+}
