@@ -21,6 +21,7 @@ let newBlogTagsEl = document.getElementById("admin-blog-tags")
 // get content out of each form field and assign to variable and then push data into the factory function
 const saveBlogEl = document.getElementById("admin-save-blog")
 
+// setup click event to run the function to take user input field content and generate a new blog post
 saveBlogEl.addEventListener("click", function(event){
     lastId = retrievedBlogDatabase.blogArray[0].id
     const newBlogPost = blogObjectFactory(
@@ -29,10 +30,19 @@ saveBlogEl.addEventListener("click", function(event){
         newBlogAuthorEl.value,
         newBlogTagsEl.value,
     )
-
+    // store this new blog post object at the beginning of the array of blog posts
     retrievedBlogDatabase.blogArray.unshift(newBlogPost);
-    
+    // store new appended blog database in local storage
     localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
+    //clear out contents of blog entry form
+    clearBlogEntryForm()
 })
 
-// setup click event to run the function to take user input field content and generate a new blog post
+
+// clears out the form elements
+function clearBlogEntryForm() {
+    newBlogAuthorEl.value = "";
+    newBlogTitleEl.value = "";
+    newBlogContentEl.value = "";
+    newBlogTagsEl.value = "";
+}
