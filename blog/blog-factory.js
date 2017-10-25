@@ -12,11 +12,7 @@ const blogIdGenerator = function* (from) {
     }
 }
 
-
-
-// const lastId = blogPosts.blogArray[0] || { id: 1 }
 let lastId = { id: 0 }
-
 
 // Create instance of generator and include the lastId to know where to start the ids from
 const blogIdFactory = blogIdGenerator(lastId)

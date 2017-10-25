@@ -8,7 +8,7 @@
 const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || produceBlogDatabase()
 console.log("retrievedBlogDatabase is: ", retrievedBlogDatabase)
 
-// Create `articles` key if it doesn't exist
+// Create `blogArray` key if it doesn't exist
 retrievedBlogDatabase.blogArray = retrievedBlogDatabase.blogArray || []
 
 
