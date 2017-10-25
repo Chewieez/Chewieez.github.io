@@ -4,7 +4,7 @@
 
 
 // pull current blog database from local storage and parse into variable
-const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || {}
+const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || produceBlogDatabase()
 
 // Create `articles` key if it doesn't exist
 ProfessionalDatabase.blogArray = ProfessionalDatabase.blogArray || []
