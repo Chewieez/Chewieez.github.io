@@ -36,6 +36,7 @@ saveBlogEl.addEventListener("click", function(event){
     localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
     //clear out contents of blog entry form
     clearBlogEntryForm()
+    createButtonToBlogPage()
 })
 
 
@@ -45,4 +46,16 @@ function clearBlogEntryForm() {
     newBlogTitleEl.value = "";
     newBlogContentEl.value = "";
     newBlogTagsEl.value = "";
+}
+
+// make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read blogs
+function createButtonToBlogPage () {
+    let AdminPageEl = document.getElementById("admin-blog-entry");
+    AdminPageEl.innerHTML += `
+    <button id="btnToBlogs" class="btn btn-success">View Blogs</button>
+    `
+    let btnToBlogsEl = document.getElementById("btnToBlogs")
+    btnToBlogsEl.addEventListener("click", function(){
+        window.location.href = "http://localhost:8080/blog/index.html"
+    })
 }
