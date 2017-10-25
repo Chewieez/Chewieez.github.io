@@ -1,3 +1,5 @@
+// added if statement to check if the blogPosts Database already exists. If it doesn't, then we create it with the posts below. 
+if (JSON.parse(localStorage.getItem("blogPosts")) === null) {
 const blogPosts = {};
 const blogArray = [];
 
@@ -18,7 +20,7 @@ const blogIdFactory = blogIdGenerator()
 // Factory function to create each blog object and cut down on repetitive typing
 const blogObjectFactory = function (title, entry, author, ...tags) {
     // function to add a space after the , in the collection of tags
-    function spacedTags() {
+    function spacedTags(tags) {
         let spacedOutTags = tags.join(", ");
         return spacedOutTags;
     }
@@ -28,7 +30,7 @@ const blogObjectFactory = function (title, entry, author, ...tags) {
         "author": { value: author, enumerable: true }, 
         "title": { value: title, enumerable: true },
         "content": { value: entry, enumerable: true },
-        "tags": { value: spacedTags(), enumerable: true },
+        "tags": { value: spacedTags(tags), enumerable: true },
         "published": { value: Date.now(), enumerable: true }
     })
     
@@ -76,3 +78,4 @@ blogPosts.blogEntries = blogArray;
 
 // Setting the database in local storage
 localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
+}

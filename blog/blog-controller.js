@@ -1,12 +1,12 @@
 // pulling blog database out of Local Storage
-const importedBlog = JSON.parse(localStorage.getItem("blogPosts"));
+const retrievedBlogs = JSON.parse(localStorage.getItem("blogPosts"));
 
 // selecting the HTML container to place my javascript code and assigning it to a variable
 let blogViewEl = document.getElementById("blog-view");
 let blogEntriesEl = document.getElementById("blog-entries-list"); 
 
 // assign array of blog posts from the blog database to a variable
-const blogPostsArray = importedBlog.blogEntries
+const blogPostsArray = retrievedBlogs.blogEntries
 
 /* -- Start Pagination code -- */
 const totalItems = blogPostsArray.length
@@ -74,7 +74,7 @@ function produceBlogs(event) {
         pageNumber * itemsPerPage
      )
 
-    // Display a <section> representation of each data object by looping through the array of blog posts that was extraced from the object (importedBlog) 
+    // Display a <section> representation of each data object by looping through the array of blog posts that was extraced from the object (retrievedBlogs) 
     for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
         let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
