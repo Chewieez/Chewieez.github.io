@@ -213,6 +213,10 @@ footer p {
     padding: 50px 10px;
 } */
 
+.invisible {
+    visibility: hidden;
+}
+
 @media screen and (max-width: 441px){
     .footer-grid {
         grid-template-columns: 1fr;
