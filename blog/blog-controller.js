@@ -6,7 +6,7 @@ let blogViewEl = document.getElementById("blog-view");
 let blogEntriesEl = document.getElementById("blog-entries-list"); 
 
 // assign array of blog posts from the blog database to a variable
-const blogPostsArray = retrievedBlogs.blogEntries
+const blogPostsArray = retrievedBlogs.blogArray
 
 /* -- Start Pagination code -- */
 const totalItems = blogPostsArray.length

@@ -17,20 +17,12 @@ const blogIdGenerator = function* (from) {
 // const lastId = blogPosts.blogArray[0] || { id: 1 }
 let lastId = { id: 0 }
 
-/* The Below Code is only needed if my blog database doesn't exist. */
-// add if statement to check if the blogPosts Database already exists. If it doesn't, then we create it with the posts below.
-if (JSON.parse(localStorage.getItem("blogPosts")) === null) {
-    // generate a blog Database by running the function to create it.
-
-    produceBlogDatabase();
-    lastId = blogPosts.blogEntries[0]
-}
 
 // Create instance of generator and include the lastId to know where to start the ids from
 const blogIdFactory = blogIdGenerator(lastId)
 
 // Factory function to create each blog object and cut down on repetitive typing
-const blogObjectFactory = function (title, entry, author, ...tags) {
+const blogObjectFactory = function (title, content, author, ...tags) {
     // function to add a space after the , in the collection of tags
     function spacedTags(tags) {
         let spacedOutTags = tags.join(", ");
@@ -41,13 +33,22 @@ const blogObjectFactory = function (title, entry, author, ...tags) {
         "id": { value: blogIdFactory.next().value, enumerable: true },
         "author": { value: author, enumerable: true }, 
         "title": { value: title, enumerable: true },
-        "content": { value: entry, enumerable: true },
+        "content": { value: content, enumerable: true },
         "tags": { value: spacedTags(tags), enumerable: true },
         "published": { value: Date.now(), enumerable: true }
     })
 }
 
 
+/* The Below Code is only needed if my blog database doesn't exist. */
+// add if statement to check if the blogPosts Database already exists. If it doesn't, then we create it with the posts below.
+if (JSON.parse(localStorage.getItem("blogPosts")) === null) {
+    // generate a blog Database by running the function to create it.
+
+    produceBlogDatabase();
+    let tempBlogDatabase = JSON.parse(localStorage.getItem("blogPosts"))
+    lastId = tempBlogDatabase.blogArray[0]
+}
 
 
 // Make function to generate a blog database with all the posts written before Oct 25th 2017
@@ -89,11 +90,11 @@ function produceBlogDatabase() {
     blogArray.unshift(post3, post2, post1, post10, post9, post8, post7, post6, post5, post4);
 
     // assigning blogArray to a property inside of blogPosts
-    blogPosts.blogEntries = blogArray;
+    blogPosts.blogArray = blogArray;
 
 
     // Setting the database in local storage
     localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
 }
 
-console.log("are waiting for me?")
+
