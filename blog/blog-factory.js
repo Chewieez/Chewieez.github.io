@@ -11,7 +11,7 @@ const blogIdGenerator = function* (from) {
         uniqueId++
     }
 }
-
+// initalize the lastId with 0 at the start.
 let lastId = { id: 0 }
 
 // Create instance of generator and include the lastId to know where to start the ids from
@@ -73,17 +73,22 @@ function produceBlogDatabase() {
     // creating object for post using blogObjectFactory
     const post3 = blogObjectFactory("Ramping Up", blogPost3Content, "Greg Lawrence", "JS", "generator functions", "factory functions", "mind bender", "event listeners")
 
+    const blogPost4Content = "<p>On my way to NSS this morning I was thinking about generator functions and trying to think of a good analogy to use to describe how they work and also how they differ from a typical javascript function. I came up with an analogy based on movies. I hope this analogy makes sense, and also is accurate and I'd love any feedback on my idea.</p><p>So I'm thinking that your normal javascript function is like going to see a movie in a big movie theater. The theater starts the movie and you are there to watch it. You cannot pause the movie if you need to leave or take a break. The movie will play for it's entire duration. If you get up and leave, and come back, you will have missed part of the movie and it will have continued on without you. When you leave, the movie doesn't stop or pause, it continues on without you.</p><p>A generator function is like having a bluray/dvd copy of a movie. You and your friends can all have your own copy of this movie. You can play it and pause it, and when you come back to it, you can resume the movie right where you left it. If you pause your copy of the movie, your friend's copy doesn't pause. The two movies are completely separate from each other, yet are still the same movie with the exact same content. They are two instances of the same movie.</p><p>In a generator function, you create a new instance (copy) of it by assigning the generator function to a variable. This is a distinct copy of this function. You can pause this copy of the function. If someone else needs to use the same generator function, they can create their own copy (instance) of it and their copy will be completely separate from your copy of the generator function. You two can both use your copies however you need and they will not effect each other. You can also create another copy of the generator function so that you now 'own' two copies. These two copies or instances, will be completely separate from each other. One can be paused at one point in the code and the other one can be paused at a different point.</p><p>I hope that this helps explain how instances of generator functions work. Let me know if I'm off base.</p>"
+    
+    const post4 = blogObjectFactory("Generator Function Instances and Going To The Movies", blogPost4Content, "Greg Lawrence", "generator functions", "analogies")
+
+
     // creating object for post using blogObjectFactory
-    const post4 = blogObjectFactory("Test2 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post5 = blogObjectFactory("Test3 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post6 = blogObjectFactory("Test4 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post7 = blogObjectFactory("Test5 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post8 = blogObjectFactory("Test6 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post9 = blogObjectFactory("Test7 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
-    const post10 = blogObjectFactory("Test8 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT1 = blogObjectFactory("Test2 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT2 = blogObjectFactory("Test3 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT3 = blogObjectFactory("Test4 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT4 = blogObjectFactory("Test5 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT5 = blogObjectFactory("Test6 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT6 = blogObjectFactory("Test7 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
+    const postT7 = blogObjectFactory("Test8 Blog Factory", "Making sure this new method of generating blog posts works", "Greg Lawrence", "JS", "factory functions")
 
     // using .unshift() instead of push() to place each new blog posts at the beginning of the array so the most recent blog post will always be at index 0. Then older posts will be posted in reverse chronological order
-    blogArray.unshift(post3, post2, post1, post10, post9, post8, post7, post6, post5, post4);
+    blogArray.unshift(post4, post3, post2, post1, postT7, postT6, postT5, postT4, postT3, postT2, postT1);
 
     // assigning blogArray to a property inside of blogPosts
     blogPosts.blogArray = blogArray;

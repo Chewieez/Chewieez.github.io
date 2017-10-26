@@ -24,6 +24,8 @@ const saveBlogEl = document.getElementById("admin-save-blog")
 // setup click event to run the function to take user input field content and generate a new blog post
 saveBlogEl.addEventListener("click", function(event){
     lastId = retrievedBlogDatabase.blogArray[0].id
+    console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
+    console.log("lastId = ", lastId);
     const newBlogPost = blogObjectFactory(
         newBlogTitleEl.value,
         newBlogContentEl.value,
