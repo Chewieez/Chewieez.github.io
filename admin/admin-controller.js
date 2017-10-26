@@ -1,5 +1,4 @@
 
-
 // blog generator function and blog factory function are in the blog-factory.js file
 
 
@@ -23,9 +22,11 @@ const saveBlogEl = document.getElementById("admin-save-blog")
 
 // setup click event to run the function to take user input field content and generate a new blog post
 saveBlogEl.addEventListener("click", function(event){
+    //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
     lastId = retrievedBlogDatabase.blogArray[0].id
-    console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
-    console.log("lastId = ", lastId);
+    //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
+
+    // create new blog with all the data that was inputted into the admin form
     const newBlogPost = blogObjectFactory(
         newBlogTitleEl.value,
         newBlogContentEl.value,
@@ -38,6 +39,7 @@ saveBlogEl.addEventListener("click", function(event){
     localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
     //clear out contents of blog entry form
     clearBlogEntryForm()
+    // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
     createButtonToBlogPage()
 })
 
@@ -50,7 +52,7 @@ function clearBlogEntryForm() {
     newBlogTagsEl.value = "";
 }
 
-// make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read blogs
+// make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read and review blogs
 function createButtonToBlogPage () {
     let AdminPageEl = document.getElementById("admin-blog-entry");
     AdminPageEl.innerHTML += `
