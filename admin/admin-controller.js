@@ -2,14 +2,12 @@
 // blog generator function and blog factory function are in the blog-factory.js file
 
 
-// pull current blog database from local storage and parse into variable
-// make new function that runs produceBlogDatabase() and then reloads page
+// pull current blog database from local storage and parse into variable. If database doesn't exist, run function to create it. The function produceBlogDatabase() resides in the blog-factory.js file
 const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || produceBlogDatabase()
 console.log("retrievedBlogDatabase is: ", retrievedBlogDatabase)
 
 // Create `blogArray` key if it doesn't exist
 retrievedBlogDatabase.blogArray = retrievedBlogDatabase.blogArray || []
-
 
 // get control of DOM input elements
 let newBlogTitleEl = document.getElementById("admin-blog-title")
@@ -17,7 +15,8 @@ let newBlogAuthorEl = document.getElementById("admin-blog-author")
 let newBlogContentEl = document.getElementById("admin-blog-content")
 let newBlogTagsEl = document.getElementById("admin-blog-tags")
 
-// get content out of each form field and assign to variable and then push data into the factory function
+
+// get control of the button DOM element the user will click to save the new blog entry
 const saveBlogEl = document.getElementById("admin-save-blog")
 
 // setup click event to run the function to take user input field content and generate a new blog post
@@ -26,7 +25,7 @@ saveBlogEl.addEventListener("click", function(event){
     lastId = retrievedBlogDatabase.blogArray[0].id
     //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
 
-    // create new blog with all the data that was inputted into the admin form
+    // use content that was entered into admin form element to create new blog 
     const newBlogPost = blogObjectFactory(
         newBlogTitleEl.value,
         newBlogContentEl.value,
@@ -52,14 +51,21 @@ function clearBlogEntryForm() {
     newBlogTagsEl.value = "";
 }
 
+console.log(document.getElementById("whatever"))
 // make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read and review blogs
 function createButtonToBlogPage () {
-    let AdminPageEl = document.getElementById("admin-blog-entry");
-    AdminPageEl.innerHTML += `
-    <button id="btnToBlogs" class="btn btn-success">View Blogs</button>
-    `
+    // check if the button to view the blog page already exists. If not, create it. This will prevent the button from duplicating if the user creates more than one blog entry without refreshing the page
+    if (document.getElementById("btnToBlogs") === null) {
+        let newButtonEl = document.getElementById("new-button");
+        newButtonEl.innerHTML += `
+        <button id="btnToBlogs" class="btn btn-success">View Blogs</button>
+        `
+    }
+    // get control of new button DOM element, then add event listener to it
     let btnToBlogsEl = document.getElementById("btnToBlogs")
     btnToBlogsEl.addEventListener("click", function(){
+        // send user to the blog page when they click on the button
         window.location.href = "http://localhost:8080/blog/index.html"
     })
+    
 }
