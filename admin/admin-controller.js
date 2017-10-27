@@ -22,6 +22,7 @@ const saveBlogEl = document.getElementById("admin-save-blog")
 // setup click event to run the function to take user input field content and generate a new blog post
 saveBlogEl.addEventListener("click", function(event){
 
+    // check if the validateForm function returns true
     if (validateForm()) {
         //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
         lastId = retrievedBlogDatabase.blogArray[0].id
@@ -43,18 +44,15 @@ saveBlogEl.addEventListener("click", function(event){
         // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
         createButtonToBlogPage()
     }
-
-    // else {
-    //     alert("Please fix errors before submitting blog")
-    // }
+    // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
 })
 
 // form validation function
 function validateForm() {
     // assigns the value of each required input field to a variable
-    let isThereTitle = document.forms["adminBlogEntry"]["admin-blog-title"];
-    let isThereAuthor = document.forms["adminBlogEntry"]["admin-blog-author"];
-    let isThereContent = document.forms["adminBlogEntry"]["admin-blog-content"];
+    let isThereTitle = document.forms["adminBlogEntryForm"]["admin-blog-title"];
+    let isThereAuthor = document.forms["adminBlogEntryForm"]["admin-blog-author"];
+    let isThereContent = document.forms["adminBlogEntryForm"]["admin-blog-content"];
 
     // checks if each field is empty and executes a unique error message
     if (isThereTitle.value === "") {
@@ -79,6 +77,7 @@ function validateForm() {
         );
         return false;
     }
+    // return true is the form includes required fields so the click handler event can run the code to submit the blog post
     else {
         return true;
     }
@@ -87,10 +86,13 @@ function validateForm() {
 
 // clears out the form elements
 function clearBlogEntryForm() {
-    newBlogAuthorEl.value = "";
-    newBlogTitleEl.value = "";
-    newBlogContentEl.value = "";
-    newBlogTagsEl.value = "";
+    document.forms["adminBlogEntryForm"].reset();
+  
+    // old code resetting each field separately
+    // newBlogAuthorEl.value = "";
+    // newBlogTitleEl.value = "";
+    // newBlogContentEl.value = "";
+    // newBlogTagsEl.value = "";
 }
 
 
