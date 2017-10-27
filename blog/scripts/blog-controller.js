@@ -8,6 +8,7 @@ let blogEntriesEl = document.getElementById("blog-entries-list");
 // assign array of blog posts from the blog database to a variable
 const blogPostsArray = retrievedBlogs.blogArray
 console.log("blogPostsArray: ", blogPostsArray)
+
 // assign DOM search field element to a variable
 let searchEl = document.getElementById("search-input") 
 
@@ -51,27 +52,27 @@ searchEl.addEventListener("keyup", function(event){
         
         console.log("blogSearchResults = ", blogSearchResults)
         
-   }
+        // run function to populate page with filtered content    
+        // produceBlogs({
+        //      "target": {
+        //          "classList": ["page-1"]
+        //      }
+        // })
 
-   produceBlogs({
-        "target": {
-            "classList": ["page-1"]
-        }
-    })
+        loadFullPage()
 
+    }
 })
+loadFullPage()
 
-
-
-
-
+function loadFullPage() {
 /* -- Start Pagination code -- */
-// assign the results array to the totalItems for pagination
-const totalItems = blogSearchResults.length
+// assign the search results array to the totalItems for pagination
+let totalItems = blogSearchResults.length
 //const totalItems = blogPostsArray.length
 
 const itemsPerPage = 5
-const numberOfPages = Math.ceil(totalItems / itemsPerPage)
+let numberOfPages = Math.ceil(totalItems / itemsPerPage)
 const paginationEl = document.getElementById("blogPaginator")
 
 // Build the DOM string for the pagination links in the footer
@@ -97,6 +98,7 @@ const nextEl = document.getElementById("next")
     on one of the pagination links at the bottom of the page
 */
 function produceBlogs(event) {
+   
     // Clear the list of blogs first before displaying the new ones
     blogViewEl.innerHTML = ""
 
@@ -130,13 +132,12 @@ function produceBlogs(event) {
 
     // Determine which items to display by slicing the array
     const itemsToDisplay = blogSearchResults.slice(
-        
-        // const itemsToDisplay = blogPostsArray.slice(       // code pre search input field
+    // const itemsToDisplay = blogPostsArray.slice(       // code pre search input field
         (pageNumber - 1) * itemsPerPage, 
         pageNumber * itemsPerPage
      )
 
-    // Display a <section> representation of each data object by looping through the array of blog posts that was extraced from the object (retrievedBlogs) 
+    // Display a <section> representation of each data object by looping through the array of blog posts that was extracted from the object (retrievedBlogs) 
     for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
         let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
@@ -196,6 +197,7 @@ nextEl.addEventListener("click", produceBlogs)
 
 
 function fillSideColumnBlogList() {
+    blogEntriesEl.innerHTML = ""
 for (let i = 0; i < blogPostsArray.length; i++) {
     let currentBlogPost = blogPostsArray[i];
     let currentBlogPublishDate =  moment(parseInt(currentBlogPost.published)).format("dddd, MMMM Do YYYY")       
@@ -230,3 +232,4 @@ function expandContent(event) {
 
 blogViewEl.addEventListener("click", expandContent)
 
+}
