@@ -7,6 +7,58 @@ let blogEntriesEl = document.getElementById("blog-entries-list");
 
 // assign array of blog posts from the blog database to a variable
 const blogPostsArray = retrievedBlogs.blogArray
+console.log("blogPostsArray: ", blogPostsArray)
+// assign DOM search field element to a variable
+let searchEl = document.getElementById("search-input") 
+
+//setup event handler to track key up strokes after the 3rd key and initiate a search function
+
+// create a results array to hold the matching blog posts
+let blogSearchResults = []
+
+searchEl.addEventListener("keyup", function(event){
+    
+    //console.log(searchEl.value.length)
+    
+    // clear the search results after each keystroke
+    blogSearchResults = [];
+    
+    // determine if the keyup is the 3rd one and start a search based on the characters in the input field
+    if (searchEl.value.length >= 3) {
+
+        // assign the contents of input field to a variable
+        let searchQuery = searchEl.value.toLowerCase();
+        console.log("searchQuery =", searchQuery)
+        // search through array and check if any blogs include the searchQuery
+        blogPostsArray.forEach(function (blog) {
+            console.log("blog = ", blog)
+            let blogTitle = blog.title.toLowerCase()
+            let blogContent = blog.content.toLowerCase()
+        
+
+            if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
+                console.log("Found one")
+                blogSearchResults.push(blog);
+            }
+            else {
+                console.log("can't find one")
+            }
+        })
+        
+        console.log("blogSearchResults = ", blogSearchResults)
+        
+        
+        
+      
+
+
+   }
+
+
+})
+
+
+
 
 /* -- Start Pagination code -- */
 const totalItems = blogPostsArray.length
