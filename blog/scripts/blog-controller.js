@@ -14,7 +14,8 @@ let searchEl = document.getElementById("search-input")
 //setup event handler to track key up strokes after the 3rd key and initiate a search function
 
 // create a results array to hold the matching blog posts
-let blogSearchResults = []
+// ???? and populate it with all the blogs on first page load
+let blogSearchResults = blogPostsArray
 
 searchEl.addEventListener("keyup", function(event){
     
@@ -29,15 +30,18 @@ searchEl.addEventListener("keyup", function(event){
         // assign the contents of input field to a variable
         let searchQuery = searchEl.value.toLowerCase();
         console.log("searchQuery =", searchQuery)
+        
+        
         // search through array and check if any blogs include the searchQuery
         blogPostsArray.forEach(function (blog) {
-            console.log("blog = ", blog)
+            // make all blog content to search lower case to make search case insensitive
             let blogTitle = blog.title.toLowerCase()
             let blogContent = blog.content.toLowerCase()
         
-
+            // check if the blog title or the blog content contains the searchQuery
             if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
-                console.log("Found one")
+
+                // push the matching blog into the results array
                 blogSearchResults.push(blog);
             }
             else {
@@ -47,21 +51,25 @@ searchEl.addEventListener("keyup", function(event){
         
         console.log("blogSearchResults = ", blogSearchResults)
         
-        
-        
-      
-
-
    }
 
+   produceBlogs({
+        "target": {
+            "classList": ["page-1"]
+        }
+    })
 
 })
 
 
 
 
+
 /* -- Start Pagination code -- */
-const totalItems = blogPostsArray.length
+// assign the results array to the totalItems for pagination
+const totalItems = blogSearchResults.length
+//const totalItems = blogPostsArray.length
+
 const itemsPerPage = 5
 const numberOfPages = Math.ceil(totalItems / itemsPerPage)
 const paginationEl = document.getElementById("blogPaginator")
@@ -121,7 +129,9 @@ function produceBlogs(event) {
     }
 
     // Determine which items to display by slicing the array
-    const itemsToDisplay = blogPostsArray.slice(
+    const itemsToDisplay = blogSearchResults.slice(
+        
+        // const itemsToDisplay = blogPostsArray.slice(       // code pre search input field
         (pageNumber - 1) * itemsPerPage, 
         pageNumber * itemsPerPage
      )
