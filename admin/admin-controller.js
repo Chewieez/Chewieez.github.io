@@ -21,26 +21,68 @@ const saveBlogEl = document.getElementById("admin-save-blog")
 
 // setup click event to run the function to take user input field content and generate a new blog post
 saveBlogEl.addEventListener("click", function(event){
-    //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
-    lastId = retrievedBlogDatabase.blogArray[0].id
-    //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
 
-    // use content that was entered into admin form element to create new blog 
-    const newBlogPost = blogObjectFactory(
-        newBlogTitleEl.value,
-        newBlogContentEl.value,
-        newBlogAuthorEl.value,
-        newBlogTagsEl.value,
-    )
-    // store this new blog post object at the beginning of the array of blog posts
-    retrievedBlogDatabase.blogArray.unshift(newBlogPost);
-    // store new appended blog database in local storage
-    localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
-    //clear out contents of blog entry form
-    clearBlogEntryForm()
-    // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-    createButtonToBlogPage()
+    if (validateForm()) {
+        //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
+        lastId = retrievedBlogDatabase.blogArray[0].id
+        //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
+        
+        // use content that was entered into admin form element to create new blog 
+        const newBlogPost = blogObjectFactory(
+            newBlogTitleEl.value,
+            newBlogContentEl.value,
+            newBlogAuthorEl.value,
+            newBlogTagsEl.value,
+        )
+        // store this new blog post object at the beginning of the array of blog posts
+        retrievedBlogDatabase.blogArray.unshift(newBlogPost);
+        // store new appended blog database in local storage
+        localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
+        //clear out contents of blog entry form
+        clearBlogEntryForm()
+        // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
+        createButtonToBlogPage()
+    }
+
+    // else {
+    //     alert("Please fix errors before submitting blog")
+    // }
 })
+
+// form validation function
+function validateForm() {
+    // assigns the value of each required input field to a variable
+    let isThereTitle = document.forms["adminBlogEntry"]["admin-blog-title"];
+    let isThereAuthor = document.forms["adminBlogEntry"]["admin-blog-author"];
+    let isThereContent = document.forms["adminBlogEntry"]["admin-blog-content"];
+
+    // checks if each field is empty and executes a unique error message
+    if (isThereTitle.value === "") {
+        alert('Error: \n' 
+        + '\t• Name must be filled out\n\n'
+        + 'Please fix errors and resubmit'
+        );
+         
+        return false;
+    }
+    else if (isThereAuthor.value === "") {
+        alert('Error: \n' 
+        + '\t• Author must be filled out\n\n'
+        + 'Please fix errors and resubmit'
+        );
+        return false;
+    }
+    else if (isThereContent.value === "") {
+        alert('Error: \n' 
+        + '\t• Content must be filled out\n\n'
+        + 'Please fix errors and resubmit'
+        );
+        return false;
+    }
+    else {
+        return true;
+    }
+}
 
 
 // clears out the form elements
@@ -51,7 +93,7 @@ function clearBlogEntryForm() {
     newBlogTagsEl.value = "";
 }
 
-console.log(document.getElementById("whatever"))
+
 // make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read and review blogs
 function createButtonToBlogPage () {
     // check if the button to view the blog page already exists. If not, create it. This will prevent the button from duplicating if the user creates more than one blog entry without refreshing the page
