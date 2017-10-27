@@ -128,7 +128,6 @@ header .header-content .header-content-inner p {
 }
 
 #bio {
-    /* width: 80%; Do I need this with .container tag?*/
     margin: 2em auto;
     padding-bottom: 4em;
     font-size: 1.2em;
@@ -236,4 +235,11 @@ footer p {
         justify-self: center;
     }
 }
+
+    #bio {
+        margin: 2.1em auto 1em;
+        padding-top: 3em;
+        padding-bottom: 0;
+
+    }
 
