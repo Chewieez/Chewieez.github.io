@@ -216,6 +216,15 @@ footer p {
     visibility: hidden;
 }
 
+/* This adds a transparent div above my bio anchor so when the mobile user clicks to my bio, the top portion of my content is not hidden behind my fixed header */
+#bio:before { 
+    display: block; 
+    content: " "; 
+    margin-top: -70px; 
+    height: 70px; 
+    visibility: hidden; 
+  }
+
 @media screen and (max-width: 441px){
     .footer-grid {
         grid-template-columns: 1fr;
@@ -237,9 +246,6 @@ footer p {
 }
 
     #bio {
-        margin: 2.1em auto 1em;
-        padding-top: 3em;
         padding-bottom: 0;
-
     }
 
