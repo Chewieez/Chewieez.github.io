@@ -12,12 +12,18 @@ console.log("blogPostsArray: ", blogPostsArray)
 // assign DOM search field element to a variable
 let searchEl = document.getElementById("search-input") 
 
-//setup event handler to track key up strokes after the 3rd key and initiate a search function
+
+
+
 
 // create a results array to hold the matching blog posts
-// ???? and populate it with all the blogs on first page load
+// and populate it with all the blogs on first page load
 let blogSearchResults = blogPostsArray
 
+// create function to search through blogs using the search Query
+
+
+//setup event handler to track key up strokes after the 3rd key and initiate a search function
 searchEl.addEventListener("keyup", function(event){
     
     //console.log(searchEl.value.length)
@@ -52,16 +58,53 @@ searchEl.addEventListener("keyup", function(event){
         
         console.log("blogSearchResults = ", blogSearchResults)
         
-        // run function to populate page with filtered content    
+        // run function to populate the page with blogs
+        loadFullPage()
+
+
+
+        /*-- OLD CODE, encapsulated all code to populate page with blogs into one function --*/
+        // run function to populate page with filtered content     
         // produceBlogs({
         //      "target": {
         //          "classList": ["page-1"]
         //      }
         // })
+        /* ---  ---*/   
+    }
+    
+    else if (event.keyCode === 13) {
+        // assign the contents of input field to a variable
+        let searchQuery = searchEl.value.toLowerCase();
+        console.log("searchQuery =", searchQuery)
+        
+        
+        // search through array and check if any blogs include the searchQuery
+        blogPostsArray.forEach(function (blog) {
+            // make all blog content to search lower case to make search case insensitive
+            let blogTitle = blog.title.toLowerCase()
+            let blogContent = blog.content.toLowerCase()
+        
+            // check if the blog title or the blog content contains the searchQuery
+            if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
 
+                // push the matching blog into the results array
+                blogSearchResults.push(blog);
+            }
+            else {
+                console.log("can't find one")
+            }
+        })
+        
+        console.log("blogSearchResults = ", blogSearchResults)
+        
+        // run function to populate the page with blogs
         loadFullPage()
 
+        
     }
+
+
 })
 loadFullPage()
 
