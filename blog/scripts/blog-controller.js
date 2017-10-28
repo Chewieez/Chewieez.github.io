@@ -63,15 +63,8 @@ searchEl.addEventListener("keyup", function(event){
         // run function to populate the page with blogs
         loadFullPage()
 
-
-        /*-- OLD CODE, encapsulated all code to populate page with blogs into one function --*/
-        // run function to populate page with filtered content     
-        // produceBlogs({
-        //      "target": {
-        //          "classList": ["page-1"]
-        //      }
-        // })
-        /* ---  ---*/   
+        // Create a new event listener for expanding content button to work. 
+        blogViewEl.addEventListener("click", expandContent) 
     }
     
     else if (event.keyCode === 13) {
@@ -79,21 +72,19 @@ searchEl.addEventListener("keyup", function(event){
         let searchQuery = searchEl.value.toLowerCase();
         console.log("searchQuery =", searchQuery)
         
-        
         // run blog search function
         searchAllBlogs(searchQuery)
         
         console.log("blogSearchResults = ", blogSearchResults)
         
         // run function to populate the page with blogs
-        loadFullPage()
-
-        
+        loadFullPage()   
     }
-
-
 })
+
+// The initial loading of all the blogs in the database on first page load
 loadFullPage()
+
 
 function loadFullPage() {
 /* -- Start Pagination code -- */
@@ -210,7 +201,7 @@ for (let j = 0; j < blogLinks.length; j++) {
     let thisBlogEl = blogLinks[j];
     thisBlogEl.addEventListener("click", produceBlogs);
 }
-    
+
 // Initially show page one on first page load
 produceBlogs({
     "target": {
@@ -241,7 +232,15 @@ fillSideColumnBlogList()
 
 // const blogViewEl = document.getElementById("blog-view");
 
+
+
+blogViewEl.addEventListener("click", expandContent)
+
+}  // <-- End of loadFullPage() function
+
+
 // create function to expand the content container for a blog post to show it's full contents on a button click
+// this function needs to live outside of the loadFullPage() function for scope, so we can call this function in our search results function. 
 function expandContent(event) {
     console.log("clicked event: ", event)
     let clickedBtn = event.target.id 
@@ -257,9 +256,4 @@ function expandContent(event) {
         contentToExpand.classList.toggle("abridged");
         
     }
-}
-
-
-blogViewEl.addEventListener("click", expandContent)
-
 }
