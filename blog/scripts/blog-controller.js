@@ -7,11 +7,93 @@ let blogEntriesEl = document.getElementById("blog-entries-list");
 
 // assign array of blog posts from the blog database to a variable
 const blogPostsArray = retrievedBlogs.blogArray
+console.log("blogPostsArray: ", blogPostsArray)
 
+// assign DOM search field element to a variable
+let searchEl = document.getElementById("search-input") 
+
+
+
+
+
+// create a results array to hold the matching blog posts
+// and populate it with all the blogs on first page load
+let blogSearchResults = blogPostsArray
+
+// create function to search through blogs using the search Query
+function searchAllBlogs(searchQuery) {
+    // search through array and check if any blogs include the searchQuery
+    blogPostsArray.forEach(function (blog) {
+        // make all blog content to search lower case to make search case insensitive
+        let blogTitle = blog.title.toLowerCase()
+        let blogContent = blog.content.toLowerCase()
+
+        // check if the blog title or the blog content contains the searchQuery
+        if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
+
+            // push the matching blog into the results array
+            blogSearchResults.push(blog);
+        }
+        else {
+            console.log("can't find one")
+        }
+    })
+}
+
+//setup event handler to track key up strokes after the 3rd key and initiate a search function
+searchEl.addEventListener("keyup", function(event){
+    
+    //console.log(searchEl.value.length)
+    
+    // clear the search results after each keystroke
+    blogSearchResults = [];
+    
+    // determine if the keyup is the 3rd one and start a search based on the characters in the input field
+    if (searchEl.value.length >= 3) {
+
+        // assign the contents of input field to a variable
+        let searchQuery = searchEl.value.toLowerCase();
+        console.log("searchQuery =", searchQuery)
+        
+        // run blog search function
+        searchAllBlogs(searchQuery)
+        
+        console.log("blogSearchResults = ", blogSearchResults)
+        
+        // run function to populate the page with blogs
+        loadFullPage()
+
+        // Create a new event listener for expanding content button to work. 
+        blogViewEl.addEventListener("click", expandContent) 
+    }
+    
+    else if (event.keyCode === 13) {
+        // assign the contents of input field to a variable
+        let searchQuery = searchEl.value.toLowerCase();
+        console.log("searchQuery =", searchQuery)
+        
+        // run blog search function
+        searchAllBlogs(searchQuery)
+        
+        console.log("blogSearchResults = ", blogSearchResults)
+        
+        // run function to populate the page with blogs
+        loadFullPage()   
+    }
+})
+
+// The initial loading of all the blogs in the database on first page load
+loadFullPage()
+
+
+function loadFullPage() {
 /* -- Start Pagination code -- */
-const totalItems = blogPostsArray.length
+// assign the search results array to the totalItems for pagination
+let totalItems = blogSearchResults.length
+//const totalItems = blogPostsArray.length
+
 const itemsPerPage = 5
-const numberOfPages = Math.ceil(totalItems / itemsPerPage)
+let numberOfPages = Math.ceil(totalItems / itemsPerPage)
 const paginationEl = document.getElementById("blogPaginator")
 
 // Build the DOM string for the pagination links in the footer
@@ -37,6 +119,7 @@ const nextEl = document.getElementById("next")
     on one of the pagination links at the bottom of the page
 */
 function produceBlogs(event) {
+   
     // Clear the list of blogs first before displaying the new ones
     blogViewEl.innerHTML = ""
 
@@ -69,12 +152,13 @@ function produceBlogs(event) {
     }
 
     // Determine which items to display by slicing the array
-    const itemsToDisplay = blogPostsArray.slice(
+    const itemsToDisplay = blogSearchResults.slice(
+    // const itemsToDisplay = blogPostsArray.slice(       // code pre search input field
         (pageNumber - 1) * itemsPerPage, 
         pageNumber * itemsPerPage
      )
 
-    // Display a <section> representation of each data object by looping through the array of blog posts that was extraced from the object (retrievedBlogs) 
+    // Display a <section> representation of each data object by looping through the array of blog posts that was extracted from the object (retrievedBlogs) 
     for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
         let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
@@ -85,8 +169,7 @@ function produceBlogs(event) {
                 <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
                 
                 `
-                
-
+        // check if the content for the blog post is created than 470 characters. If it is 
         if (currentBlog.content.length > 470) {
             blogViewEl.innerHTML += `
             <div id="blogContent-${currentBlog.id}" class="abridged">
@@ -132,8 +215,9 @@ nextEl.addEventListener("click", produceBlogs)
 
 
 
-
+// create function to fill the side column of page with a list of all the blog posts, showing their published date
 function fillSideColumnBlogList() {
+    blogEntriesEl.innerHTML = ""
 for (let i = 0; i < blogPostsArray.length; i++) {
     let currentBlogPost = blogPostsArray[i];
     let currentBlogPublishDate =  moment(parseInt(currentBlogPost.published)).format("dddd, MMMM Do YYYY")       
@@ -148,6 +232,15 @@ fillSideColumnBlogList()
 
 // const blogViewEl = document.getElementById("blog-view");
 
+
+
+blogViewEl.addEventListener("click", expandContent)
+
+}  // <-- End of loadFullPage() function
+
+
+// create function to expand the content container for a blog post to show it's full contents on a button click
+// this function needs to live outside of the loadFullPage() function for scope, so we can call this function in our search results function. 
 function expandContent(event) {
     console.log("clicked event: ", event)
     let clickedBtn = event.target.id 
@@ -164,7 +257,3 @@ function expandContent(event) {
         
     }
 }
-
-
-blogViewEl.addEventListener("click", expandContent)
-

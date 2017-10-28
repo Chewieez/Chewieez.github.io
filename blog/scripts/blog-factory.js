@@ -108,5 +108,5 @@ function produceBlogDatabase() {
     localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
 }
 
-console.log("BlogDatabase", JSON.parse(localStorage.getItem("blogPosts")))
+// console.log("BlogDatabase", JSON.parse(localStorage.getItem("blogPosts")))
 
