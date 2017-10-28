@@ -21,7 +21,24 @@ let searchEl = document.getElementById("search-input")
 let blogSearchResults = blogPostsArray
 
 // create function to search through blogs using the search Query
+function searchAllBlogs(searchQuery) {
+    // search through array and check if any blogs include the searchQuery
+    blogPostsArray.forEach(function (blog) {
+        // make all blog content to search lower case to make search case insensitive
+        let blogTitle = blog.title.toLowerCase()
+        let blogContent = blog.content.toLowerCase()
 
+        // check if the blog title or the blog content contains the searchQuery
+        if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
+
+            // push the matching blog into the results array
+            blogSearchResults.push(blog);
+        }
+        else {
+            console.log("can't find one")
+        }
+    })
+}
 
 //setup event handler to track key up strokes after the 3rd key and initiate a search function
 searchEl.addEventListener("keyup", function(event){
@@ -38,29 +55,13 @@ searchEl.addEventListener("keyup", function(event){
         let searchQuery = searchEl.value.toLowerCase();
         console.log("searchQuery =", searchQuery)
         
-        
-        // search through array and check if any blogs include the searchQuery
-        blogPostsArray.forEach(function (blog) {
-            // make all blog content to search lower case to make search case insensitive
-            let blogTitle = blog.title.toLowerCase()
-            let blogContent = blog.content.toLowerCase()
-        
-            // check if the blog title or the blog content contains the searchQuery
-            if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
-
-                // push the matching blog into the results array
-                blogSearchResults.push(blog);
-            }
-            else {
-                console.log("can't find one")
-            }
-        })
+        // run blog search function
+        searchAllBlogs(searchQuery)
         
         console.log("blogSearchResults = ", blogSearchResults)
         
         // run function to populate the page with blogs
         loadFullPage()
-
 
 
         /*-- OLD CODE, encapsulated all code to populate page with blogs into one function --*/
@@ -79,22 +80,8 @@ searchEl.addEventListener("keyup", function(event){
         console.log("searchQuery =", searchQuery)
         
         
-        // search through array and check if any blogs include the searchQuery
-        blogPostsArray.forEach(function (blog) {
-            // make all blog content to search lower case to make search case insensitive
-            let blogTitle = blog.title.toLowerCase()
-            let blogContent = blog.content.toLowerCase()
-        
-            // check if the blog title or the blog content contains the searchQuery
-            if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
-
-                // push the matching blog into the results array
-                blogSearchResults.push(blog);
-            }
-            else {
-                console.log("can't find one")
-            }
-        })
+        // run blog search function
+        searchAllBlogs(searchQuery)
         
         console.log("blogSearchResults = ", blogSearchResults)
         
@@ -191,8 +178,7 @@ function produceBlogs(event) {
                 <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
                 
                 `
-                
-
+        // check if the content for the blog post is created than 470 characters. If it is 
         if (currentBlog.content.length > 470) {
             blogViewEl.innerHTML += `
             <div id="blogContent-${currentBlog.id}" class="abridged">
@@ -224,7 +210,7 @@ for (let j = 0; j < blogLinks.length; j++) {
     let thisBlogEl = blogLinks[j];
     thisBlogEl.addEventListener("click", produceBlogs);
 }
-
+    
 // Initially show page one on first page load
 produceBlogs({
     "target": {
@@ -238,7 +224,7 @@ nextEl.addEventListener("click", produceBlogs)
 
 
 
-
+// create function to fill the side column of page with a list of all the blog posts, showing their published date
 function fillSideColumnBlogList() {
     blogEntriesEl.innerHTML = ""
 for (let i = 0; i < blogPostsArray.length; i++) {
@@ -255,6 +241,7 @@ fillSideColumnBlogList()
 
 // const blogViewEl = document.getElementById("blog-view");
 
+// create function to expand the content container for a blog post to show it's full contents on a button click
 function expandContent(event) {
     console.log("clicked event: ", event)
     let clickedBtn = event.target.id 
