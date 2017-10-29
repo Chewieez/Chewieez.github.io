@@ -34,16 +34,15 @@ function searchAllBlogs(searchQuery) {
 
             // push the matching blog into the results array
             blogSearchResults.push(blog);
+            // clear out the message that displays when no blogs match search terms
             noResultsEl.innerHTML = "";
         }
         else {
-            console.log("can't find one")
-            
+            console.log("can't find one") 
         }
     })
+    // added message to display when no blogs match the search terms
     if (blogSearchResults.length === 0) {
-        console.log("no results to show")
-        
         noResultsEl.innerHTML = `
         <p>We cannot find any blogs that match your search parameters. </p>
         `
