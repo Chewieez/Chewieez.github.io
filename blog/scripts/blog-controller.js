@@ -4,6 +4,7 @@ const retrievedBlogs = JSON.parse(localStorage.getItem("blogPosts"));
 // selecting the HTML container to place my javascript code and assigning it to a variable
 let blogViewEl = document.getElementById("blog-view");
 let blogEntriesEl = document.getElementById("blog-entries-list"); 
+let noResultsEl = document.getElementById("no-results-msg");
 
 // assign array of blog posts from the blog database to a variable
 const blogPostsArray = retrievedBlogs.blogArray
@@ -33,11 +34,20 @@ function searchAllBlogs(searchQuery) {
 
             // push the matching blog into the results array
             blogSearchResults.push(blog);
+            noResultsEl.innerHTML = "";
         }
         else {
             console.log("can't find one")
+            
         }
     })
+    if (blogSearchResults.length === 0) {
+        console.log("no results to show")
+        
+        noResultsEl.innerHTML = `
+        <p>We cannot find any blogs that match your search parameters. </p>
+        `
+    }
 }
 
 //setup event handler to track key up strokes after the 3rd key and initiate a search function
@@ -240,7 +250,7 @@ blogViewEl.addEventListener("click", expandContent)
 
 
 // create function to expand the content container for a blog post to show it's full contents on a button click
-// this function needs to live outside of the loadFullPage() function for scope, so we can call this function in our search results function. 
+// this function needs to live outside of the loadFullPage() function for scope, so we can call this function inside our search results function. 
 function expandContent(event) {
     console.log("clicked event: ", event)
     let clickedBtn = event.target.id 
