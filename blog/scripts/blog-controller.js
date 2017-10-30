@@ -14,9 +14,6 @@ console.log("blogPostsArray: ", blogPostsArray)
 let searchEl = document.getElementById("search-input") 
 
 
-
-
-
 // create a results array to hold the matching blog posts
 // and populate it with all the blogs on first page load
 let blogSearchResults = blogPostsArray
@@ -31,22 +28,18 @@ function searchAllBlogs(searchQuery) {
 
         // check if the blog title or the blog content contains the searchQuery
         if (blogTitle.includes(searchQuery) || blogContent.includes(searchQuery)){
-
+           
             // push the matching blog into the results array
             blogSearchResults.push(blog);
             // clear out the message that displays when no blogs match search terms
             noResultsEl.innerHTML = "";
+
         }
         else {
             console.log("can't find one") 
         }
     })
-    // added message to display when no blogs match the search terms
-    if (blogSearchResults.length === 0) {
-        noResultsEl.innerHTML = `
-        <p>We cannot find any blogs that match your search parameters. </p>
-        `
-    }
+    // Code to let the user know when no blog entries are found via their search is located inside the pagination code, right above where the blog entries are places into the blogViewerEl DOM element. 
 }
 
 //setup event handler to track key up strokes after the 3rd key and initiate a search function
@@ -167,8 +160,17 @@ function produceBlogs(event) {
         pageNumber * itemsPerPage
      )
 
+    // check if the array is empty, which would be the result of a search that didn't return any blogs. If array is empty, then populate blogview DOM element with a message to state no blogs were found matching query
+     if (itemsToDisplay.length === 0) {
+         blogViewEl.innerHTML = `
+            <p>No blog entries match your search parameters. </p>
+            `
+     }
+
+
     // Display a <section> representation of each data object by looping through the array of blog posts that was extracted from the object (retrievedBlogs) 
-    for (let i = 0; i < itemsToDisplay.length; i++) {
+    else {
+        for (let i = 0; i < itemsToDisplay.length; i++) {
         let currentBlog = itemsToDisplay[i];
         let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
         
@@ -199,6 +201,7 @@ function produceBlogs(event) {
         <hr>
         </article>
         `
+        }
     }
 }
 

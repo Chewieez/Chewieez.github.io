@@ -53,29 +53,30 @@
                 <!-- change bootstrap classes as viewport shrinks -->
                 <section id="blog-search" class="col-xs-12 col-sm-4 col-md-3 pull-right">
                     <label>Search: </label>
-                    <input type="text" id="search-input" class="blog-search__input" placeholder="Search Blog Posts">
+                    <input type="text" id="search-input" class="blog-search__input form-control" placeholder="Search Blog Posts">
                 </section>
             </div>
-
+            
             <div class="row">
+                <!-- Blog entries will populate this <section> via the javascript file blog-controller.js -->
                 <section id="blog-view" class="col-sm-9">
-                
-                </section>
-                <section id="no-results-msg" class="col-sm-9">
                     
                 </section>
                 
-            
-                <aside  class="col-sm-3">
+                <!-- This is also populated via the js file. This is the list of all blog entries. Currently displaying the publication date of each. -->
+                <aside id="blog-list" class="col-sm-3">
                     <div class="text-center">
                         <h4>Blog Entries</h4>
                         <section id="blog-entries-list">
                             
                         </section> 
-                    </div>
+                    </div>  
                 </aside>
+                
+               
             </div>
         </div>
+        <!-- This is where the pagination code is being placed. Pagination code is in the blog-controller.js file -->
         <section id="blogPaginator">
             
         </section>

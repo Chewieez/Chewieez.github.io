@@ -45,9 +45,19 @@
     width: 75%;
 }
 
+.form-control {
+    display: inline-block;
+    height: 28px;
+}
+
+label {
+    margin-bottom: 0;
+}
+
 @media screen and (max-width: 768px) {
     .blog-search__input {
         width: 50%;
     }
-    
+
+   
 }
