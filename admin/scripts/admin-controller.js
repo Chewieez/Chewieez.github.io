@@ -87,12 +87,6 @@ function validateForm() {
 // clears out the form elements
 function clearBlogEntryForm() {
     document.forms["adminBlogEntryForm"].reset();
-  
-    // old code resetting each field separately
-    // newBlogAuthorEl.value = "";
-    // newBlogTitleEl.value = "";
-    // newBlogContentEl.value = "";
-    // newBlogTagsEl.value = "";
 }
 
 

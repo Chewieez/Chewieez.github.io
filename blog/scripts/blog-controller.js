@@ -21,7 +21,7 @@ let blogSearchResults = blogPostsArray
 // create function to search through blogs using the search Query
 function searchAllBlogs(searchQuery) {
     // search through array and check if any blogs include the searchQuery
-    blogPostsArray.forEach(function (blog) {
+    blogPostsArray.forEach(blog => {
         // make all blog content to search lower case to make search case insensitive
         let blogTitle = blog.title.toLowerCase()
         let blogContent = blog.content.toLowerCase()
@@ -31,9 +31,7 @@ function searchAllBlogs(searchQuery) {
            
             // push the matching blog into the results array
             blogSearchResults.push(blog);
-            // clear out the message that displays when no blogs match search terms
-            noResultsEl.innerHTML = "";
-
+           
         }
         else {
             console.log("can't find one") 
@@ -170,38 +168,38 @@ function produceBlogs(event) {
 
     // Display a <section> representation of each data object by looping through the array of blog posts that was extracted from the object (retrievedBlogs) 
     else {
-        for (let i = 0; i < itemsToDisplay.length; i++) {
-        let currentBlog = itemsToDisplay[i];
-        let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
-        
-        blogViewEl.innerHTML += `
-        <article  id="blogPost-${currentBlog.id}">
-                <h4 class="blog-title">${currentBlog.title}</h4>
-                <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
-                
+        itemsToDisplay.forEach(currentBlog => {
+            
+            let currentBlogPublishedDate = moment(parseInt(currentBlog.published)).format("dddd, MMMM Do YYYY")
+            
+            blogViewEl.innerHTML += `
+            <article  id="blogPost-${currentBlog.id}">
+                    <h4 class="blog-title">${currentBlog.title}</h4>
+                    <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
+                    
+                    `
+            // check if the content for the blog post is created than 470 characters. If it is 
+            if (currentBlog.content.length > 470) {
+                blogViewEl.innerHTML += `
+                <div id="blogContent-${currentBlog.id}" class="abridged">
+                    <p class="blog-content">${currentBlog.content}</p>
+                </div>
+                <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
                 `
-        // check if the content for the blog post is created than 470 characters. If it is 
-        if (currentBlog.content.length > 470) {
+            } else {
+                blogViewEl.innerHTML += `
+                <div id="blogContent-${currentBlog.id}">
+                    <p class="blog-content">${currentBlog.content}</p>
+                </div>
+                `
+            } 
+            
             blogViewEl.innerHTML += `
-            <div id="blogContent-${currentBlog.id}" class="abridged">
-                <p class="blog-content">${currentBlog.content}</p>
-            </div>
-            <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
+            <p class="blog-tags">tags: ${currentBlog.tags}</p>
+            <hr>
+            </article>
             `
-        } else {
-            blogViewEl.innerHTML += `
-            <div id="blogContent-${currentBlog.id}">
-                <p class="blog-content">${currentBlog.content}</p>
-            </div>
-            `
-        } 
-        
-        blogViewEl.innerHTML += `
-        <p class="blog-tags">tags: ${currentBlog.tags}</p>
-        <hr>
-        </article>
-        `
-        }
+        })
     }
 }
 
@@ -230,13 +228,12 @@ nextEl.addEventListener("click", produceBlogs)
 // create function to fill the side column of page with a list of all the blog posts, showing their published date
 function fillSideColumnBlogList() {
     blogEntriesEl.innerHTML = ""
-for (let i = 0; i < blogPostsArray.length; i++) {
-    let currentBlogPost = blogPostsArray[i];
+blogPostsArray.forEach(currentBlogPost => {
     let currentBlogPublishDate =  moment(parseInt(currentBlogPost.published)).format("dddd, MMMM Do YYYY")       
     blogEntriesEl.innerHTML += `
     <p><a href="#">${currentBlogPublishDate}</a></p>
     `
-    } 
+    })
 }
 
 fillSideColumnBlogList()
