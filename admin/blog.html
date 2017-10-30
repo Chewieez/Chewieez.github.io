@@ -45,13 +45,13 @@
                     <form name="adminBlogEntryForm">
                     <label>Title</label>
                     <!-- Added autofocus to title input field to automatically place the cursor in this field on page load -->
-                    <input type="text" id="admin-blog-title" name="admin-blog-title" placeholder="Enter Blog Title Here" autofocus required>
+                    <input type="text" id="admin-blog-title" name="admin-blog-title" placeholder="Enter Blog Title Here" class="form-control" autofocus required>
                     <label>Author</label>
-                    <input type="text" id="admin-blog-author" name="admin-blog-author" placeholder="Author name" autocomplete="on" required>
+                    <input type="text" id="admin-blog-author" name="admin-blog-author" placeholder="Author name" class="form-control" autocomplete="on" required>
                     <label>Content</label>
-                    <textarea id="admin-blog-content"name="admin-blog-content" placeholder="Compose your blog content here" rows="10" cols="100" required></textarea>
+                    <textarea id="admin-blog-content"name="admin-blog-content" placeholder="Compose your blog content here"  rows="10" cols="100" class="form-control" required></textarea>
                     <label>Tags</label>
-                    <input type="text" id="admin-blog-tags" name="admin-blog-tags" placeholder="separate, tags, with, commas">
+                    <input type="text" id="admin-blog-tags" name="admin-blog-tags" placeholder="separate, tags, with, commas" class="form-control">
                     </form>
                     <br>
                     <button id="admin-save-blog" class="btn btn-primary">Save Blog</button>

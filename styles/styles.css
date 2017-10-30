@@ -216,6 +216,12 @@ footer p {
     visibility: hidden;
 }
 
+/* This changes overall look of form fields on site. Narrows the height and makes the form fields not display: block */
+.form-control {
+    display: inline-block;
+    height: 28px;
+}
+
 /* This adds a transparent div above my bio anchor so when the mobile user clicks to my bio, the top portion of my content is not hidden behind my fixed header */
 #bio:before { 
     display: block; 
