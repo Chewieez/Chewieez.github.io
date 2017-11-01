@@ -8,11 +8,10 @@ let noResultsEl = document.getElementById("no-results-msg");
 
 // assign array of blog posts from the blog database to a variable
 const blogPostsArray = retrievedBlogs.blogArray
-console.log("blogPostsArray: ", blogPostsArray)
+//console.log("blogPostsArray: ", blogPostsArray)
 
 // assign DOM search field element to a variable
 let searchEl = document.getElementById("search-input") 
-
 
 // create a results array to hold the matching blog posts
 // and populate it with all the blogs on first page load
@@ -48,13 +47,13 @@ searchEl.addEventListener("keyup", function(event){
     // clear the search results after each keystroke
     blogSearchResults = [];
     
+    // assign the contents of input field to a variable
+    let searchQuery = searchEl.value.toLowerCase();
+    console.log("searchQuery =", searchQuery)
+
     // determine if the keyup is the 3rd one and start a search based on the characters in the input field
     if (searchEl.value.length >= 3) {
 
-        // assign the contents of input field to a variable
-        let searchQuery = searchEl.value.toLowerCase();
-        console.log("searchQuery =", searchQuery)
-        
         // run blog search function
         searchAllBlogs(searchQuery)
         
@@ -62,24 +61,11 @@ searchEl.addEventListener("keyup", function(event){
         
         // run function to populate the page with blogs
         loadFullPage()
-
-        // Further testing shows that I do not need this extra eventhandler line anymore
-        // Create a new event listener for expanding content button to work. 
-        // blogViewEl.addEventListener("click", expandContent) 
     }
-    
-    else if (event.keyCode === 13) {
-        // assign the contents of input field to a variable
-        let searchQuery = searchEl.value.toLowerCase();
-        console.log("searchQuery =", searchQuery)
-        
-        // run blog search function
-        searchAllBlogs(searchQuery)
-        
-        console.log("blogSearchResults = ", blogSearchResults)
-        
-        // run function to populate the page with blogs
-        loadFullPage()   
+       
+    else {
+        blogSearchResults = blogPostsArray
+        loadFullPage();
     }
 })
 
