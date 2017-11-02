@@ -40,7 +40,7 @@ header#intro {
     background-size: cover;
     -o-background-size: cover;
     background-position: center;
-    background-image: url('/images/header.jpg');
+    background-image: url('/images/pexels-photo_darker_web.jpg');
     text-align: center;
     color: white;
     
@@ -85,13 +85,13 @@ header .header-content .header-content-inner h1 {
     /* text-transform: uppercase; */
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 3em;
+    font-size: 4em;
 }
 
 header .header-content .header-content-inner p {
     /* font-weight: 300; */
     color: rgba(255, 255, 255, 0.7);
-    font-size: 2.5em;
+    font-size: 3.5em;
     margin-bottom: 50px;
     padding-bottom: 50px;
 }
@@ -230,7 +230,11 @@ footer p {
     height: 70px; 
     visibility: hidden; 
   }
-
+  
+  #bio {
+      padding-bottom: 0;
+  }
+  
 @media screen and (max-width: 441px){
     .footer-grid {
         grid-template-columns: 1fr;
@@ -249,9 +253,13 @@ footer p {
         grid-area: footer-right;
         justify-self: center;
     }
-}
 
-    #bio {
-        padding-bottom: 0;
+    header .header-content .header-content-inner h1 {
+        font-size: 3em;
     }
-
+    
+    header .header-content .header-content-inner p {
+        font-size: 2.5em;
+    }
+}
+    
