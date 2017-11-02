@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {"sourceType": "module"},
+    "rules": {
+        "indent": ["error",4],
+        "linebreak-style": ["error","unix"],
+        "quotes": ["error","double"],
+        "no-console": ["warn"],
+        "no-unused-vars": ["warn"],
+        "no-useless-escape": ["warn"],
+        "semi": ["warn","never"]
+    },
+    "globals": {
+        "moment": true,
+        "professionalHistory": true,
+        "blogObjectFactory": true,
+        "lastId": true,
+        "produceBlogDatabase": true,
+        "projectString": true 
+    }
+}

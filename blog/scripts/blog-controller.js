@@ -114,10 +114,10 @@ function loadFullPage() {
         // This function is creating a new array from dom token content in event.target.classList. Then using the .find function to search each string inside the array for "page-". If that exists, it splits the word into two pieces and places ii in a new array; ["page-", "1"] (whatever number that follows). Then the element at index[1] is converted into an integer with parseInt()
         const pageNumber = parseInt(
             Array.from(event.target.classList)
-            .find(clazz => {
-                if (clazz.startsWith("page-")) return clazz
-            })
-            .split("-")[1]
+                .find(clazz => {
+                    if (clazz.startsWith("page-")) return clazz
+                })
+                .split("-")[1]
         )
 
 
@@ -221,7 +221,7 @@ function expandContent(event) {
     let clickedBtnId = event.target.id 
     
     let clickedBtnEl = event.target;
-   // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
+    // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
 
     // parse out the number in the ID of the event that was clicked
     const clickedBtnIdNum = clickedBtnId.split("-")[1];
@@ -247,12 +247,13 @@ function expandContent(event) {
 // create function to fill the side column of page with a list of all the blog posts, showing their published date
 function fillSideColumnBlogList() {
     blogEntriesEl.innerHTML = ""
-blogPostsArray.forEach(currentBlogPost => {
-    let currentBlogPublishDate =  moment(currentBlogPost.published).format("dddd, MMMM Do YYYY")       
-    blogEntriesEl.innerHTML += `
-    <p><a href="#">${currentBlogPublishDate}</a></p>
-    `
+    blogPostsArray.forEach(currentBlogPost => {
+        let currentBlogPublishDate =  moment(currentBlogPost.published).format("dddd, MMMM Do YYYY")       
+        blogEntriesEl.innerHTML += `
+        <p><a href="#">${currentBlogPublishDate}</a></p>
+        `
     })
 }
 
 fillSideColumnBlogList()
+
