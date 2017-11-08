@@ -26,7 +26,6 @@ saveBlogEl.addEventListener("click", function(event){
     if (validateForm()) {
         //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
         lastId = retrievedBlogDatabase.blogArray[0].id
-        //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
         
         // use content that was entered into admin form element to create new blog 
         const newBlogPost = blogObjectFactory(
@@ -108,7 +107,7 @@ function createButtonToBlogPage () {
     
 }
 
-function editBlogs() {
+function listBlogs() {
 
     let blogListContainer = "<div id='blogListForEdits' class='blogList'></div>"
     
@@ -126,17 +125,30 @@ function editBlogs() {
         <p id='blog_${currentBlog.id}'>${currentBlog.title} <button id='blogBtn_${currentBlog.id}'>Edit</button></p>
         `
 
-        let blogEditBtnEl = document.getElementById("blogBtn_" + `${currentBlog.id}`)
-        blogEditBtnEl.addEventListener("click", event => {
-            console.log("You clicked a blog entry!")
-        })
     })
     
     blogList.innerHTML += blogListForEditCode
     
     let blogListForEditsEl = document.getElementById("blogListForEdits")
     
-    
+    blogListForEditsEl.addEventListener("click", editBlog)
 }
 
-editBlogs()
+listBlogs()
+
+
+function editBlog(event) {
+    let selectedBlogId = parseInt(event.target.id.split("_")[1])
+    console.log(selectedBlogId)
+    
+    let blogToEdit = retrievedBlogDatabase.blogArray.find(blog => {
+        return blog.id === selectedBlogId
+    })
+    console.log(blogToEdit)
+
+    document.getElementById("admin-blog-title").value = blogToEdit.title
+    document.getElementById("admin-blog-author").value = blogToEdit.author
+    document.getElementById("admin-blog-content").value = blogToEdit.content
+    document.getElementById("admin-blog-tags").value = blogToEdit.tags
+
+}
