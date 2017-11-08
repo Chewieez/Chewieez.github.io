@@ -122,7 +122,7 @@ function listBlogs() {
     
     retrievedBlogDatabase.blogArray.forEach(currentBlog => {
         blogListForEditCode += `
-        <p id='blog_${currentBlog.id}'>${currentBlog.title} <button id='blogBtn_${currentBlog.id}'>Edit</button></p>
+        <p id='blog_${currentBlog.id}'>${currentBlog.title} <button id='blogBtn_${currentBlog.id}'class='btn btn-primary btn-sm'>Edit</button></p>
         `
 
     })
