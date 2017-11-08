@@ -4,7 +4,7 @@
 
 // pull current blog database from local storage and parse into variable. If database doesn't exist, run function to create it. The function produceBlogDatabase() resides in the blog-factory.js file
 const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || produceBlogDatabase()
-console.log("retrievedBlogDatabase is: ", retrievedBlogDatabase)
+// console.log("retrievedBlogDatabase is: ", retrievedBlogDatabase)
 
 // Create `blogArray` key if it doesn't exist
 retrievedBlogDatabase.blogArray = retrievedBlogDatabase.blogArray || []
@@ -77,7 +77,7 @@ function validateForm() {
         );
         return false;
     }
-    // return true is the form includes required fields so the click handler event can run the code to submit the blog post
+    // return true if the form includes required fields so the click handler event can run the code to submit the blog post
     else {
         return true;
     }
@@ -107,3 +107,36 @@ function createButtonToBlogPage () {
     })
     
 }
+
+function editBlogs() {
+
+    let blogListContainer = "<div id='blogListForEdits' class='blogList'></div>"
+    
+    let template = document.createElement('template');
+    template.innerHTML = blogListContainer;
+    blogList = template.content.firstChild;
+
+    
+    document.getElementById("site-content").appendChild(blogList);
+    
+    let blogListForEditCode = "<h2>Blog Entries</h2>"
+    
+    retrievedBlogDatabase.blogArray.forEach(currentBlog => {
+        blogListForEditCode += `
+        <p id='blog_${currentBlog.id}'>${currentBlog.title} <button id='blogBtn_${currentBlog.id}'>Edit</button></p>
+        `
+
+        let blogEditBtnEl = document.getElementById("blogBtn_" + `${currentBlog.id}`)
+        blogEditBtnEl.addEventListener("click", event => {
+            console.log("You clicked a blog entry!")
+        })
+    })
+    
+    blogList.innerHTML += blogListForEditCode
+    
+    let blogListForEditsEl = document.getElementById("blogListForEdits")
+    
+    
+}
+
+editBlogs()
