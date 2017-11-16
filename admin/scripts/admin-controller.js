@@ -111,23 +111,27 @@ function listBlogs() {
 
     let blogListContainer = "<div id='blogListForEdits' class='blogList'></div>"
     
-    let template = document.createElement('template');
-    template.innerHTML = blogListContainer;
-    blogList = template.content.firstChild;
+    // let template = document.createElement('template');
+    // template.innerHTML = blogListContainer;
+    // blogList = template.content.firstChild;
 
-    
+    const blogList = document.createElement("div");
+    blogList.className = "blogList";
+    blogList.id = "blogListForEdits";
+
+
     document.getElementById("site-content").appendChild(blogList);
     
-    let blogListForEditCode = "<h2>Blog Entries</h2>"
+    let blogListForEditingDomString = "<h2>Blog Entries</h2>"
     
     retrievedBlogDatabase.blogArray.forEach(currentBlog => {
-        blogListForEditCode += `
+        blogListForEditingDomString += `
         <p id='blog_${currentBlog.id}'>${currentBlog.title} <button id='blogBtn_${currentBlog.id}'class='btn btn-primary btn-sm'>Edit</button></p>
         `
 
     })
     
-    blogList.innerHTML += blogListForEditCode
+    blogList.innerHTML += blogListForEditingDomString
     
     let blogListForEditsEl = document.getElementById("blogListForEdits")
     

@@ -169,7 +169,7 @@ function loadFullPage() {
                 if (currentBlog.content.length > 470) {
                     blogViewEl.innerHTML += `
                     <div id="blogContent-${currentBlog.id}" class="abridged">
-                        <p class="blog-content">${currentBlog.content}</p>
+                        <p class="blog-content">${currentBlog.content} </p>
                     </div>
                     <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
                     `
