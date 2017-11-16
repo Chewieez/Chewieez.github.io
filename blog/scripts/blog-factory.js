@@ -12,14 +12,16 @@ const blogIdGenerator = function* (from) {
     }
 }
 
+// moved lastId definition out here because of ESLint errors. It was defined in each of these if/else statements below.
+var lastId;
 // check to see if Blog Database exists in local storage. If it does not exist, create a lastId of 0 to use as a starting point in my blogIdGenerator
 if (JSON.parse(localStorage.getItem("blogPosts")) === null) {
     // using var on purpose for its hoisting ability, to be initialized and defined and available globaly
-    var lastId = { id: 0 }
+    lastId = { id: 0 }
 } else {   // if Blog Database does exist, temporarily pull it from local storage and grab the most recent blog post for it's id.
     let blogPosts = JSON.parse(localStorage.getItem("blogPosts"))
     // using var on purpose for its hoisting ability, to be initialized and defined and available globaly
-    var lastId = blogPosts.blogArray[0]
+    lastId = blogPosts.blogArray[0]
 }
 
 

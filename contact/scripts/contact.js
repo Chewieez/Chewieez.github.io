@@ -39,7 +39,7 @@ let contactDomEl = document.getElementById("contact-list");
 console.log("retreivedContactInfo", retreivedContactInfo)
 
 // loop through retreived data from local storage
-for (key in retreivedContactInfo) {
+for (let key in retreivedContactInfo) {
     let individualContactInfo = retreivedContactInfo[key]
 
     contactDomEl.innerHTML += `

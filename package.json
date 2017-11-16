@@ -19,5 +19,17 @@
   "bugs": {
     "url": "https://github.com/Chewieez/Chewieez.github.io/issues"
   },
-  "homepage": "https://github.com/Chewieez/Chewieez.github.io#readme"
+  "homepage": "https://github.com/Chewieez/Chewieez.github.io#readme",
+  "devDependencies": {
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^20.1.0"
+  },
+  "dependencies": {}
 }
