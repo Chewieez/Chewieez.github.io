@@ -5,8 +5,8 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON("package.json"),
         watch: {
             scripts: {
-                // files: ["*.js", "!node_modules/**/*.js"]   // a better way to target all .js files that are not in node_modules folder
-                files: ["admin/scripts/*.js", "blog/scripts/*.js", "contact/scripts/*.js", "projects/scripts/*.js", "resume/scripts/*.js"],
+                files: ["**/**/*.js", "!node_modules/**/*.js", "!build/*.js"],   // a better way to target all .js files that are not in node_modules folder
+                // files: ["admin/scripts/*.js", "blog/scripts/*.js", "contact/scripts/*.js", "projects/scripts/*.js", "resume/scripts/*.js"],
                 tasks: ["eslint","uglify"],
                 options: {
                     spawn: false
@@ -14,7 +14,8 @@ module.exports = function (grunt) {
             }
         },
         eslint: {
-            src: ["admin/scripts/*.js", "blog/scripts/*.js", "contact/scripts/*.js", "projects/scripts/*.js", "resume/scripts/*.js"]
+            //src: ["admin/scripts/*.js", "blog/scripts/*.js", "contact/scripts/*.js", "projects/scripts/*.js", "resume/scripts/*.js"]
+            src: ["**/**/*.js", "!node_modules/**/*.js", "!build/*.js"]
             // options: {
             //     configFile: 'conf/eslint-config.json',
             //     rulePaths: ['conf/']
