@@ -27,7 +27,7 @@ if (JSON.parse(localStorage.getItem("blogPosts")) === null) {
 const blogIdFactory = blogIdGenerator(lastId)
 
 // Factory function to create each blog object and cut down on repetitive typing
-const blogObjectFactory = function (title, content, author, ...tags) {
+const blogObjectFactory = function (title, content, author, id, ...tags) {
     // function to add a space after the , in the collection of tags
     function spacedTags(tags) {
         let spacedOutTags = tags.join(", ");
@@ -35,7 +35,7 @@ const blogObjectFactory = function (title, content, author, ...tags) {
     }
     // factory function will return a function with this format, each prop will be populated with data either passed in as a parameter or created in this function such as Date and blog ID (from generator function)
     return Object.create(null, {
-        "id": { value: blogIdFactory.next().value, enumerable: true },
+        "id": { value: (id = null) ? blogIdFactory.next().value : id, enumerable: true },
         "author": { value: author, enumerable: true }, 
         "title": { value: title, enumerable: true },
         "content": { value: content, enumerable: true },
