@@ -33,7 +33,7 @@ saveBlogEl.addEventListener("click", function(event){
             newBlogTitleEl.value,
             newBlogContentEl.value,
             newBlogAuthorEl.value,
-            newBlogTagsEl.value,
+            newBlogTagsEl.value
         )
         // store this new blog post object at the beginning of the array of blog posts
         retrievedBlogDatabase.blogArray.unshift(newBlogPost);
@@ -56,24 +56,24 @@ function validateForm() {
 
     // checks if each field is empty and executes a unique error message
     if (isThereTitle.value === "") {
-        alert('Error: \n' 
-        + '\t• Name must be filled out\n\n'
-        + 'Please fix errors and resubmit'
+        alert("Error: \n" 
+        + "\t• Name must be filled out\n\n"
+        + "Please fix errors and resubmit"
         );
          
         return false;
     }
     else if (isThereAuthor.value === "") {
-        alert('Error: \n' 
-        + '\t• Author must be filled out\n\n'
-        + 'Please fix errors and resubmit'
+        alert("Error: \n" 
+        + "\t• Author must be filled out\n\n"
+        + "Please fix errors and resubmit"
         );
         return false;
     }
     else if (isThereContent.value === "") {
-        alert('Error: \n' 
-        + '\t• Content must be filled out\n\n'
-        + 'Please fix errors and resubmit'
+        alert("Error: \n" 
+        + "\t• Content must be filled out\n\n"
+        + "Please fix errors and resubmit"
         );
         return false;
     }

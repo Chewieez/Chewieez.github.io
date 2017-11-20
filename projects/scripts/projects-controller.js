@@ -7,7 +7,7 @@ let portfolioEl = document.getElementById("portfolio")
 
 
 //loop through object
-for (key in retrievedAllProjects) {
+for (let key in retrievedAllProjects) {
     let projectsArray = retrievedAllProjects[key];
 
     // loop through arrays in object
@@ -31,6 +31,4 @@ for (key in retrievedAllProjects) {
     }
 }
 
-
-
-
+// 
