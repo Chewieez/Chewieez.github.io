@@ -15,18 +15,18 @@ $.ajax({
 
         // populate html container variable with project content
         portfolioEl.innerHTML += `
-                <article class="col-sm-6">
-                    <div class="thumbnail">
-                        <a href="${project.image}" target="_blank"><img src="${project.image}" class="img-responsive" alt="${project.name}">
-                            <div class="caption">
-                            <h4>${project.name}</h4>
-                            <p><span class="important-text">Date completed:</span> ${project.date} &nbsp; &nbsp; <span class="important-text">Teammates:</span> ${project.teammates}</p>
-                            <p><span class="important-text">Technologies used:</span> ${project.technologies}</p>
-                            </div>
-                        </a>
-                    </div>
-                </article>
-            `
+            <article class="col-sm-6">
+                <div class="thumbnail">
+                    <a href="${project.image}" target="_blank"><img src="${project.image}" class="img-responsive" alt="${project.name}">
+                        <div class="caption">
+                        <h4>${project.name}</h4>
+                        <p><span class="important-text">Date completed:</span> ${project.date} &nbsp; &nbsp; <span class="important-text">Teammates:</span> ${project.teammates}</p>
+                        <p><span class="important-text">Technologies used:</span> ${project.technologies}</p>
+                        </div>
+                    </a>
+                </div>
+            </article>
+        `
     })
 })
 
