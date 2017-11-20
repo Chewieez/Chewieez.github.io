@@ -10,6 +10,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:200,300,500,700|Roboto+Condensed:300,700" rel="stylesheet">
     <link href="/styles/styles.css" rel="stylesheet">
+    <link href="/styles/projects-styles.css" rel="stylesheet">
+    <link href="/styles/contact-styles.css" rel="stylesheet">
+    <link href="/styles/blog-styles.css" rel="stylesheet">
+    <link href="/styles/pagination-styles.css" rel="stylesheet">
+    <link href="/styles/admin-styles.css" rel="stylesheet">
+    <link href="/styles/resume-styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -28,12 +34,12 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav" role: "tablist">
 
-                        <li><a href="#bio">Bio</a></li>
-                        <li><a href="/projects/index.html">Projects</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/resume/index.html">Resume</a></li>
-                        <li><a href="/contact/index.html">Contact</a></li>
-                        <li><a href="/admin/blog.html"><span class="invisible">Admin</span></a></li>
+                        <li class="nav__Link"><a href="#bio" class="nav__link--bio">Bio</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--projects">Projects</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--blog">Blog</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--resume">Resume</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--contact">Contact</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--admin"><span class="invisible">Admin</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -41,31 +47,51 @@
         
 
 <!-- classes I removed from header for redesign class="jumbotron jumbo-style left-pull" -->
-        <header id="intro">
-            <div class="header-content">
-                <div class="header-content-inner">
+        <section id="landingPage" class="mainSection">
+            <header id="intro">
+                <div class="header-content">
+                    <div class="header-content-inner">
 
-                    <h1 id= "homeHeading">Greg Lawrence</h1>
-                    <hr>
-                    <h6 class="lead">Web Developer / Audio Engineer</h6>
-                    <a href="#bio" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+                        <h1 id= "homeHeading">Greg Lawrence</h1>
+                        <hr>
+                        <h6 class="lead">Web Developer / Audio Engineer</h6>
+                        <a href="#bio" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+                    </div>
+
+                    <!-- <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM" alt="Greg Headshot" width="180">
+                    </div> -->
                 </div>
-
-                <!-- <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM" alt="Greg Headshot" width="180">
-                </div> -->
-            </div>
-        </header> <!-- /end of jumbotron -->
+            </header> <!-- /end of jumbotron -->
 
 
-        <article id="bio" class="container">
+            <article id="bio" class="container">
+                
+                <p>I have lived in Nashville, TN for over 15 years working in the music business as an audio engineer and am currently enrolled in the Nashville Software School. I have always enjoyed working with computers, android phones and technology. I've had several side jobs which involved different aspects of using digital tools such as tweaking websites, updating content on websites, editing photos in photoshop and consulting businesses on social media setup and management. I really enjoy problem solving, creating things and working on projects on a team. I am excited to learn as much as possible while attending NSS and grow my skills as a web developer.</p> 
+
+                <p>I also enjoy cycling, hiking, craft beer, working with my hands. I live in Nashville with my wife and two kids. </p>
             
-            <p>I have lived in Nashville, TN for over 15 years working in the music business as an audio engineer and am currently enrolled in the Nashville Software School. I have always enjoyed working with computers, android phones and technology. I've had several side jobs which involved different aspects of using digital tools such as tweaking websites, updating content on websites, editing photos in photoshop and consulting businesses on social media setup and management. I really enjoy problem solving, creating things and working on projects on a team. I am excited to learn as much as possible while attending NSS and grow my skills as a web developer.</p> 
-
-            <p>I also enjoy cycling, hiking, craft beer, working with my hands. I live in Nashville with my wife and two kids. </p>
+            </article>
+        </section>
         
-        </article>
+        <section class="mainSection hidden" id="projects">
+            <header class="page-header">
+                <h1>Projects</h1>
+            </header>
 
-      
+            <section id="portfolio" class="container-fluid text-center">
+            </section>
+        </section>  <!-- End of projectsPage -->
+        
+        <section class="mainSection hidden" id="contact">
+            <header class="page-header"> 
+                <h1>Connect With Me!</h1>  
+            </header>
+            
+            <article class="container">
+                <section id="contact-list" class="contacts">
+                </section>
+            </article> 
+        </section>
     </div>
     <!-- /end of site-content -->
 
@@ -87,6 +113,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/build/bundle.js"></script>
 </body>
 
 </html>

@@ -118,10 +118,10 @@ $.ajax({
             // This function is creating a new array from dom token content in event.target.classList. Then using the .find function to search each string inside the array for "page-". If that exists, it splits the word into two pieces and places ii in a new array; ["page-", "1"] (whatever number that follows). Then the element at index[1] is converted into an integer with parseInt()
             const pageNumber = parseInt(
                 Array.from(event.target.classList)
-                .find(clazz => {
-                    if (clazz.startsWith("page-")) return clazz
-                })
-                .split("-")[1]
+                    .find(clazz => {
+                        if (clazz.startsWith("page-")) return clazz
+                    })
+                    .split("-")[1]
             )
     
     
@@ -202,7 +202,6 @@ $.ajax({
             let thisBlogEl = blogLinks[j];
             thisBlogEl.addEventListener("click", produceBlogs);
         }
-<<<<<<< HEAD
     
         // Initially show page one on first page load
         produceBlogs({
@@ -224,39 +223,9 @@ $.ajax({
     function expandContent(event) {
         //console.log("clicked event: ", event)
         let clickedBtnId = event.target.id 
-=======
-    })
-
-    previousEl.addEventListener("click", produceBlogs)
-    nextEl.addEventListener("click", produceBlogs)
-
-    blogViewEl.addEventListener("click", expandContent)
-
-}  // <-- End of loadFullPage() function
-
-
-// create function to expand the content container for a blog post to show it's full contents on a button click
-// this function needs to live outside of the loadFullPage() function for scope, so we can call this function inside our search results function. 
-function expandContent(event) {
-    //console.log("clicked event: ", event)
-    let clickedBtnId = event.target.id 
-    
-    let clickedBtnEl = event.target;
-    // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
-
-    // parse out the number in the ID of the event that was clicked
-    const clickedBtnIdNum = clickedBtnId.split("-")[1];
-    
-    // check if the ID of event that was clicked starts with "expandContent-". If so, then expand that blog content
-    if (clickedBtnId.startsWith("expandContent-")) {
-        //assign the Id number of the clicked element to the blog content div to be expanded
-        let contentToExpand = document.getElementById("blogContent-" + clickedBtnIdNum)
-        // toggle the abridged class off when click, to then show the full content.
-        contentToExpand.classList.toggle("abridged");
->>>>>>> configGruntRestore
         
         let clickedBtnEl = event.target;
-       // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
+        // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
     
         // parse out the number in the ID of the event that was clicked
         const clickedBtnIdNum = clickedBtnId.split("-")[1];
@@ -277,36 +246,19 @@ function expandContent(event) {
             }
         }
     }
-<<<<<<< HEAD
     
     
     // create function to fill the side column of page with a list of all the blog posts, showing their published date
     function fillSideColumnBlogList() {
         blogEntriesEl.innerHTML = ""
-=======
-}
-
-
-// create function to fill the side column of page with a list of all the blog posts, showing their published date
-function fillSideColumnBlogList() {
-    blogEntriesEl.innerHTML = ""
->>>>>>> configGruntRestore
-    blogPostsArray.forEach(currentBlogPost => {
-        let currentBlogPublishDate =  moment(currentBlogPost.published).format("dddd, MMMM Do YYYY")       
-        blogEntriesEl.innerHTML += `
+        blogPostsArray.forEach(currentBlogPost => {
+            let currentBlogPublishDate =  moment(currentBlogPost.published).format("dddd, MMMM Do YYYY")       
+            blogEntriesEl.innerHTML += `
         <p><a href="#">${currentBlogPublishDate}</a></p>
         `
-<<<<<<< HEAD
         })
     }
     
     fillSideColumnBlogList()
 
 })
-=======
-    })
-}
-
-fillSideColumnBlogList()
-
->>>>>>> configGruntRestore

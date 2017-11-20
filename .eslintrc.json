@@ -12,8 +12,9 @@
         "quotes": ["error","double"],
         "no-console": ["warn"],
         "no-unused-vars": ["warn"],
-        "no-useless-escape": ["warn"],
-        "semi": ["warn","never"]
+        "no-useless-escape": [0],
+        "semi": [0],
+        "no-debugger": [1]
     },
     "globals": {
         "moment": true,
@@ -21,6 +22,7 @@
         "blogObjectFactory": true,
         "lastId": true,
         "produceBlogDatabase": true,
-        "projectString": true 
+        "projectString": true,
+        "$": true
     }
 }

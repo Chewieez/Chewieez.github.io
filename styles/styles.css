@@ -234,6 +234,10 @@ footer p {
   #bio {
       padding-bottom: 0;
   }
+
+  .hidden {
+      display: none;
+  }
   
 @media screen and (max-width: 441px){
     .footer-grid {

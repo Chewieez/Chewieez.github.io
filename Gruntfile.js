@@ -4,16 +4,36 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         watch: {
+            options: {
+                livereload: true
+            },
+            styles: {
+                files: ["styles/**/*.css"]
+            },
+            html: {
+                files: ["index.html"]
+            },
             scripts: {
-                files: ["**/**/*.js", "!node_modules/**/*.js", "!build/*.js"],   // a better way to target all .js files that are not in node_modules folder
-                tasks: ["eslint","uglify"],
+                files: ["scripts/*.js", "scripts/**/*.js", "!node_modules/**/*.js" ],
+                tasks: ["eslint", "browserify"],
                 options: {
-                    spawn: false
-                }
-            }
+                    spawn: false,
+                },
+            },
+        },
+        browserify: {
+            dist: {
+                files: {
+                    "build/bundle.js": ["scripts/main.js"],
+                },
+            },
         },
         eslint: {
-            src: ["**/**/*.js", "!node_modules/**/*.js", "!build/*.js"]
+            src: [
+                "**/scripts/*.js",
+                "**/scripts/**/*.js",
+                "!node_modules/**/*.js",
+            ],
         },
         uglify: {
             options: {
@@ -22,35 +42,7 @@ module.exports = function (grunt) {
             build: {
                 files: [{
                     expand: true,
-                    cwd: "admin/scripts/",
-                    src: "*.js",
-                    dest: "build/",
-                    ext: ".min.js"
-                },
-                {
-                    expand: true,
-                    cwd: "blog/scripts/",
-                    src: "*.js",
-                    dest: "build/",
-                    ext: ".min.js"
-                },
-                {
-                    expand: true,
-                    cwd: "contact/scripts/",
-                    src: "*.js",
-                    dest: "build/",
-                    ext: ".min.js"
-                },
-                {
-                    expand: true,
-                    cwd: "projects/scripts/",
-                    src: "*.js",
-                    dest: "build/",
-                    ext: ".min.js"
-                },
-                {
-                    expand: true,
-                    cwd: "resume/scripts/",
+                    cwd: "build/",
                     src: "*.js",
                     dest: "build/",
                     ext: ".min.js"
@@ -64,7 +56,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-eslint");
+    grunt.loadNpmTasks("grunt-browserify");
 
     // Default task(s).
-    grunt.registerTask("default", ["uglify", "watch", "eslint"]);
+    grunt.registerTask("default", ["eslint", "browserify", "watch", "uglify"]);
 }
