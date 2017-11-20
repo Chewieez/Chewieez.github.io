@@ -30,22 +30,30 @@ let contactInfoString = JSON.stringify(contactInfo);
 localStorage.setItem("contactInfo", contactInfoString);
 
 
-// Pull data from local Storage
-const retreivedContactInfo = JSON.parse(localStorage.getItem("contactInfo", contactInfoString));
-// get element from DOM to place contact data
-let contactDomEl = document.getElementById("contact-list");
 
+// Pull data from Firebase
+let retrievedContactInfo = {}
 
-console.log("retreivedContactInfo", retreivedContactInfo)
+$.ajax({
+    "url": "https://personal-site-60774.firebaseio.com/contactInfo.json"
+}).then ((contactInfo) => {
+    retrievedContactInfo = contactInfo
 
-// loop through retreived data from local storage
-for (key in retreivedContactInfo) {
-    let individualContactInfo = retreivedContactInfo[key]
-
-    contactDomEl.innerHTML += `
-       
-            <p><img src="${individualContactInfo.icon}" width="50px" alt="${individualContactInfo.socialPlatform} title="${individualContactInfo.socialPlatform}"/> <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
-       
-    `
+    // get element from DOM to place contact data
+    let contactDomEl = document.getElementById("contact-list");
     
-}
+    // loop through retreived data from local storage
+    for (key in retrievedContactInfo) {
+        let individualContactInfo = retrievedContactInfo[key]
+    
+        contactDomEl.innerHTML += `
+           
+                <p><img src="${individualContactInfo.icon}" width="50px" alt="${individualContactInfo.socialPlatform} title="${individualContactInfo.socialPlatform}"/> <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
+           
+        `
+        
+    }
+
+})
+
+
