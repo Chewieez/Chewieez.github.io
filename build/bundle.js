@@ -31,7 +31,51 @@ function addListenersNav() {
 }
 
 module.exports = addListenersNav
-},{"./blog/blogInit.js":2}],2:[function(require,module,exports){
+},{"./blog/blogInit.js":3}],2:[function(require,module,exports){
+
+
+const addListeners = function () {
+
+    // create function to expand the content container for a blog post to show it's full contents on a button click
+    // this function needs to live outside of the loadFullPage() function for scope, so we can call this function inside our search results function. 
+    document.addEventListener("click", (event) => {
+
+        //console.log("clicked event: ", event)
+        if (event.target.id && event.target.id.includes("expandContent")) {
+            let clickedBtnId = event.target.id
+
+            let clickedBtnEl = event.target;
+            // console.log("clickedBtnEl: ", clickedBtnEl.innerHTML)
+
+            // parse out the number in the ID of the event that was clicked
+            const clickedBtnIdNum = clickedBtnId.split("-")[1];
+
+            // check if the ID of event that was clicked starts with "expandContent-". If so, then expand that blog content
+            if (clickedBtnId.startsWith("expandContent-")) {
+                //assign the Id number of the clicked element to the blog content div to be expanded
+                let contentToExpand = document.getElementById("blogContent-" + clickedBtnIdNum)
+                // toggle the abridged class off when click, to then show the full content.
+                contentToExpand.classList.toggle("abridged");
+
+                // check if the button clicked says "Click to see less" or "Click to see more" and toggle it's state. 
+                if (clickedBtnEl.innerHTML.includes("more")) {
+                    clickedBtnEl.innerHTML = "Click to see less"
+                }
+                else if (clickedBtnEl.innerHTML.includes("less")) {
+                    clickedBtnEl.innerHTML = "Click to read more"
+                }
+            }
+        }
+    })
+}
+
+
+module.exports = addListeners
+},{}],3:[function(require,module,exports){
+// creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
+
+const addListeners = require("./addListeners")
+
 
 
 const Blogs = Object.create(null, {
@@ -60,49 +104,69 @@ const Blogs = Object.create(null, {
     "populate": {
         "value": () => {
             const blogViewEl = document.getElementById("blog-view")
+            const blogEntriesEl = document.getElementById("blog-entries-list")
+
+            let blogViewContentString = ""
+            let blogEntriesListString = ""
             
             Blogs.blogEntries.forEach(currentBlog => {
                 // use Moment.js to format published date and store in a variable
                 //let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
                 let currentBlogPublishedDate = currentBlog.published
 
-                blogViewEl.innerHTML += `
+                blogViewContentString += `
                 <article  id="blogPost-${currentBlog.id}">
                         <h4 class="blog-title">${currentBlog.title}</h4>
                         <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
-                        
                         `
+                        
                 // check if the content for the blog post is created than 470 characters. If it is 
                 if (currentBlog.content.length > 470) {
-                    blogViewEl.innerHTML += `
+                    blogViewContentString += `
                     <div id="blogContent-${currentBlog.id}" class="abridged">
                         <p class="blog-content">${currentBlog.content}</p>
                     </div>
                     <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
                     `
                 } else {
-                    blogViewEl.innerHTML += `
+                    blogViewContentString += `
                     <div id="blogContent-${currentBlog.id}">
                         <p class="blog-content">${currentBlog.content}</p>
                     </div>
                     `
                 } 
                 
-                blogViewEl.innerHTML += `
+                blogViewContentString += `
                 <p class="blog-tags">tags: ${currentBlog.tags}</p>
                 <hr>
                 </article>
                 `
+                
+                // post blog creation data info to the right column
+                blogEntriesListString += `
+                    <p><a href="#">${currentBlogPublishedDate}</a></p>
+                    `
+            
             })
+
+            // Print blog content and data info to DOM
+            blogViewEl.innerHTML += blogViewContentString            
+            blogEntriesEl.innerHTML += blogEntriesListString            
+
+            // Add event listeners for blog page
+            Blogs.addListeners()
         },
     },
     "edit": {
         "value": {},
+    },
+    "addListeners":{
+        "value": addListeners
     }
 })
 //
 module.exports = Blogs
-},{}],3:[function(require,module,exports){
+},{"./addListeners":2}],4:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -164,7 +228,7 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
@@ -179,7 +243,7 @@ populateResume()
 
 Blogs.retrieve()
 
-},{"./addListenersNav":1,"./blog/blogInit":2,"./contact/contact":3,"./projects/projects-controller":5,"./resume/resume-controller":6}],5:[function(require,module,exports){
+},{"./addListenersNav":1,"./blog/blogInit":3,"./contact/contact":4,"./projects/projects-controller":6,"./resume/resume-controller":7}],6:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -214,7 +278,7 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -254,4 +318,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[4]);
+},{}]},{},[5]);
