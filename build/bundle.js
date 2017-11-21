@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const Blogs = require("./blog/factory")
+const blogController = require("./blog/blogController")
 
 function addListenersNav() {
     $("#myNavbar").on("click", e=>{
@@ -21,16 +21,17 @@ function addListenersNav() {
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
 
-            // if (sectionName === "blog") {
-            //     Blogs.retrieve()
-            // }
+            if (sectionName === "blog") {
+                blogController.init()
+                
+            }
         }
     })
 
 }
 
 module.exports = addListenersNav
-},{"./blog/factory":4}],2:[function(require,module,exports){
+},{"./blog/blogController":3}],2:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -78,7 +79,7 @@ const addListeners = require("./addListeners")
 const blogController = Object.create(null, {
     "init": {
         value: function () {
-            debugger
+            
             blogFactory.retrieveAll().then(blogs => {
                 populate(blogs)
                 addListeners(blogs)
@@ -283,7 +284,7 @@ populateContactInfo()
 populateResume()
 
 // blogFactory.retrieveAll()
-blogController.init()
+// blogController.init()
 },{"./addListenersNav":1,"./blog/blogController":3,"./blog/factory":4,"./contact/contact":6,"./projects/projects-controller":8,"./resume/resume-controller":9}],8:[function(require,module,exports){
 
 

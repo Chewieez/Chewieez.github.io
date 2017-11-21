@@ -12,4 +12,4 @@ populateContactInfo()
 populateResume()
 
 // blogFactory.retrieveAll()
-blogController.init()
+// blogController.init()

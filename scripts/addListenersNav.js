@@ -1,4 +1,4 @@
-const Blogs = require("./blog/factory")
+const blogController = require("./blog/blogController")
 
 function addListenersNav() {
     $("#myNavbar").on("click", e=>{
@@ -20,9 +20,10 @@ function addListenersNav() {
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
 
-            // if (sectionName === "blog") {
-            //     Blogs.retrieve()
-            // }
+            if (sectionName === "blog") {
+                blogController.init()
+                
+            }
         }
     })
 

@@ -7,7 +7,7 @@ const addListeners = require("./addListeners")
 const blogController = Object.create(null, {
     "init": {
         value: function () {
-            debugger
+            
             blogFactory.retrieveAll().then(blogs => {
                 populate(blogs)
                 addListeners(blogs)
