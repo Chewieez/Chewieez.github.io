@@ -15,9 +15,9 @@ module.exports = function (grunt) {
             },
             scripts: {
                 files: ["scripts/*.js", "scripts/**/*.js", "!node_modules/**/*.js" ],
-                tasks: ["eslint", "browserify", "notify_hooks"],
+                tasks: ["eslint", "browserify"],
                 options: {
-                    //spawn: false,
+                    spawn: false,
                 },
             },
         },

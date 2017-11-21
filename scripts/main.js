@@ -2,7 +2,8 @@ const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
-const Blogs = require("./blog/blogInit")
+const blogFactory = require("./blog/factory")
+const blogController = require("./blog/blogController")
 
 
 addListenersNav()
@@ -10,4 +11,5 @@ populateProjects()
 populateContactInfo()
 populateResume()
 
-Blogs.retrieve()
+// blogFactory.retrieveAll()
+blogController.init()

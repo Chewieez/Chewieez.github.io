@@ -5,8 +5,6 @@ const addListeners = function () {
     // create function to expand the content container for a blog post to show it's full contents on a button click
     // this function needs to live outside of the loadFullPage() function for scope, so we can call this function inside our search results function. 
     document.addEventListener("click", (event) => {
-
-        //console.log("clicked event: ", event)
         if (event.target.id && event.target.id.includes("expandContent")) {
             let clickedBtnId = event.target.id
 

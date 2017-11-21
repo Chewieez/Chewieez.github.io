@@ -9,12 +9,11 @@ function populateProjects() {
 
         // grab control of HTML container with document.getElementById()
         let portfolioEl = document.getElementById("portfolio")
-
+        let portfolioString = ""
         // loop through arrays in object
         projectsArray.forEach(project => {
-
             // populate html container variable with project content
-            portfolioEl.innerHTML += `
+            portfolioString += `
                 <article class="col-sm-6">
                     <div class="thumbnail">
                         <a href="${project.image}" target="_blank"><img src="${project.image}" class="img-responsive" alt="${project.name}">
@@ -28,6 +27,7 @@ function populateProjects() {
                 </article>
             `
         })
+        portfolioEl.innerHTML = portfolioString
     })
 }
 

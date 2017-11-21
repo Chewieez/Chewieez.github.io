@@ -1,7 +1,6 @@
-const Blogs = require("./blog/blogInit.js")
+const Blogs = require("./blog/factory")
 
 function addListenersNav() {
-    // debugger
     $("#myNavbar").on("click", e=>{
         if (!e.target.className.includes("nav__link--bio ")) {
             console.log(e)
@@ -21,9 +20,9 @@ function addListenersNav() {
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
 
-            if (sectionName === "blog") {
-                Blogs.retrieve(Blogs.populate)
-            }
+            // if (sectionName === "blog") {
+            //     Blogs.retrieve()
+            // }
         }
     })
 

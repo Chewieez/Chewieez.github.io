@@ -1,8 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const Blogs = require("./blog/blogInit.js")
+const Blogs = require("./blog/factory")
 
 function addListenersNav() {
-    // debugger
     $("#myNavbar").on("click", e=>{
         if (!e.target.className.includes("nav__link--bio ")) {
             console.log(e)
@@ -22,16 +21,16 @@ function addListenersNav() {
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
 
-            if (sectionName === "blog") {
-                Blogs.retrieve(Blogs.populate)
-            }
+            // if (sectionName === "blog") {
+            //     Blogs.retrieve()
+            // }
         }
     })
 
 }
 
 module.exports = addListenersNav
-},{"./blog/blogInit.js":3}],2:[function(require,module,exports){
+},{"./blog/factory":4}],2:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -39,8 +38,6 @@ const addListeners = function () {
     // create function to expand the content container for a blog post to show it's full contents on a button click
     // this function needs to live outside of the loadFullPage() function for scope, so we can call this function inside our search results function. 
     document.addEventListener("click", (event) => {
-
-        //console.log("clicked event: ", event)
         if (event.target.id && event.target.id.includes("expandContent")) {
             let clickedBtnId = event.target.id
 
@@ -72,101 +69,144 @@ const addListeners = function () {
 
 module.exports = addListeners
 },{}],3:[function(require,module,exports){
+//const paginate = require("../pagination")
+//const blogComponent = require("./createBogComponent")
+const blogFactory = require("./factory")
+const populate = require("./populate")
+const addListeners = require("./addListeners")
+
+const blogController = Object.create(null, {
+    "init": {
+        value: function () {
+            debugger
+            blogFactory.retrieveAll().then(blogs => {
+                populate(blogs)
+                addListeners(blogs)
+                // paginate.itemsToPaginate = blogs
+                // paginate.start(".blog__paginator", ".blog__articles", blogComponent)
+            })
+            //filter.init()
+        }
+    }
+})
+
+module.exports = blogController
+},{"./addListeners":2,"./factory":4,"./populate":5}],4:[function(require,module,exports){
 // creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
 
 const addListeners = require("./addListeners")
+const populate = require("./populate")
 
 
 
-const Blogs = Object.create(null, {
-    "blogEntries": {
+const blogFactory = Object.create(null, {
+    "blogCache": {
         "value": {},
         "writable": true
     },
     "write": {
-        "value": {},
+        "value": {
+            // insert function to write new blog to Firebase
+        },
     },
-    "retrieve": {
-        "value": function(callback) {
+    "retrieveAll": {
+        "value": function (callback,...callbacks) {
             // pull blogs from Firebase
-            $.ajax({
+            return $.ajax({
                 "url": "https://personal-site-60774.firebaseio.com/blogArray.json"
             }).then( blogDatabase => {
                 // assign blog posts to this object
-                this.blogEntries = blogDatabase
+                this.blogCache = blogDatabase
 
-                if (callback) {
-                    callback()
-                }
+                return this.blogCache
+
+                // I'm thinking this below could be callback hell
+                // // if a callback function is passed in, run it
+                // if (callback) {
+                //     callback(blogDatabase)
+                // }
+
+                // //if multiple callback functions are passed in, call each one
+                // if (callbacks.length > 0) {
+                //     callbacks.forEach(c => c())
+                // }
             })
         }
     },
     "populate": {
-        "value": () => {
-            const blogViewEl = document.getElementById("blog-view")
-            const blogEntriesEl = document.getElementById("blog-entries-list")
-
-            let blogViewContentString = ""
-            let blogEntriesListString = ""
-            
-            Blogs.blogEntries.forEach(currentBlog => {
-                // use Moment.js to format published date and store in a variable
-                //let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
-                let currentBlogPublishedDate = currentBlog.published
-
-                blogViewContentString += `
-                <article  id="blogPost-${currentBlog.id}">
-                        <h4 class="blog-title">${currentBlog.title}</h4>
-                        <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
-                        `
-                        
-                // check if the content for the blog post is created than 470 characters. If it is 
-                if (currentBlog.content.length > 470) {
-                    blogViewContentString += `
-                    <div id="blogContent-${currentBlog.id}" class="abridged">
-                        <p class="blog-content">${currentBlog.content}</p>
-                    </div>
-                    <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
-                    `
-                } else {
-                    blogViewContentString += `
-                    <div id="blogContent-${currentBlog.id}">
-                        <p class="blog-content">${currentBlog.content}</p>
-                    </div>
-                    `
-                } 
-                
-                blogViewContentString += `
-                <p class="blog-tags">tags: ${currentBlog.tags}</p>
-                <hr>
-                </article>
-                `
-                
-                // post blog creation data info to the right column
-                blogEntriesListString += `
-                    <p><a href="#">${currentBlogPublishedDate}</a></p>
-                    `
-            
-            })
-
-            // Print blog content and data info to DOM
-            blogViewEl.innerHTML += blogViewContentString            
-            blogEntriesEl.innerHTML += blogEntriesListString            
-
-            // Add event listeners for blog page
-            Blogs.addListeners()
-        },
+        "value": populate
     },
     "edit": {
-        "value": {},
+        "value": {
+            // insert function to edit a blog post on Firebase
+        },
     },
-    "addListeners":{
+    "addListeners": {
         "value": addListeners
     }
 })
 //
-module.exports = Blogs
-},{"./addListeners":2}],4:[function(require,module,exports){
+module.exports = blogFactory
+},{"./addListeners":2,"./populate":5}],5:[function(require,module,exports){
+
+
+const populate = (blogEntries) => {
+    const blogViewEl = document.getElementById("blog-view")
+    const blogEntriesEl = document.getElementById("blog-entries-list")
+
+    let blogViewContentString = ""
+    let blogEntriesListString = ""
+
+    blogEntries.forEach(currentBlog => {
+        // use Moment.js to format published date and store in a variable
+        //let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
+        let currentBlogPublishedDate = currentBlog.published
+
+        blogViewContentString += `
+            <article  id="blogPost-${currentBlog.id}">
+                    <h4 class="blog-title">${currentBlog.title}</h4>
+                    <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
+                    `
+
+        // check if the content for the blog post is created than 470 characters. If it is 
+        if (currentBlog.content.length > 470) {
+            blogViewContentString += `
+                <div id="blogContent-${currentBlog.id}" class="abridged">
+                    <p class="blog-content">${currentBlog.content}</p>
+                </div>
+                <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
+                `
+        } else {
+            blogViewContentString += `
+                <div id="blogContent-${currentBlog.id}">
+                    <p class="blog-content">${currentBlog.content}</p>
+                </div>
+                `
+        }
+
+        blogViewContentString += `
+            <p class="blog-tags">tags: ${currentBlog.tags}</p>
+            <hr>
+            </article>
+            `
+
+        // post blog creation data info to the right column
+        blogEntriesListString += `
+                <p><a href="#">${currentBlogPublishedDate}</a></p>
+                `
+
+    })
+
+    // Print blog content and data info to DOM
+    blogViewEl.innerHTML += blogViewContentString
+    blogEntriesEl.innerHTML += blogEntriesListString
+
+   
+}
+
+
+module.exports = populate
+},{}],6:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -228,12 +268,13 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
-const Blogs = require("./blog/blogInit")
+const blogFactory = require("./blog/factory")
+const blogController = require("./blog/blogController")
 
 
 addListenersNav()
@@ -241,9 +282,9 @@ populateProjects()
 populateContactInfo()
 populateResume()
 
-Blogs.retrieve()
-
-},{"./addListenersNav":1,"./blog/blogInit":3,"./contact/contact":4,"./projects/projects-controller":6,"./resume/resume-controller":7}],6:[function(require,module,exports){
+// blogFactory.retrieveAll()
+blogController.init()
+},{"./addListenersNav":1,"./blog/blogController":3,"./blog/factory":4,"./contact/contact":6,"./projects/projects-controller":8,"./resume/resume-controller":9}],8:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -255,12 +296,11 @@ function populateProjects() {
 
         // grab control of HTML container with document.getElementById()
         let portfolioEl = document.getElementById("portfolio")
-
+        let portfolioString = ""
         // loop through arrays in object
         projectsArray.forEach(project => {
-
             // populate html container variable with project content
-            portfolioEl.innerHTML += `
+            portfolioString += `
                 <article class="col-sm-6">
                     <div class="thumbnail">
                         <a href="${project.image}" target="_blank"><img src="${project.image}" class="img-responsive" alt="${project.name}">
@@ -274,11 +314,12 @@ function populateProjects() {
                 </article>
             `
         })
+        portfolioEl.innerHTML = portfolioString
     })
 }
 
 module.exports = populateProjects
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -318,4 +359,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[5]);
+},{}]},{},[7]);

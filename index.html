@@ -39,7 +39,7 @@
                         <li class="nav__Link"><a href="#" class="nav__link--blog">Blog</a></li>
                         <li class="nav__Link"><a href="#" class="nav__link--resume">Resume</a></li>
                         <li class="nav__Link"><a href="#" class="nav__link--contact">Contact</a></li>
-                        <li class="nav__Link"><a href="#" class="nav__link--admin"><span class="invisible">Admin</span></a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--admin">Admin</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -139,6 +139,29 @@
             <section id="blogPaginator">
                 
             </section>
+        </section>     <!-- End of Blog Page -->
+        <section class="mainSection hidden" id="admin">
+                <header class="page-header"> 
+                        <h1>Create a Blog Post</h1>
+                    </header>   
+                        <section id="admin-blog-entry">
+                            <form name="adminBlogEntryForm">
+                            <label>Title</label>
+                            <!-- Added autofocus to title input field to automatically place the cursor in this field on page load -->
+                            <input type="text" id="admin-blog-title" name="admin-blog-title" placeholder="Enter Blog Title Here" class="form-control" autofocus required>
+                            <label>Author</label>
+                            <input type="text" id="admin-blog-author" name="admin-blog-author" placeholder="Author name" class="form-control" autocomplete="on" required>
+                            <label>Content</label>
+                            <textarea id="admin-blog-content"name="admin-blog-content" placeholder="Compose your blog content here"  rows="10" cols="100" class="form-control" required></textarea>
+                            <label>Tags</label>
+                            <input type="text" id="admin-blog-tags" name="admin-blog-tags" placeholder="separate, tags, with, commas" class="form-control">
+                            </form>
+                            <br>
+                            <button id="admin-save-blog" class="btn btn-primary">Save Blog</button>
+                        </section>
+                        <section id="new-button">
+                        </section>
+        
         </section>
     </div>
     <!-- /end of site-content -->
