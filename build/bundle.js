@@ -4,11 +4,17 @@
 function addListenersNav() {
     // debugger
     $("#myNavbar").on("click", e=>{
-        if (!e.target.className.includes("nav__link--bio")) {
+        if (!e.target.className.includes("nav__link--bio ")) {
             console.log(e)
             // find out what link was clicked on
-            let sectionName = e.target.className.split("--")[1]
-            // let sectionEl = $(`#${sectionName}`)
+            let targetClasses = Array.from(e.target.classList)
+
+            let sectionName = targetClasses.find(clazz => {
+                return clazz.startsWith("nav__link")
+            }).split("--")[1]
+
+            //console.log(sectionName)
+            
             // Add `hidden` class to all main sections
             Array.from(document.getElementsByClassName("mainSection"))
                 .forEach(section => section.classList.add("hidden"))
@@ -87,13 +93,14 @@ module.exports = populateContactInfo
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
+const populateResume = require("./resume/resume-controller")
 
 
 addListenersNav()
 populateProjects()
 populateContactInfo()
-
-},{"./addListenersNav":1,"./contact/contact":2,"./projects/projects-controller":4}],4:[function(require,module,exports){
+populateResume()
+},{"./addListenersNav":1,"./contact/contact":2,"./projects/projects-controller":4,"./resume/resume-controller":5}],4:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -128,4 +135,44 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
+},{}],5:[function(require,module,exports){
+
+function populateResume() {
+    // pull professionalHistory Database from local storage
+    // const professionalHistoryD = JSON.parse(localStorage.getItem("professionalHistoryString"));
+
+    // pull professionalHistory from Firebase
+    $.ajax({
+        "url": "https://personal-site-60774.firebaseio.com/professionalHistoryArray.json"
+    }).then((professionalHistory) => {
+        let profHistoryArray = professionalHistory
+
+        // get control of container to place job history with document.getElementById
+        const profHistoryEl = document.getElementById("professional-history");
+        
+        // // assign professionalHistoryArray that is inside the professionalHistory object to a variable
+        // const profHistoryArray = professionalHistory.professionalHistoryArray;
+        
+        
+        //loop through array and populate the <section id-"professional-history"> container with each array item (job).
+        for (let i = 0; i < profHistoryArray.length; i++) {
+            let job = profHistoryArray[i];
+        
+            profHistoryEl.innerHTML += `
+                <article class="job-info">
+                    <h4>${job.title}</h4>
+                    <h5>${job.company}</h5>
+                    <p>Dates: ${job.dates}</p>
+                    <h5>Responsibilies:</h5>
+                    <p>${job.responsibilities}</p>
+                </article>
+                <hr>
+                `
+        
+        }
+    })
+}
+
+module.exports = populateResume
+
 },{}]},{},[3]);
