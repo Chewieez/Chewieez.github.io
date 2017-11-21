@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
+const Blogs = require("./blog/blogInit.js")
 
 function addListenersNav() {
     // debugger
@@ -21,13 +21,88 @@ function addListenersNav() {
 
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
+
+            if (sectionName === "blog") {
+                Blogs.retrieve(Blogs.populate)
+            }
         }
     })
 
 }
 
 module.exports = addListenersNav
-},{}],2:[function(require,module,exports){
+},{"./blog/blogInit.js":2}],2:[function(require,module,exports){
+
+
+const Blogs = Object.create(null, {
+    "blogEntries": {
+        "value": {},
+        "writable": true
+    },
+    "write": {
+        "value": {},
+    },
+    "retrieve": {
+        "value": function(callback) {
+            // pull blogs from Firebase
+            $.ajax({
+                "url": "https://personal-site-60774.firebaseio.com/blogArray.json"
+            }).then( blogDatabase => {
+                // assign blog posts to this object
+                this.blogEntries = blogDatabase
+
+                if (callback) {
+                    callback()
+                }
+            })
+        }
+    },
+    "populate": {
+        "value": () => {
+            const blogViewEl = document.getElementById("blog-view")
+            
+            Blogs.blogEntries.forEach(currentBlog => {
+                // use Moment.js to format published date and store in a variable
+                //let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
+                let currentBlogPublishedDate = currentBlog.published
+
+                blogViewEl.innerHTML += `
+                <article  id="blogPost-${currentBlog.id}">
+                        <h4 class="blog-title">${currentBlog.title}</h4>
+                        <p class="blog-subheading"><span class="special-text">by:</span> ${currentBlog.author}    <span class="special-text">published on:</span> ${currentBlogPublishedDate}</p>
+                        
+                        `
+                // check if the content for the blog post is created than 470 characters. If it is 
+                if (currentBlog.content.length > 470) {
+                    blogViewEl.innerHTML += `
+                    <div id="blogContent-${currentBlog.id}" class="abridged">
+                        <p class="blog-content">${currentBlog.content}</p>
+                    </div>
+                    <button id="expandContent-${currentBlog.id}" class="expandContentBtn">Click to read more</button>
+                    `
+                } else {
+                    blogViewEl.innerHTML += `
+                    <div id="blogContent-${currentBlog.id}">
+                        <p class="blog-content">${currentBlog.content}</p>
+                    </div>
+                    `
+                } 
+                
+                blogViewEl.innerHTML += `
+                <p class="blog-tags">tags: ${currentBlog.tags}</p>
+                <hr>
+                </article>
+                `
+            })
+        },
+    },
+    "edit": {
+        "value": {},
+    }
+})
+//
+module.exports = Blogs
+},{}],3:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -89,18 +164,22 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
+const Blogs = require("./blog/blogInit")
 
 
 addListenersNav()
 populateProjects()
 populateContactInfo()
 populateResume()
-},{"./addListenersNav":1,"./contact/contact":2,"./projects/projects-controller":4,"./resume/resume-controller":5}],4:[function(require,module,exports){
+
+Blogs.retrieve()
+
+},{"./addListenersNav":1,"./blog/blogInit":2,"./contact/contact":3,"./projects/projects-controller":5,"./resume/resume-controller":6}],5:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -135,7 +214,7 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -175,4 +254,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[3]);
+},{}]},{},[4]);

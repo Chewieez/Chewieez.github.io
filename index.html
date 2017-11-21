@@ -80,7 +80,7 @@
 
             <section id="portfolio" class="container-fluid text-center">
             </section>
-        </section>  <!-- End of projectsPage -->
+        </section>  <!-- End of Project Page -->
         
         <section class="mainSection hidden" id="contact">
             <header class="page-header"> 
@@ -91,7 +91,7 @@
                 <section class="contacts" id="contact-list" >
                 </section>
             </article> 
-        </section>
+        </section>  <!-- End of Contact page -->
 
         <section class="mainSection hidden" id="resume">
             <header class="page-header">
@@ -99,6 +99,45 @@
             </header> 
         
             <section id="professional-history" class="article container-fluid">
+            </section>
+        </section>  <!-- End of Resume page -->
+
+        <section class="mainSection hidden" id="blog">
+
+            <header id="blog-header" class="blog-header page-header">
+                    <h1>Thoughts of a NSS Student</h1>
+            </header> 
+        
+        
+            <div class="container-fluid">
+                <div class="row center-block">
+                    <!-- change bootstrap classes as viewport shrinks -->
+                    <section id="blog-search" class="col-xs-12 col-sm-4 col-md-3 pull-right">
+                        <label>Search: </label>
+                        <input type="text" id="search-input" class="blog-search__input form-control" placeholder="Search Blog Posts">
+                    </section>
+                </div>
+                
+                <div class="row">
+                    <!-- Blog entries will populate this <section> -->
+                    <section id="blog-view" class="col-sm-9">
+                        
+                    </section>
+                    
+                    <!-- This is also populated via the js file. This is the list of all blog entries. Currently displaying the publication date of each. -->
+                    <aside id="blog-list" class="col-sm-3">
+                        <div class="text-center">
+                            <h4>Blog Entries</h4>
+                            <section id="blog-entries-list">
+                                
+                            </section> 
+                        </div>  
+                    </aside>
+                </div>
+            </div>
+            <!-- This is where the pagination code is being placed. -->
+            <section id="blogPaginator">
+                
             </section>
         </section>
     </div>

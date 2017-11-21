@@ -1,4 +1,4 @@
-
+const Blogs = require("./blog/blogInit.js")
 
 function addListenersNav() {
     // debugger
@@ -20,6 +20,10 @@ function addListenersNav() {
 
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
+
+            if (sectionName === "blog") {
+                Blogs.retrieve(Blogs.populate)
+            }
         }
     })
 
