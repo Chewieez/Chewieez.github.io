@@ -31,55 +31,79 @@ function addListenersNav() {
 }
 
 module.exports = addListenersNav
-},{"./blog/blogController":4}],2:[function(require,module,exports){
-
-// blog generator function and blog factory function are in the blog-factory.js file
-
-
-// pull current blog database from local storage and parse into variable. If database doesn't exist, run function to create it. The function produceBlogDatabase() resides in the blog-factory.js file
-const retrievedBlogDatabase = JSON.parse(localStorage.getItem("blogPosts")) || produceBlogDatabase()
-console.log("retrievedBlogDatabase is: ", retrievedBlogDatabase)
-
-// Create `blogArray` key if it doesn't exist
-retrievedBlogDatabase.blogArray = retrievedBlogDatabase.blogArray || []
-
-// get control of DOM input elements
-let newBlogTitleEl = document.getElementById("admin-blog-title")
-let newBlogAuthorEl = document.getElementById("admin-blog-author")
-let newBlogContentEl = document.getElementById("admin-blog-content")
-let newBlogTagsEl = document.getElementById("admin-blog-tags")
+},{"./blog/blogController":7}],2:[function(require,module,exports){
+const blogFactory = require("../blog/factory")
 
 
-// get control of the button DOM element the user will click to save the new blog entry
-const saveBlogEl = document.getElementById("admin-save-blog")
 
-// setup click event to run the function to take user input field content and generate a new blog post
-saveBlogEl.addEventListener("click", function(event){
+function createBlogEntryForm() {
+    // get control of section to place the create blog form
+    const blogEntrySectionEl = document.getElementById("blogEntry")
 
-    // check if the validateForm function returns true
-    if (validateForm()) {
-        //set lastId to the most recently posted blog, so this new one we are creating will have a concurrent Id number
-        lastId = retrievedBlogDatabase.blogArray[0].id
-        //console.log("retrievedBlogDatabase.blogArray[0].id", retrievedBlogDatabase.blogArray[0].id)
+    // create a DOM string for the blog entry form 
+    let blogEntrySectionString = `
+                <header class="page-header"> 
+                    <h1>Create a Blog Post</h1>
+                </header>   
+                <section id="admin-blog-entry">
+                    <form name="adminBlogEntryForm">
+                    <label>Title</label>
+                    <!-- Added autofocus to title input field to automatically place the cursor in this field on page load -->
+                    <input type="text" id="admin-blog-title" name="admin-blog-title" placeholder="Enter Blog Title Here" class="form-control" autofocus required>
+                    <label>Author</label>
+                    <input type="text" id="admin-blog-author" name="admin-blog-author" placeholder="Author name" class="form-control" autocomplete="on" required>
+                    <label>Content</label>
+                    <textarea id="admin-blog-content"name="admin-blog-content" placeholder="Compose your blog content here"  rows="10" cols="100" class="form-control" required></textarea>
+                    <label>Tags</label>
+                    <input type="text" id="admin-blog-tags" name="admin-blog-tags" placeholder="separate, tags, with, commas" class="form-control">
+                    </form>
+                    <br>
+                    <button id="admin-save-blog" class="btn btn-primary">Save Blog</button>
+                </section>
+                <section id="new-button">
+                </section>    
+            `
+    // set the inner HTML of the blog entry DOM element
+    blogEntrySectionEl.innerHTML = blogEntrySectionString
+
+    // get control of DOM input elements
+    let newBlogTitleEl = document.getElementById("admin-blog-title")
+    let newBlogAuthorEl = document.getElementById("admin-blog-author")
+    let newBlogContentEl = document.getElementById("admin-blog-content")
+    let newBlogTagsEl = document.getElementById("admin-blog-tags")
+
+
+    // get control of the button DOM element the user will click to save the new blog entry
+    const saveBlogEl = document.getElementById("admin-save-blog")
+
+    // setup click event to run the function to take user input field content and generate a new blog post
+    saveBlogEl.addEventListener("click", function (event) {
+
+        // check if the validateForm function returns true
+        if (validateForm()) {
+           
+            // use content that was entered into admin form element to create new blog 
+            const newBlogPost = blogObjectFactory(
+                newBlogTitleEl.value,
+                newBlogContentEl.value,
+                newBlogAuthorEl.value,
+                newBlogTagsEl.value
+            )
+            // create a POST request to Firebase to store the new blog post
+
+            // clear out contents of blog entry form
+            // clearBlogEntryForm()
+            // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
+            createButtonToBlogPage()
+        }
+        // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
+    })
+}
+
         
-        // use content that was entered into admin form element to create new blog 
-        const newBlogPost = blogObjectFactory(
-            newBlogTitleEl.value,
-            newBlogContentEl.value,
-            newBlogAuthorEl.value,
-            newBlogTagsEl.value
-        )
-        // store this new blog post object at the beginning of the array of blog posts
-        retrievedBlogDatabase.blogArray.unshift(newBlogPost);
-        // store new appended blog database in local storage
-        localStorage.setItem("blogPosts", JSON.stringify(retrievedBlogDatabase))
-        //clear out contents of blog entry form
-        clearBlogEntryForm()
-        // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-        createButtonToBlogPage()
-    }
-    // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
-})
+    
+
+
 
 // form validation function
 function validateForm() {
@@ -90,24 +114,24 @@ function validateForm() {
 
     // checks if each field is empty and executes a unique error message
     if (isThereTitle.value === "") {
-        alert("Error: \n" 
-        + "\t• Name must be filled out\n\n"
-        + "Please fix errors and resubmit"
+        alert("Error: \n"
+            + "\t• Name must be filled out\n\n"
+            + "Please fix errors and resubmit"
         );
-         
+
         return false;
     }
     else if (isThereAuthor.value === "") {
-        alert("Error: \n" 
-        + "\t• Author must be filled out\n\n"
-        + "Please fix errors and resubmit"
+        alert("Error: \n"
+            + "\t• Author must be filled out\n\n"
+            + "Please fix errors and resubmit"
         );
         return false;
     }
     else if (isThereContent.value === "") {
-        alert("Error: \n" 
-        + "\t• Content must be filled out\n\n"
-        + "Please fix errors and resubmit"
+        alert("Error: \n"
+            + "\t• Content must be filled out\n\n"
+            + "Please fix errors and resubmit"
         );
         return false;
     }
@@ -125,7 +149,7 @@ function clearBlogEntryForm() {
 
 
 // make a button show up after the user has submitted the new blog post that lets them click through to the blog page to read and review blogs
-function createButtonToBlogPage () {
+function createButtonToBlogPage() {
     // check if the button to view the blog page already exists. If not, create it. This will prevent the button from duplicating if the user creates more than one blog entry without refreshing the page
     if (document.getElementById("btnToBlogs") === null) {
         let newButtonEl = document.getElementById("new-button");
@@ -135,15 +159,138 @@ function createButtonToBlogPage () {
     }
     // get control of new button DOM element, then add event listener to it
     let btnToBlogsEl = document.getElementById("btnToBlogs")
-    btnToBlogsEl.addEventListener("click", function(){
+    btnToBlogsEl.addEventListener("click", function () {
         // send user to the blog page when they click on the button
         window.location.href = "http://localhost:8080/blog/index.html"
     })
-    
+
 }
 
-module.exports = null
-},{}],3:[function(require,module,exports){
+module.exports = createBlogEntryForm
+},{"../blog/factory":8}],3:[function(require,module,exports){
+
+function createLogin() {
+
+    const loggingInOutControlsEl = document.getElementById("loggingInOutControls")
+
+    let loggingInOutControlsDOMString = `
+        <section class="login" id="adminLogin">
+            <header class="page-header">
+                <h3>Login</h3>
+            </header>
+            <form name="adminLoginForm">
+                <label>Email</label>
+                <input type="email" name="adminLoginEmail" class="form-control" autofocus required placeholder="...email">
+                <label>Password</label>
+                <input type="password" name="adminLoginPassword" class="form-control"  required placeholder="...password">
+            </form>
+                <button class="btn btn-primary" id="adminLoginBtn">Login</button>
+                <button class="btn btn-success" id="adminCreateLoginBtn">Create Account</button>
+        </section>
+        <section class="logout hidden" id="logout">
+            <button class="btn btn-warning" id="adminLogoutBtn">Logout</button>
+        </section>
+    `
+
+    loggingInOutControlsEl.innerHTML = loggingInOutControlsDOMString
+
+}
+
+module.exports = createLogin
+},{}],4:[function(require,module,exports){
+const createLogin = require("./createLogin")
+
+
+const addListeners = function () {
+
+    document.getElementById("adminCreateLoginBtn").addEventListener("click", (event) =>{
+
+        const userEmail = document.querySelector("[name='adminLoginEmail']").value;
+        const userPassword = document.querySelector("[name='adminLoginPassword']").value;
+    
+        firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            // ...
+        });
+    })
+
+
+    document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
+
+        const userEmail = document.querySelector("[name='adminLoginEmail']").value;
+        const userPassword = document.querySelector("[name='adminLoginPassword']").value;
+    
+        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            // ...
+        });
+    })
+    
+    document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
+        
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            console.log("Logout Successful")
+            createLogin()
+        }).catch(function(error) {
+            // An error happened.
+            console.log("Could log out the current user")
+        });
+    })
+}
+
+
+
+module.exports = addListeners
+},{"./createLogin":3}],5:[function(require,module,exports){
+const adminController = require("./adminController")
+const createLogin = require("./createLogin")
+const loginAddListeners = require("./loginAddListeners")
+
+function validateUser() {
+    
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            
+            // create and display login and logout form and buttons and hide login form
+            createLogin()
+            document.getElementById("adminLogin").classList.add("hidden")
+            document.getElementById("logout").classList.remove("hidden")
+            // create and display blog entry form
+            adminController()
+            
+        } else {
+            console.log("user is signed out")
+            // create and display login form 
+            createLogin()
+            document.getElementById("logout").classList.add("hidden")
+            
+            // clear out contents of the admin form
+            document.getElementById("blogEntry").innerHTML = ""
+        }
+
+        loginAddListeners()
+    
+    });
+
+}
+
+module.exports = validateUser
+},{"./adminController":2,"./createLogin":3,"./loginAddListeners":4}],6:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -181,7 +328,7 @@ const addListeners = function () {
 
 
 module.exports = addListeners
-},{}],4:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 //const paginate = require("../pagination")
 //const blogComponent = require("./createBogComponent")
 const blogFactory = require("./factory")
@@ -204,7 +351,7 @@ const blogController = Object.create(null, {
 })
 
 module.exports = blogController
-},{"./addListeners":3,"./factory":5,"./populate":6}],5:[function(require,module,exports){
+},{"./addListeners":6,"./factory":8,"./populate":9}],8:[function(require,module,exports){
 // creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
 
 const addListeners = require("./addListeners")
@@ -230,6 +377,11 @@ const blogFactory = Object.create(null, {
             }).then( blogDatabase => {
                 // assign blog posts to this object
                 this.blogCache = blogDatabase
+                this.cache = Object.keys(blogDatabase)
+                    .map(key => {
+                        blogDatabase[key].id = key
+                        return blogDatabase[key]
+                    })
 
                 return this.blogCache
 
@@ -260,7 +412,7 @@ const blogFactory = Object.create(null, {
 })
 //
 module.exports = blogFactory
-},{"./addListeners":3,"./populate":6}],6:[function(require,module,exports){
+},{"./addListeners":6,"./populate":9}],9:[function(require,module,exports){
 
 
 const populate = (blogEntries) => {
@@ -319,7 +471,7 @@ const populate = (blogEntries) => {
 
 
 module.exports = populate
-},{}],7:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -381,16 +533,22 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
 const blogFactory = require("./blog/factory")
 const blogController = require("./blog/blogController")
-const adminController = require("./admin/adminController")
+//const adminController = require("./admin/adminController")
+// const createLogin = require("./admin/createLogin")
+// const loginAddListeners = require("./admin/loginAddListeners")
+const validateUser = require("./admin/validateUser")
 
 
+// createLogin()
+validateUser()
+// loginAddListeners()
 addListenersNav()
 populateProjects()
 populateContactInfo()
@@ -398,7 +556,7 @@ populateResume()
 
 // blogFactory.retrieveAll()
 // blogController.init()
-},{"./addListenersNav":1,"./admin/adminController":2,"./blog/blogController":4,"./blog/factory":5,"./contact/contact":7,"./projects/projects-controller":9,"./resume/resume-controller":10}],9:[function(require,module,exports){
+},{"./addListenersNav":1,"./admin/validateUser":5,"./blog/blogController":7,"./blog/factory":8,"./contact/contact":10,"./projects/projects-controller":12,"./resume/resume-controller":13}],12:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -433,7 +591,7 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
-},{}],10:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -473,4 +631,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[8]);
+},{}]},{},[11]);

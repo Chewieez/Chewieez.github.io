@@ -24,6 +24,7 @@
         "lastId": true,
         "produceBlogDatabase": true,
         "projectString": true,
-        "$": true
+        "$": true,
+        "firebase": true
     }
 }

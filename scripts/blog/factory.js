@@ -23,6 +23,11 @@ const blogFactory = Object.create(null, {
             }).then( blogDatabase => {
                 // assign blog posts to this object
                 this.blogCache = blogDatabase
+                this.cache = Object.keys(blogDatabase)
+                    .map(key => {
+                        blogDatabase[key].id = key
+                        return blogDatabase[key]
+                    })
 
                 return this.blogCache
 
