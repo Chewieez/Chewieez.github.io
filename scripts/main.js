@@ -4,6 +4,7 @@ const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
 const blogFactory = require("./blog/factory")
 const blogController = require("./blog/blogController")
+const adminController = require("./admin/adminController")
 
 
 addListenersNav()

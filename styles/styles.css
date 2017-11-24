@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .page-header {
-    padding: 0;
+    padding: 1.5em .2em .2em .5em;
 }
 
 
@@ -43,7 +43,6 @@ header#intro {
     background-image: url('/images/pexels-photo_darker_web.jpg');
     text-align: center;
     color: white;
-    
 } 
 
 header .header-content {
@@ -132,6 +131,7 @@ header .header-content .header-content-inner p {
     padding-bottom: 4em;
     font-size: 1.2em;
 }
+
 
 .footer-grid {
     display: grid;
