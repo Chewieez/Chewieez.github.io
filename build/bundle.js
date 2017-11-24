@@ -223,7 +223,12 @@ const addListeners = function () {
         const userEmail = document.querySelector("[name='adminLoginEmail']").value;
         const userPassword = document.querySelector("[name='adminLoginPassword']").value;
     
-        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
+            // empty login fields
+            document.querySelector("[name='adminLoginEmail']").value = "";
+            document.querySelector("[name='adminLoginPassword']").value = "";
+
+        }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -237,7 +242,13 @@ const addListeners = function () {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
             console.log("Logout Successful")
-            createLogin()
+
+
+            // clear out contents of the admin form DOM element
+            document.getElementById("blogEntry").innerHTML = ""
+
+            // display the login form
+            document.getElementById("adminLogin").classList.remove("hidden")
         }).catch(function(error) {
             // An error happened.
             console.log("Could log out the current user")
@@ -250,8 +261,7 @@ const addListeners = function () {
 module.exports = addListeners
 },{"./createLogin":3}],5:[function(require,module,exports){
 const adminController = require("./adminController")
-const createLogin = require("./createLogin")
-const loginAddListeners = require("./loginAddListeners")
+
 
 function validateUser() {
     
@@ -265,32 +275,38 @@ function validateUser() {
             var isAnonymous = user.isAnonymous;
             var uid = user.uid;
             var providerData = user.providerData;
-            
-            // create and display login and logout form and buttons and hide login form
-            createLogin()
+            console.log(uid)
+            // hide the login form
             document.getElementById("adminLogin").classList.add("hidden")
+            // display the logout button
             document.getElementById("logout").classList.remove("hidden")
-            // create and display blog entry form
-            adminController()
             
+            // check if the user is authorized to use blog entry form
+            if (user.uid === "OmaxzFwI2yMWWSuKVuMOwzqKG173") {
+                // create and display blog entry form
+                adminController()
+            } else {
+                // post message to DOM that states the user does not have authorization to view this page. 
+                document.getElementById("blogEntry").innerHTML = "<h4>You are not authorized to view this page.</h4>"
+            }
+
+            return user
+
         } else {
             console.log("user is signed out")
-            // create and display login form 
-            createLogin()
             document.getElementById("logout").classList.add("hidden")
             
-            // clear out contents of the admin form
+            // clear out contents of the admin form DOM element.
             document.getElementById("blogEntry").innerHTML = ""
+
+            // return null since no current user
+            return null
         }
-
-        loginAddListeners()
-    
     });
-
 }
 
 module.exports = validateUser
-},{"./adminController":2,"./createLogin":3,"./loginAddListeners":4}],6:[function(require,module,exports){
+},{"./adminController":2}],6:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -541,14 +557,14 @@ const populateResume = require("./resume/resume-controller")
 const blogFactory = require("./blog/factory")
 const blogController = require("./blog/blogController")
 //const adminController = require("./admin/adminController")
-// const createLogin = require("./admin/createLogin")
-// const loginAddListeners = require("./admin/loginAddListeners")
+const createLogin = require("./admin/createLogin")
+const loginAddListeners = require("./admin/loginAddListeners")
 const validateUser = require("./admin/validateUser")
 
 
-// createLogin()
+createLogin()
+loginAddListeners()
 validateUser()
-// loginAddListeners()
 addListenersNav()
 populateProjects()
 populateContactInfo()
@@ -556,7 +572,7 @@ populateResume()
 
 // blogFactory.retrieveAll()
 // blogController.init()
-},{"./addListenersNav":1,"./admin/validateUser":5,"./blog/blogController":7,"./blog/factory":8,"./contact/contact":10,"./projects/projects-controller":12,"./resume/resume-controller":13}],12:[function(require,module,exports){
+},{"./addListenersNav":1,"./admin/createLogin":3,"./admin/loginAddListeners":4,"./admin/validateUser":5,"./blog/blogController":7,"./blog/factory":8,"./contact/contact":10,"./projects/projects-controller":12,"./resume/resume-controller":13}],12:[function(require,module,exports){
 
 
 function populateProjects() {

@@ -1,6 +1,5 @@
 const adminController = require("./adminController")
-const createLogin = require("./createLogin")
-const loginAddListeners = require("./loginAddListeners")
+
 
 function validateUser() {
     
@@ -14,28 +13,34 @@ function validateUser() {
             var isAnonymous = user.isAnonymous;
             var uid = user.uid;
             var providerData = user.providerData;
-            
-            // create and display login and logout form and buttons and hide login form
-            createLogin()
+            console.log(uid)
+            // hide the login form
             document.getElementById("adminLogin").classList.add("hidden")
+            // display the logout button
             document.getElementById("logout").classList.remove("hidden")
-            // create and display blog entry form
-            adminController()
             
+            // check if the user is authorized to use blog entry form
+            if (user.uid === "OmaxzFwI2yMWWSuKVuMOwzqKG173") {
+                // create and display blog entry form
+                adminController()
+            } else {
+                // post message to DOM that states the user does not have authorization to view this page. 
+                document.getElementById("blogEntry").innerHTML = "<h4>You are not authorized to view this page.</h4>"
+            }
+
+            return user
+
         } else {
             console.log("user is signed out")
-            // create and display login form 
-            createLogin()
             document.getElementById("logout").classList.add("hidden")
             
-            // clear out contents of the admin form
+            // clear out contents of the admin form DOM element.
             document.getElementById("blogEntry").innerHTML = ""
+
+            // return null since no current user
+            return null
         }
-
-        loginAddListeners()
-    
     });
-
 }
 
 module.exports = validateUser

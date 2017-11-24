@@ -23,7 +23,12 @@ const addListeners = function () {
         const userEmail = document.querySelector("[name='adminLoginEmail']").value;
         const userPassword = document.querySelector("[name='adminLoginPassword']").value;
     
-        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
+            // empty login fields
+            document.querySelector("[name='adminLoginEmail']").value = "";
+            document.querySelector("[name='adminLoginPassword']").value = "";
+
+        }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -37,7 +42,13 @@ const addListeners = function () {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
             console.log("Logout Successful")
-            createLogin()
+
+
+            // clear out contents of the admin form DOM element
+            document.getElementById("blogEntry").innerHTML = ""
+
+            // display the login form
+            document.getElementById("adminLogin").classList.remove("hidden")
         }).catch(function(error) {
             // An error happened.
             console.log("Could log out the current user")
