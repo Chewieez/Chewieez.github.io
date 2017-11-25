@@ -31,8 +31,9 @@ function addListenersNav() {
 }
 
 module.exports = addListenersNav
-},{"./blog/blogController":7}],2:[function(require,module,exports){
+},{"./blog/blogController":8}],2:[function(require,module,exports){
 const blogFactory = require("../blog/factory")
+const createNewBlogEntry = require("./createNewBlogEntry")
 
 
 
@@ -83,14 +84,16 @@ function createBlogEntryForm() {
         if (validateForm()) {
            
             // use content that was entered into admin form element to create new blog 
-            const newBlogPost = blogObjectFactory(
+            const newBlogPost = createNewBlogEntry(
                 newBlogTitleEl.value,
                 newBlogContentEl.value,
                 newBlogAuthorEl.value,
                 newBlogTagsEl.value
             )
-            // create a POST request to Firebase to store the new blog post
 
+            // create a POST request to Firebase to store the new blog post
+            blogFactory.write(newBlogPost)
+            
             // clear out contents of blog entry form
             // clearBlogEntryForm()
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
@@ -167,7 +170,7 @@ function createButtonToBlogPage() {
 }
 
 module.exports = createBlogEntryForm
-},{"../blog/factory":8}],3:[function(require,module,exports){
+},{"../blog/factory":9,"./createNewBlogEntry":4}],3:[function(require,module,exports){
 
 function createLogin() {
 
@@ -198,6 +201,26 @@ function createLogin() {
 
 module.exports = createLogin
 },{}],4:[function(require,module,exports){
+
+// Factory function to create each blog object and cut down on repetitive typing
+const blogObjectFactory = function (title, content, author, ...tags) {
+    // function to add a space after the , in the collection of tags
+    function spacedTags(tags) {
+        let spacedOutTags = tags.join(", ");
+        return spacedOutTags;
+    }
+    // factory function will return a function with this format, each prop will be populated with data either passed in as a parameter or created in this function such as Date and blog ID (from generator function)
+    return Object.create(null, {
+        "author": { value: author, enumerable: true }, 
+        "title": { value: title, enumerable: true },
+        "content": { value: content, enumerable: true },
+        "tags": { value: spacedTags(tags), enumerable: true },
+        "published": { value: Date.now(), enumerable: true }
+    })
+}
+
+module.exports = blogObjectFactory
+},{}],5:[function(require,module,exports){
 const createLogin = require("./createLogin")
 
 
@@ -259,7 +282,7 @@ const addListeners = function () {
 
 
 module.exports = addListeners
-},{"./createLogin":3}],5:[function(require,module,exports){
+},{"./createLogin":3}],6:[function(require,module,exports){
 const adminController = require("./adminController")
 
 
@@ -306,7 +329,7 @@ function validateUser() {
 }
 
 module.exports = validateUser
-},{"./adminController":2}],6:[function(require,module,exports){
+},{"./adminController":2}],7:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -344,7 +367,7 @@ const addListeners = function () {
 
 
 module.exports = addListeners
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 //const paginate = require("../pagination")
 //const blogComponent = require("./createBogComponent")
 const blogFactory = require("./factory")
@@ -356,6 +379,10 @@ const blogController = Object.create(null, {
         value: function () {
             
             blogFactory.retrieveAll().then(blogs => {
+                console.log(blogs)
+                blogs.sort((a, b) => {
+                    return b.published - a.published
+                })
                 populate(blogs)
                 addListeners(blogs)
                 // paginate.itemsToPaginate = blogs
@@ -367,12 +394,13 @@ const blogController = Object.create(null, {
 })
 
 module.exports = blogController
-},{"./addListeners":6,"./factory":8,"./populate":9}],8:[function(require,module,exports){
+},{"./addListeners":7,"./factory":9,"./populate":10}],9:[function(require,module,exports){
 // creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
 
 const addListeners = require("./addListeners")
 const populate = require("./populate")
 
+const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
 
 
 const blogFactory = Object.create(null, {
@@ -381,24 +409,31 @@ const blogFactory = Object.create(null, {
         "writable": true
     },
     "write": {
-        "value": {
+        "value": function (blog) {
             // insert function to write new blog to Firebase
+            return $.ajax({
+                "url": `${firebaseURL}/.json`,
+                "method": "POST",
+                "data": JSON.stringify(blog)
+            }).then((blogs)=>{
+                populate(blogs)
+                addListeners(blogs)
+            })
         },
     },
     "retrieveAll": {
-        "value": function (callback,...callbacks) {
+        "value": function () {
             // pull blogs from Firebase
             return $.ajax({
-                "url": "https://personal-site-60774.firebaseio.com/blogArray.json"
+                "url": `${firebaseURL}.json`
             }).then( blogDatabase => {
                 // assign blog posts to this object
-                this.blogCache = blogDatabase
-                this.cache = Object.keys(blogDatabase)
+                //this.blogCache = blogDatabase
+                this.blogCache = Object.keys(blogDatabase)
                     .map(key => {
                         blogDatabase[key].id = key
                         return blogDatabase[key]
                     })
-
                 return this.blogCache
 
                 // I'm thinking this below could be callback hell
@@ -428,7 +463,7 @@ const blogFactory = Object.create(null, {
 })
 //
 module.exports = blogFactory
-},{"./addListeners":6,"./populate":9}],9:[function(require,module,exports){
+},{"./addListeners":7,"./populate":10}],10:[function(require,module,exports){
 
 
 const populate = (blogEntries) => {
@@ -487,7 +522,7 @@ const populate = (blogEntries) => {
 
 
 module.exports = populate
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -549,7 +584,7 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
@@ -572,7 +607,7 @@ populateResume()
 
 // blogFactory.retrieveAll()
 // blogController.init()
-},{"./addListenersNav":1,"./admin/createLogin":3,"./admin/loginAddListeners":4,"./admin/validateUser":5,"./blog/blogController":7,"./blog/factory":8,"./contact/contact":10,"./projects/projects-controller":12,"./resume/resume-controller":13}],12:[function(require,module,exports){
+},{"./addListenersNav":1,"./admin/createLogin":3,"./admin/loginAddListeners":5,"./admin/validateUser":6,"./blog/blogController":8,"./blog/factory":9,"./contact/contact":11,"./projects/projects-controller":13,"./resume/resume-controller":14}],13:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -607,7 +642,7 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -647,4 +682,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[11]);
+},{}]},{},[12]);

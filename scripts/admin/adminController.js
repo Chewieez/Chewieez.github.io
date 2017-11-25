@@ -1,4 +1,5 @@
 const blogFactory = require("../blog/factory")
+const createNewBlogEntry = require("./createNewBlogEntry")
 
 
 
@@ -49,14 +50,16 @@ function createBlogEntryForm() {
         if (validateForm()) {
            
             // use content that was entered into admin form element to create new blog 
-            const newBlogPost = blogObjectFactory(
+            const newBlogPost = createNewBlogEntry(
                 newBlogTitleEl.value,
                 newBlogContentEl.value,
                 newBlogAuthorEl.value,
                 newBlogTagsEl.value
             )
-            // create a POST request to Firebase to store the new blog post
 
+            // create a POST request to Firebase to store the new blog post
+            blogFactory.write(newBlogPost)
+            
             // clear out contents of blog entry form
             // clearBlogEntryForm()
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs

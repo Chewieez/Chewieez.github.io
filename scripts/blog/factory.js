@@ -3,6 +3,7 @@
 const addListeners = require("./addListeners")
 const populate = require("./populate")
 
+const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
 
 
 const blogFactory = Object.create(null, {
@@ -11,24 +12,31 @@ const blogFactory = Object.create(null, {
         "writable": true
     },
     "write": {
-        "value": {
+        "value": function (blog) {
             // insert function to write new blog to Firebase
+            return $.ajax({
+                "url": `${firebaseURL}/.json`,
+                "method": "POST",
+                "data": JSON.stringify(blog)
+            }).then((blogs)=>{
+                populate(blogs)
+                addListeners(blogs)
+            })
         },
     },
     "retrieveAll": {
-        "value": function (callback,...callbacks) {
+        "value": function () {
             // pull blogs from Firebase
             return $.ajax({
-                "url": "https://personal-site-60774.firebaseio.com/blogArray.json"
+                "url": `${firebaseURL}.json`
             }).then( blogDatabase => {
                 // assign blog posts to this object
-                this.blogCache = blogDatabase
-                this.cache = Object.keys(blogDatabase)
+                //this.blogCache = blogDatabase
+                this.blogCache = Object.keys(blogDatabase)
                     .map(key => {
                         blogDatabase[key].id = key
                         return blogDatabase[key]
                     })
-
                 return this.blogCache
 
                 // I'm thinking this below could be callback hell

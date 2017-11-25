@@ -9,6 +9,10 @@ const blogController = Object.create(null, {
         value: function () {
             
             blogFactory.retrieveAll().then(blogs => {
+                console.log(blogs)
+                blogs.sort((a, b) => {
+                    return b.published - a.published
+                })
                 populate(blogs)
                 addListeners(blogs)
                 // paginate.itemsToPaginate = blogs
