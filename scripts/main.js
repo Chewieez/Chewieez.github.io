@@ -1,22 +1,24 @@
 const addListenersNav = require("./addListenersNav")
-const populateProjects = require("./projects/projects-controller")
+// const populateProjects = require("./projects/projects-controller")
 const populateContactInfo = require("./contact/contact")
 const populateResume = require("./resume/resume-controller")
-const blogFactory = require("./blog/factory")
-const blogController = require("./blog/blogController")
+//const blogFactory = require("./blog/factory")
+//const blogController = require("./blog/blogController")
 //const adminController = require("./admin/adminController")
 const createLogin = require("./admin/createLogin")
 const loginAddListeners = require("./admin/loginAddListeners")
-const validateUser = require("./admin/validateUser")
-
+//const validateUser = require("./admin/validateUser")
+const auth = require("./admin/validateUser")
 
 createLogin()
 loginAddListeners()
-validateUser()
+
+auth.init()
+
 addListenersNav()
-populateProjects()
+
+// validateUser()
+//populateProjects()
+
 populateContactInfo()
 populateResume()
-
-// blogFactory.retrieveAll()
-// blogController.init()
