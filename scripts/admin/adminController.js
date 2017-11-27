@@ -1,9 +1,16 @@
 const blogFactory = require("../blog/factory")
 const createNewBlogEntry = require("./createNewBlogEntry")
+const blogController = require("../blog/blogController")
+
+// set an edit flag to hold whether the user is in edit mode and 
+let editMode = {
+    "flag": false,
+    "currentBlogId": null
+}
 
 
 function createBlogEntryForm() {
-
+    
     // get control of section to place the create blog form
     const blogEntrySectionEl = document.getElementById("blogEntry")
 
@@ -56,23 +63,53 @@ function createBlogEntryForm() {
                 newBlogAuthorEl.value,
                 newBlogTagsEl.value
             )
+            
+            // check what mode EDIT object is in to know whether to create a new blog post or edit an existing post
 
             // create a POST request to Firebase to store the new blog post
             blogFactory.write(newBlogPost)
             
             // clear out contents of blog entry form
-            // clearBlogEntryForm()
+            clearBlogEntryForm()
     
             // -- need to revisit this link to the blog page now that we refactored to a single page app -- 
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-            // createButtonToBlogPage()
+            createButtonToBlogPage()
         }
         // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
     })
-}
 
+    // list all the blogs below the admin form for editing and deleting
+    listBlogs()
+
+    // listen for a click in the list of blogs DOM element
+    $("#blogListForEdits").on("click", (e) => {
         
+        // figure out which button was clicked
+        let selectedBlogId = event.target.id.split("!")[1]
+        console.log(selectedBlogId)
+        
+        // search array of blogs and find the blog entry for editing or deleting
+        let blogToEdit = blogFactory.blogCache.find(blog => {
+            return blog.id === selectedBlogId
+        })
+            
     
+        if (event.target.id.includes("blogEditBtn")) {
+            document.getElementById("admin-blog-title").value = blogToEdit.title
+            document.getElementById("admin-blog-author").value = blogToEdit.author
+            document.getElementById("admin-blog-content").value = blogToEdit.content
+            document.getElementById("admin-blog-tags").value = blogToEdit.tags
+            
+            editMode.flag = true;
+            editMode.currentBlogId = blogToEdit.id
+    
+        } else if (event.target.id.includes("blogDeleteBtn")) {
+            blogFactory.delete(blogToEdit.id)
+            listBlogs()
+        }
+    })
+}
 
 
 
@@ -112,7 +149,6 @@ function validateForm() {
     }
 }
 
-
 // clears out the form elements
 function clearBlogEntryForm() {
     document.forms["adminBlogEntryForm"].reset();
@@ -132,9 +168,39 @@ function createButtonToBlogPage() {
     let btnToBlogsEl = document.getElementById("btnToBlogs")
     btnToBlogsEl.addEventListener("click", function () {
         // send user to the blog page when they click on the button
-        window.location.href = "http://localhost:8080/blog/index.html"
+        blogController.init();
+
+        // hide admin page
+        $("#admin").addClass("hidden")
+        // reveal blog page
+        $("#blog").removeClass("hidden")
     })
 
 }
+
+// list all of the blogs in the database underneith the blog entry form
+function listBlogs() {
+    
+    blogFactory.retrieveAll().then(blogDatabase => {
+        
+        blogDatabase.sort((a, b) => {
+            return b.published - a.published
+        })
+
+        let blogListForEditingDomString = "<h2>Blog Entries</h2>"
+
+        blogDatabase.forEach(currentBlog => {
+            blogListForEditingDomString += `
+                <p id='blog!${currentBlog.id}'>${currentBlog.title}<button id='blogEditBtn!${currentBlog.id}' class='btn btn-primary btn-sm'>Edit</button>
+                <button id='blogDeleteBtn!${currentBlog.id}' class='btn btn-warning btn-sm'>Delete</button>
+                </p>
+                `
+        })
+
+        document.getElementById("blogListForEdits").innerHTML = blogListForEditingDomString
+    })
+            
+}
+    
 
 module.exports = createBlogEntryForm

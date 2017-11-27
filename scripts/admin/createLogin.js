@@ -1,5 +1,3 @@
-const loginAddListeners = require("./loginAddListeners")
-
 function createLogin() {
 
     const loggingInOutControlsEl = document.getElementById("loggingInOutControls")
@@ -16,7 +14,6 @@ function createLogin() {
                 <input type="password" name="adminLoginPassword" class="form-control"  required placeholder="...password">
             </form>
                 <button class="btn btn-primary" id="adminLoginBtn">Login</button>
-                <button class="btn btn-success" id="adminCreateLoginBtn">Create Account</button>
         </section>
         <section class="logout hidden" id="logout">
             <button class="btn btn-warning" id="adminLogoutBtn">Logout</button>
@@ -24,9 +21,6 @@ function createLogin() {
     `
 
     loggingInOutControlsEl.innerHTML = loggingInOutControlsDOMString
-
-    // add listeners to the login elements
-    loginAddListeners()
 }
 
 module.exports = createLogin

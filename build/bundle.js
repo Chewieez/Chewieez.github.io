@@ -25047,7 +25047,6 @@ const populateResume = require("./resume/resume-controller")
 const populateContactInfo = require("./contact/contact")
 // const auth = require("./admin/validateUser")
 // const createLogin = require("./admin/createLogin")
-// const loginAddListeners = require("./admin/loginAddListeners")
 // const adminController = require("./admin/adminController")
 // const observer = require("./admin/observer")
 
@@ -25096,13 +25095,20 @@ function addListenersNav() {
 }
 
 module.exports = addListenersNav
-},{"./blog/blogController":167,"./contact/contact":170,"./projects/projects-controller":172,"./resume/resume-controller":173}],160:[function(require,module,exports){
+},{"./blog/blogController":166,"./contact/contact":169,"./projects/projects-controller":171,"./resume/resume-controller":172}],160:[function(require,module,exports){
 const blogFactory = require("../blog/factory")
 const createNewBlogEntry = require("./createNewBlogEntry")
+const blogController = require("../blog/blogController")
+
+// set an edit flag to hold whether the user is in edit mode and 
+let editMode = {
+    "flag": false,
+    "currentBlogId": null
+}
 
 
 function createBlogEntryForm() {
-
+    
     // get control of section to place the create blog form
     const blogEntrySectionEl = document.getElementById("blogEntry")
 
@@ -25155,23 +25161,53 @@ function createBlogEntryForm() {
                 newBlogAuthorEl.value,
                 newBlogTagsEl.value
             )
+            
+            // check what mode EDIT object is in to know whether to create a new blog post or edit an existing post
 
             // create a POST request to Firebase to store the new blog post
             blogFactory.write(newBlogPost)
             
             // clear out contents of blog entry form
-            // clearBlogEntryForm()
+            clearBlogEntryForm()
     
             // -- need to revisit this link to the blog page now that we refactored to a single page app -- 
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-            // createButtonToBlogPage()
+            createButtonToBlogPage()
         }
         // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
     })
-}
 
+    // list all the blogs below the admin form for editing and deleting
+    listBlogs()
+
+    // listen for a click in the list of blogs DOM element
+    $("#blogListForEdits").on("click", (e) => {
         
+        // figure out which button was clicked
+        let selectedBlogId = event.target.id.split("!")[1]
+        console.log(selectedBlogId)
+        
+        // search array of blogs and find the blog entry for editing or deleting
+        let blogToEdit = blogFactory.blogCache.find(blog => {
+            return blog.id === selectedBlogId
+        })
+            
     
+        if (event.target.id.includes("blogEditBtn")) {
+            document.getElementById("admin-blog-title").value = blogToEdit.title
+            document.getElementById("admin-blog-author").value = blogToEdit.author
+            document.getElementById("admin-blog-content").value = blogToEdit.content
+            document.getElementById("admin-blog-tags").value = blogToEdit.tags
+            
+            editMode.flag = true;
+            editMode.currentBlogId = blogToEdit.id
+    
+        } else if (event.target.id.includes("blogDeleteBtn")) {
+            blogFactory.delete(blogToEdit.id)
+            listBlogs()
+        }
+    })
+}
 
 
 
@@ -25211,7 +25247,6 @@ function validateForm() {
     }
 }
 
-
 // clears out the form elements
 function clearBlogEntryForm() {
     document.forms["adminBlogEntryForm"].reset();
@@ -25231,15 +25266,43 @@ function createButtonToBlogPage() {
     let btnToBlogsEl = document.getElementById("btnToBlogs")
     btnToBlogsEl.addEventListener("click", function () {
         // send user to the blog page when they click on the button
-        window.location.href = "http://localhost:8080/blog/index.html"
+        blogController.init();
+
+        // hide admin page
+        $("#admin").addClass("hidden")
+        // reveal blog page
+        $("#blog").removeClass("hidden")
     })
 
 }
 
-module.exports = createBlogEntryForm
-},{"../blog/factory":168,"./createNewBlogEntry":162}],161:[function(require,module,exports){
-const loginAddListeners = require("./loginAddListeners")
+// list all of the blogs in the database underneith the blog entry form
+function listBlogs() {
+    
+    blogFactory.retrieveAll().then(blogDatabase => {
+        
+        blogDatabase.sort((a, b) => {
+            return b.published - a.published
+        })
 
+        let blogListForEditingDomString = "<h2>Blog Entries</h2>"
+
+        blogDatabase.forEach(currentBlog => {
+            blogListForEditingDomString += `
+                <p id='blog!${currentBlog.id}'>${currentBlog.title}<button id='blogEditBtn!${currentBlog.id}' class='btn btn-primary btn-sm'>Edit</button>
+                <button id='blogDeleteBtn!${currentBlog.id}' class='btn btn-warning btn-sm'>Delete</button>
+                </p>
+                `
+        })
+
+        document.getElementById("blogListForEdits").innerHTML = blogListForEditingDomString
+    })
+            
+}
+    
+
+module.exports = createBlogEntryForm
+},{"../blog/blogController":166,"../blog/factory":167,"./createNewBlogEntry":162}],161:[function(require,module,exports){
 function createLogin() {
 
     const loggingInOutControlsEl = document.getElementById("loggingInOutControls")
@@ -25256,7 +25319,6 @@ function createLogin() {
                 <input type="password" name="adminLoginPassword" class="form-control"  required placeholder="...password">
             </form>
                 <button class="btn btn-primary" id="adminLoginBtn">Login</button>
-                <button class="btn btn-success" id="adminCreateLoginBtn">Create Account</button>
         </section>
         <section class="logout hidden" id="logout">
             <button class="btn btn-warning" id="adminLogoutBtn">Logout</button>
@@ -25264,13 +25326,10 @@ function createLogin() {
     `
 
     loggingInOutControlsEl.innerHTML = loggingInOutControlsDOMString
-
-    // add listeners to the login elements
-    loginAddListeners()
 }
 
 module.exports = createLogin
-},{"./loginAddListeners":163}],162:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 
 // Factory function to create each blog object and cut down on repetitive typing
 const blogObjectFactory = function (title, content, author, ...tags) {
@@ -25291,65 +25350,6 @@ const blogObjectFactory = function (title, content, author, ...tags) {
 
 module.exports = blogObjectFactory
 },{}],163:[function(require,module,exports){
-const firebase = require("firebase")
-
-const addListeners = function () {
-
-    document.getElementById("adminCreateLoginBtn").addEventListener("click", (event) =>{
-
-        const userEmail = document.querySelector("[name='adminLoginEmail']").value;
-        const userPassword = document.querySelector("[name='adminLoginPassword']").value;
-    
-        firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            // ...
-        });
-    })
-
-    // document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
-        
-    //     const userEmail = document.querySelector("[name='adminLoginEmail']").value;
-    //     const userPassword = document.querySelector("[name='adminLoginPassword']").value;
-    
-    //     firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
-    //         // empty login fields
-    //         document.querySelector("[name='adminLoginEmail']").value = "";
-    //         document.querySelector("[name='adminLoginPassword']").value = "";
-    //     }).catch(function(error) {
-    //         // Handle Errors here.
-    //         var errorCode = error.code;
-    //         var errorMessage = error.message;
-    //         console.log(errorCode, errorMessage)
-    //         // ...
-    //     });
-    // })
-    
-    document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
-        
-        firebase.auth().signOut().then(function() {
-            // Sign-out successful.
-            console.log("Logout Successful")
-
-
-            // clear out contents of the admin form DOM element
-            document.getElementById("blogEntry").innerHTML = ""
-
-            // display the login form
-            document.getElementById("adminLogin").classList.remove("hidden")
-        }).catch(function(error) {
-            // An error happened.
-            console.log("Could log out the current user")
-        });
-    })
-}
-
-
-
-module.exports = addListeners
-},{"firebase":154}],164:[function(require,module,exports){
 const firebase = require("firebase")
 const adminController = require("./adminController")
 
@@ -25387,7 +25387,7 @@ const observer = Object.create(null, {
 })
 
 module.exports = observer
-},{"./adminController":160,"firebase":154}],165:[function(require,module,exports){
+},{"./adminController":160,"firebase":154}],164:[function(require,module,exports){
 //const adminController = require("./adminController")
 const firebase = require("firebase")
 const observer = require("./observer")
@@ -25400,7 +25400,7 @@ var config = {
     storageBucket: "personal-site-60774.appspot.com",
     messagingSenderId: "674756866097"
 };
-
+//
 
 const auth = Object.create(null, {
     "activeUser": {
@@ -25411,6 +25411,7 @@ const auth = Object.create(null, {
         value: function () {
             firebase.initializeApp(config)
             
+            // add listener to the login button
             document.getElementById("adminLoginBtn").addEventListener("click", e => {
                 // Validate login information
                 this.validate(
@@ -25421,6 +25422,20 @@ const auth = Object.create(null, {
                 // Clear the form
                 document.querySelector("[name='adminLoginEmail']").value = ""
                 document.querySelector("[name='adminLoginPassword']").value = ""
+            })
+
+            // add listener to the logout button
+            document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
+                
+                this.logout()
+        
+                // clear out contents of the admin form DOM element
+                document.getElementById("blogEntry").innerHTML = ""
+        
+                // display the login form
+                document.getElementById("adminLogin").classList.remove("hidden")
+                // hide the logout button
+                document.getElementById("adminLogoutBtn").classList.add("hidden")
             })
 
             // Set up authentication observer
@@ -25501,7 +25516,7 @@ module.exports = auth
 // }
 
 // module.exports = validateUser
-},{"./observer":164,"firebase":154}],166:[function(require,module,exports){
+},{"./observer":163,"firebase":154}],165:[function(require,module,exports){
 
 
 const addListeners = function () {
@@ -25539,7 +25554,7 @@ const addListeners = function () {
 
 
 module.exports = addListeners
-},{}],167:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 //const paginate = require("../pagination")
 //const blogComponent = require("./createBogComponent")
 const blogFactory = require("./factory")
@@ -25566,10 +25581,9 @@ const blogController = Object.create(null, {
 })
 
 module.exports = blogController
-},{"./addListeners":166,"./factory":168,"./populate":169}],168:[function(require,module,exports){
+},{"./addListeners":165,"./factory":167,"./populate":168}],167:[function(require,module,exports){
 // creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
 
-const addListeners = require("./addListeners")
 const populate = require("./populate")
 
 const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
@@ -25577,7 +25591,7 @@ const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
 
 const blogFactory = Object.create(null, {
     "blogCache": {
-        "value": {},
+        "value": null,
         "writable": true
     },
     "write": {
@@ -25588,11 +25602,7 @@ const blogFactory = Object.create(null, {
                 "method": "POST",
                 "data": JSON.stringify(blog)
             })
-            // .then((blogs)=>{
-            //     populate(blogs)
-            //     addListeners(blogs)
-            // })
-        },
+        }
     },
     "retrieveAll": {
         "value": function () {
@@ -25600,25 +25610,13 @@ const blogFactory = Object.create(null, {
             return $.ajax({
                 "url": `${firebaseURL}.json`
             }).then( blogDatabase => {
-                // assign blog posts to this object
-                //this.blogCache = blogDatabase
+                // assign blog posts to this object for caching, convert object of object from Firebase into an array
                 this.blogCache = Object.keys(blogDatabase)
                     .map(key => {
                         blogDatabase[key].id = key
                         return blogDatabase[key]
                     })
                 return this.blogCache
-
-                // I'm thinking this below could be callback hell
-                // // if a callback function is passed in, run it
-                // if (callback) {
-                //     callback(blogDatabase)
-                // }
-
-                // //if multiple callback functions are passed in, call each one
-                // if (callbacks.length > 0) {
-                //     callbacks.forEach(c => c())
-                // }
             })
         }
     },
@@ -25630,13 +25628,19 @@ const blogFactory = Object.create(null, {
             // insert function to edit a blog post on Firebase
         },
     },
-    "addListeners": {
-        "value": addListeners
+    "delete": {
+        "value": function(id) {
+            // insert function to write new blog to Firebase and pass in the id of the blog entry to delete
+            return $.ajax({
+                "url": `${firebaseURL}/${id}/.json`,
+                "method": "DELETE",
+            })
+        }
     }
 })
-//
+
 module.exports = blogFactory
-},{"./addListeners":166,"./populate":169}],169:[function(require,module,exports){
+},{"./populate":168}],168:[function(require,module,exports){
 
 
 const populate = (blogEntries) => {
@@ -25695,7 +25699,7 @@ const populate = (blogEntries) => {
 
 
 module.exports = populate
-},{}],170:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 const contactInfo = {};
 
 const twitterInfo = {
@@ -25757,19 +25761,17 @@ function populateContactInfo () {
 
 
 module.exports = populateContactInfo
-},{}],171:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
 const createLogin = require("./admin/createLogin")
-// const loginAddListeners = require("./admin/loginAddListeners")
 const auth = require("./admin/validateUser")
 
 addListenersNav()
 createLogin()
-// loginAddListeners()
 auth.init()
 
 
-},{"./addListenersNav":159,"./admin/createLogin":161,"./admin/validateUser":165}],172:[function(require,module,exports){
+},{"./addListenersNav":159,"./admin/createLogin":161,"./admin/validateUser":164}],171:[function(require,module,exports){
 
 
 function populateProjects() {
@@ -25804,7 +25806,7 @@ function populateProjects() {
 }
 
 module.exports = populateProjects
-},{}],173:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 
 function populateResume() {
     // pull professionalHistory Database from local storage
@@ -25844,4 +25846,4 @@ function populateResume() {
 
 module.exports = populateResume
 
-},{}]},{},[171]);
+},{}]},{},[170]);

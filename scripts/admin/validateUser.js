@@ -10,7 +10,7 @@ var config = {
     storageBucket: "personal-site-60774.appspot.com",
     messagingSenderId: "674756866097"
 };
-
+//
 
 const auth = Object.create(null, {
     "activeUser": {
@@ -21,6 +21,7 @@ const auth = Object.create(null, {
         value: function () {
             firebase.initializeApp(config)
             
+            // add listener to the login button
             document.getElementById("adminLoginBtn").addEventListener("click", e => {
                 // Validate login information
                 this.validate(
@@ -31,6 +32,20 @@ const auth = Object.create(null, {
                 // Clear the form
                 document.querySelector("[name='adminLoginEmail']").value = ""
                 document.querySelector("[name='adminLoginPassword']").value = ""
+            })
+
+            // add listener to the logout button
+            document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
+                
+                this.logout()
+        
+                // clear out contents of the admin form DOM element
+                document.getElementById("blogEntry").innerHTML = ""
+        
+                // display the login form
+                document.getElementById("adminLogin").classList.remove("hidden")
+                // hide the logout button
+                document.getElementById("adminLogoutBtn").classList.add("hidden")
             })
 
             // Set up authentication observer

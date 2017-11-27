@@ -4,7 +4,6 @@ const populateResume = require("./resume/resume-controller")
 const populateContactInfo = require("./contact/contact")
 // const auth = require("./admin/validateUser")
 // const createLogin = require("./admin/createLogin")
-// const loginAddListeners = require("./admin/loginAddListeners")
 // const adminController = require("./admin/adminController")
 // const observer = require("./admin/observer")
 
