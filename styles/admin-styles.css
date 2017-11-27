@@ -9,9 +9,9 @@ input, textarea {
     width: 100%;
 }
 
-#admin-blog-entry {
+#admin-blog-entry, #blogListForEdits {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 2em;
 }
 
 #admin-blog-entry label, #adminLogin label {
@@ -30,4 +30,21 @@ input, textarea {
 
 #btnToBlogs {
     width: 80px;
+}
+
+.btn {
+    margin: .2em .1em .2em .4em
+}
+
+.blogList {
+    border-top: 1px solid grey;
+}
+
+#loggingInOutControls {
+    /* display: relative; */
+    float: right;
+}
+
+#loggingIntOutControls::after {
+    clear: both;
 }

@@ -40,8 +40,13 @@ const blogFactory = Object.create(null, {
         "value": populate
     },
     "edit": {
-        "value": {
+        "value": function (blog, id){
             // insert function to edit a blog post on Firebase
+            return $.ajax({
+                "url": `${firebaseURL}/${id}/.json`,
+                "method": "PUT",
+                "data": JSON.stringify(blog)
+            })
         },
     },
     "delete": {

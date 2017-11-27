@@ -27,6 +27,8 @@ const observer = Object.create(null, {
                     
                     // clear out contents of the admin form DOM element.
                     document.getElementById("blogEntry").innerHTML = ""
+                    document.getElementById("blogListForEdits").innerHTML = ""
+
                     auth.activeUser = null
                 }
             })

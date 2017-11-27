@@ -55,9 +55,8 @@ function createBlogEntryForm() {
     saveBlogEl.addEventListener("click", function (event) {
         // check if the validateForm function returns true
         if (validateForm()) {
-           
             // use content that was entered into admin form element to create new blog 
-            const newBlogPost = createNewBlogEntry(
+            const blogPost = createNewBlogEntry(
                 newBlogTitleEl.value,
                 newBlogContentEl.value,
                 newBlogAuthorEl.value,
@@ -65,14 +64,17 @@ function createBlogEntryForm() {
             )
             
             // check what mode EDIT object is in to know whether to create a new blog post or edit an existing post
-
-            // create a POST request to Firebase to store the new blog post
-            blogFactory.write(newBlogPost)
+            if (editMode.flag === false) {
+                // create a POST request to Firebase to store the new blog post
+                blogFactory.write(blogPost)
+                
+            } else {
+                // use the edit function on the blogFactory to replace the file in firebase
+                blogFactory.edit(blogPost, editMode.currentBlogId)
+            }
             
             // clear out contents of blog entry form
             clearBlogEntryForm()
-    
-            // -- need to revisit this link to the blog page now that we refactored to a single page app -- 
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
             createButtonToBlogPage()
         }
@@ -191,9 +193,9 @@ function listBlogs() {
 
         blogDatabase.forEach(currentBlog => {
             blogListForEditingDomString += `
-                <p id='blog!${currentBlog.id}'>${currentBlog.title}<button id='blogEditBtn!${currentBlog.id}' class='btn btn-primary btn-sm'>Edit</button>
+                <div id='blog!${currentBlog.id}'>${currentBlog.title}<button id='blogEditBtn!${currentBlog.id}' class='btn btn-primary btn-sm'>Edit</button>
                 <button id='blogDeleteBtn!${currentBlog.id}' class='btn btn-warning btn-sm'>Delete</button>
-                </p>
+                </div>
                 `
         })
 
