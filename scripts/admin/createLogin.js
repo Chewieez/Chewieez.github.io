@@ -1,3 +1,4 @@
+const loginAddListeners = require("./loginAddListeners")
 
 function createLogin() {
 
@@ -24,6 +25,8 @@ function createLogin() {
 
     loggingInOutControlsEl.innerHTML = loggingInOutControlsDOMString
 
+    // add listeners to the login elements
+    loginAddListeners()
 }
 
 module.exports = createLogin

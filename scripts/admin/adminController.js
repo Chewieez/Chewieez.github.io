@@ -2,8 +2,8 @@ const blogFactory = require("../blog/factory")
 const createNewBlogEntry = require("./createNewBlogEntry")
 
 
-
 function createBlogEntryForm() {
+
     // get control of section to place the create blog form
     const blogEntrySectionEl = document.getElementById("blogEntry")
 
@@ -43,9 +43,9 @@ function createBlogEntryForm() {
     // get control of the button DOM element the user will click to save the new blog entry
     const saveBlogEl = document.getElementById("admin-save-blog")
 
+
     // setup click event to run the function to take user input field content and generate a new blog post
     saveBlogEl.addEventListener("click", function (event) {
-
         // check if the validateForm function returns true
         if (validateForm()) {
            
@@ -62,8 +62,10 @@ function createBlogEntryForm() {
             
             // clear out contents of blog entry form
             // clearBlogEntryForm()
+    
+            // -- need to revisit this link to the blog page now that we refactored to a single page app -- 
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-            createButtonToBlogPage()
+            // createButtonToBlogPage()
         }
         // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
     })

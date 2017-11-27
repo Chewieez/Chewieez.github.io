@@ -1,6 +1,6 @@
 //const adminController = require("./adminController")
 const firebase = require("firebase")
-const observe = require("./observer")
+const observer = require("./observer")
 
 var config = {
     apiKey: "AIzaSyDCcUjGA2Aucemv8DdP4HDz8a6bVYCXenE",
@@ -11,7 +11,7 @@ var config = {
     messagingSenderId: "674756866097"
 };
 
-//
+
 const auth = Object.create(null, {
     "activeUser": {
         value: null,
@@ -20,8 +20,8 @@ const auth = Object.create(null, {
     "init": {
         value: function () {
             firebase.initializeApp(config)
-
-            document.getElementById("adminCreateLoginBtn").addEventListener("click", e => {
+            
+            document.getElementById("adminLoginBtn").addEventListener("click", e => {
                 // Validate login information
                 this.validate(
                     document.querySelector("[name='adminLoginEmail']").value,
@@ -34,7 +34,7 @@ const auth = Object.create(null, {
             })
 
             // Set up authentication observer
-            observe.init(this)
+            observer.init(this)
         }
     },
     "validate": {

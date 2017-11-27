@@ -16,25 +16,23 @@ const addListeners = function () {
         });
     })
 
-
-    document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
-
-        const userEmail = document.querySelector("[name='adminLoginEmail']").value;
-        const userPassword = document.querySelector("[name='adminLoginPassword']").value;
+    // document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
+        
+    //     const userEmail = document.querySelector("[name='adminLoginEmail']").value;
+    //     const userPassword = document.querySelector("[name='adminLoginPassword']").value;
     
-        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
-            // empty login fields
-            document.querySelector("[name='adminLoginEmail']").value = "";
-            document.querySelector("[name='adminLoginPassword']").value = "";
-
-        }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            // ...
-        });
-    })
+    //     firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
+    //         // empty login fields
+    //         document.querySelector("[name='adminLoginEmail']").value = "";
+    //         document.querySelector("[name='adminLoginPassword']").value = "";
+    //     }).catch(function(error) {
+    //         // Handle Errors here.
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //         console.log(errorCode, errorMessage)
+    //         // ...
+    //     });
+    // })
     
     document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
         

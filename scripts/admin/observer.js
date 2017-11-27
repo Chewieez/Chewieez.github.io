@@ -1,16 +1,13 @@
 const firebase = require("firebase")
-// const createLogin = require("./createLogin")
-const loginAddListeners = require("./loginAddListeners")
 const adminController = require("./adminController")
+
 
 const observer = Object.create(null, {
     "init": {
         value: function (auth) {
             firebase.auth().onAuthStateChanged(function(user) {
 
-                // createLogin()
-                // loginAddListeners()
-
+               
                 if (user) {
                     auth.activeUser = user
 

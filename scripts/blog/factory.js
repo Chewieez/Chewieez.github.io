@@ -18,10 +18,11 @@ const blogFactory = Object.create(null, {
                 "url": `${firebaseURL}/.json`,
                 "method": "POST",
                 "data": JSON.stringify(blog)
-            }).then((blogs)=>{
-                populate(blogs)
-                addListeners(blogs)
             })
+            // .then((blogs)=>{
+            //     populate(blogs)
+            //     addListeners(blogs)
+            // })
         },
     },
     "retrieveAll": {

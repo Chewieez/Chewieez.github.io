@@ -25043,16 +25043,20 @@ process.umask = function() { return 0; };
 },{}],159:[function(require,module,exports){
 const populateProjects = require("./projects/projects-controller")
 const blogController = require("./blog/blogController")
-const validateUser = require("./admin/validateUser")
-const createLogin = require("./admin/createLogin")
-const loginAddListeners = require("./admin/loginAddListeners")
-const adminController = require("./admin/adminController")
-const observer = require("./admin/observer")
+const populateResume = require("./resume/resume-controller")
+const populateContactInfo = require("./contact/contact")
+// const auth = require("./admin/validateUser")
+// const createLogin = require("./admin/createLogin")
+// const loginAddListeners = require("./admin/loginAddListeners")
+// const adminController = require("./admin/adminController")
+// const observer = require("./admin/observer")
 
 function addListenersNav() {
     $("#myNavbar").on("click", e=>{
-        if (!e.target.className.includes("nav__link--bio ")) {
-            console.log(e)
+        console.log(e)
+
+        // check if the user clicked a nav link that is NOT bio. 
+        if (!e.target.className.includes("nav__link--bio")) {
             // find out what link was clicked on
             let targetClasses = Array.from(e.target.classList)
 
@@ -25060,8 +25064,6 @@ function addListenersNav() {
                 return clazz.startsWith("nav__link")
             }).split("--")[1]
 
-            //console.log(sectionName)
-            
             // Add `hidden` class to all main sections
             Array.from(document.getElementsByClassName("mainSection"))
                 .forEach(section => section.classList.add("hidden"))
@@ -25069,53 +25071,38 @@ function addListenersNav() {
             // unhide the section clicked
             $(`#${sectionName}`).removeClass("hidden")
 
-            if (sectionName === "projects") {
-                populateProjects()
-            }
-            if (sectionName === "blog") {
-                blogController.init()    
-            }
-
-            if (sectionName === "admin") {
-                // createLogin()
-                // loginAddListeners()
-                
-                observer.init()
-                
-            
-                // check if the user is authorized to use blog entry form
-                // if (user) {
-                //     console.log(user.uid)
-                //     if (user.uid === "OmaxzFwI2yMWWSuKVuMOwzqKG173") {
-                //         // create and display blog entry form
-                //         adminController()
-                //     } else {
-                //         // post message to DOM that states the user does not have authorization to view this page.
-                    
-                //         document.getElementById("blogEntry").innerHTML = "<h4>You are not authorized to view this page.</h4>"
-                //     }
-                // } else {
-                //     document.getElementById("logout").classList.add("hidden")
-                    
-                //     // clear out contents of the admin form DOM element.
-                //     document.getElementById("blogEntry").innerHTML = ""
-                    
-                // }
-
+            // initialize the page that was clicked
+            switch (sectionName) {
+            case "projects":
+                populateProjects();
+                break;
+            case "blog":
+                blogController.init();
+                break;
+            case "resume":
+                populateResume();
+                break;
+            case "contact":
+                populateContactInfo();
+                break;
+            // case "admin":
+            //     createLogin()
+            //     // loginAddListeners()
+            //     auth.init();
+            //     break;
             }
         }
     })
-
 }
 
 module.exports = addListenersNav
-},{"./admin/adminController":160,"./admin/createLogin":161,"./admin/loginAddListeners":163,"./admin/observer":164,"./admin/validateUser":165,"./blog/blogController":167,"./projects/projects-controller":172}],160:[function(require,module,exports){
+},{"./blog/blogController":167,"./contact/contact":170,"./projects/projects-controller":172,"./resume/resume-controller":173}],160:[function(require,module,exports){
 const blogFactory = require("../blog/factory")
 const createNewBlogEntry = require("./createNewBlogEntry")
 
 
-
 function createBlogEntryForm() {
+
     // get control of section to place the create blog form
     const blogEntrySectionEl = document.getElementById("blogEntry")
 
@@ -25155,9 +25142,9 @@ function createBlogEntryForm() {
     // get control of the button DOM element the user will click to save the new blog entry
     const saveBlogEl = document.getElementById("admin-save-blog")
 
+
     // setup click event to run the function to take user input field content and generate a new blog post
     saveBlogEl.addEventListener("click", function (event) {
-
         // check if the validateForm function returns true
         if (validateForm()) {
            
@@ -25174,8 +25161,10 @@ function createBlogEntryForm() {
             
             // clear out contents of blog entry form
             // clearBlogEntryForm()
+    
+            // -- need to revisit this link to the blog page now that we refactored to a single page app -- 
             // create a new button to allow the user to quickly navigate to the blog page to read and review blogs
-            createButtonToBlogPage()
+            // createButtonToBlogPage()
         }
         // if validateForm function returns false, nothing happens in this function/click handler and form remains populated so the user can correct their errors and reclick Save Blog
     })
@@ -25249,6 +25238,7 @@ function createButtonToBlogPage() {
 
 module.exports = createBlogEntryForm
 },{"../blog/factory":168,"./createNewBlogEntry":162}],161:[function(require,module,exports){
+const loginAddListeners = require("./loginAddListeners")
 
 function createLogin() {
 
@@ -25275,10 +25265,12 @@ function createLogin() {
 
     loggingInOutControlsEl.innerHTML = loggingInOutControlsDOMString
 
+    // add listeners to the login elements
+    loginAddListeners()
 }
 
 module.exports = createLogin
-},{}],162:[function(require,module,exports){
+},{"./loginAddListeners":163}],162:[function(require,module,exports){
 
 // Factory function to create each blog object and cut down on repetitive typing
 const blogObjectFactory = function (title, content, author, ...tags) {
@@ -25317,25 +25309,23 @@ const addListeners = function () {
         });
     })
 
-
-    document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
-
-        const userEmail = document.querySelector("[name='adminLoginEmail']").value;
-        const userPassword = document.querySelector("[name='adminLoginPassword']").value;
+    // document.getElementById("adminLoginBtn").addEventListener("click", (event) =>{
+        
+    //     const userEmail = document.querySelector("[name='adminLoginEmail']").value;
+    //     const userPassword = document.querySelector("[name='adminLoginPassword']").value;
     
-        firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
-            // empty login fields
-            document.querySelector("[name='adminLoginEmail']").value = "";
-            document.querySelector("[name='adminLoginPassword']").value = "";
-
-        }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            // ...
-        });
-    })
+    //     firebase.auth().signInWithEmailAndPassword(userEmail, userPassword).then(()=>{
+    //         // empty login fields
+    //         document.querySelector("[name='adminLoginEmail']").value = "";
+    //         document.querySelector("[name='adminLoginPassword']").value = "";
+    //     }).catch(function(error) {
+    //         // Handle Errors here.
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //         console.log(errorCode, errorMessage)
+    //         // ...
+    //     });
+    // })
     
     document.getElementById("adminLogoutBtn").addEventListener("click", (event) => {
         
@@ -25361,18 +25351,15 @@ const addListeners = function () {
 module.exports = addListeners
 },{"firebase":154}],164:[function(require,module,exports){
 const firebase = require("firebase")
-// const createLogin = require("./createLogin")
-const loginAddListeners = require("./loginAddListeners")
 const adminController = require("./adminController")
+
 
 const observer = Object.create(null, {
     "init": {
         value: function (auth) {
             firebase.auth().onAuthStateChanged(function(user) {
 
-                // createLogin()
-                // loginAddListeners()
-
+               
                 if (user) {
                     auth.activeUser = user
 
@@ -25400,10 +25387,10 @@ const observer = Object.create(null, {
 })
 
 module.exports = observer
-},{"./adminController":160,"./loginAddListeners":163,"firebase":154}],165:[function(require,module,exports){
+},{"./adminController":160,"firebase":154}],165:[function(require,module,exports){
 //const adminController = require("./adminController")
 const firebase = require("firebase")
-const observe = require("./observer")
+const observer = require("./observer")
 
 var config = {
     apiKey: "AIzaSyDCcUjGA2Aucemv8DdP4HDz8a6bVYCXenE",
@@ -25414,7 +25401,7 @@ var config = {
     messagingSenderId: "674756866097"
 };
 
-//
+
 const auth = Object.create(null, {
     "activeUser": {
         value: null,
@@ -25423,8 +25410,8 @@ const auth = Object.create(null, {
     "init": {
         value: function () {
             firebase.initializeApp(config)
-
-            document.getElementById("adminCreateLoginBtn").addEventListener("click", e => {
+            
+            document.getElementById("adminLoginBtn").addEventListener("click", e => {
                 // Validate login information
                 this.validate(
                     document.querySelector("[name='adminLoginEmail']").value,
@@ -25437,7 +25424,7 @@ const auth = Object.create(null, {
             })
 
             // Set up authentication observer
-            observe.init(this)
+            observer.init(this)
         }
     },
     "validate": {
@@ -25600,10 +25587,11 @@ const blogFactory = Object.create(null, {
                 "url": `${firebaseURL}/.json`,
                 "method": "POST",
                 "data": JSON.stringify(blog)
-            }).then((blogs)=>{
-                populate(blogs)
-                addListeners(blogs)
             })
+            // .then((blogs)=>{
+            //     populate(blogs)
+            //     addListeners(blogs)
+            // })
         },
     },
     "retrieveAll": {
@@ -25771,31 +25759,17 @@ function populateContactInfo () {
 module.exports = populateContactInfo
 },{}],171:[function(require,module,exports){
 const addListenersNav = require("./addListenersNav")
-// const populateProjects = require("./projects/projects-controller")
-const populateContactInfo = require("./contact/contact")
-const populateResume = require("./resume/resume-controller")
-//const blogFactory = require("./blog/factory")
-//const blogController = require("./blog/blogController")
-//const adminController = require("./admin/adminController")
 const createLogin = require("./admin/createLogin")
-const loginAddListeners = require("./admin/loginAddListeners")
-//const validateUser = require("./admin/validateUser")
+// const loginAddListeners = require("./admin/loginAddListeners")
 const auth = require("./admin/validateUser")
 
+addListenersNav()
 createLogin()
-loginAddListeners()
-
+// loginAddListeners()
 auth.init()
 
-addListenersNav()
 
-// validateUser()
-//populateProjects()
-
-populateContactInfo()
-populateResume()
-
-},{"./addListenersNav":159,"./admin/createLogin":161,"./admin/loginAddListeners":163,"./admin/validateUser":165,"./contact/contact":170,"./resume/resume-controller":173}],172:[function(require,module,exports){
+},{"./addListenersNav":159,"./admin/createLogin":161,"./admin/validateUser":165}],172:[function(require,module,exports){
 
 
 function populateProjects() {
