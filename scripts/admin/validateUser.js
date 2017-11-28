@@ -1,6 +1,9 @@
 //const adminController = require("./adminController")
 const firebase = require("firebase")
 const observer = require("./observer")
+const admin = require("firebase-admin")
+const serviceAccount = require("../private/serviceAccountKey.json")
+
 
 var config = {
     apiKey: "AIzaSyDCcUjGA2Aucemv8DdP4HDz8a6bVYCXenE",
@@ -10,7 +13,7 @@ var config = {
     storageBucket: "personal-site-60774.appspot.com",
     messagingSenderId: "674756866097"
 };
-//
+
 
 const auth = Object.create(null, {
     "activeUser": {
@@ -28,7 +31,7 @@ const auth = Object.create(null, {
                     document.querySelector("[name='adminLoginEmail']").value,
                     document.querySelector("[name='adminLoginPassword']").value
                 )
-
+                
                 // Clear the form
                 document.querySelector("[name='adminLoginEmail']").value = ""
                 document.querySelector("[name='adminLoginPassword']").value = ""
@@ -65,6 +68,37 @@ const auth = Object.create(null, {
                 })
         }
     },
+    "getToken": {
+        value: function () {
+            
+            firebase.auth().currentUser.getIdToken().then(function(idToken) {
+                console.log("idToken", idToken)
+                auth.activeUser.idToken = idToken
+                // Send token to your backend via HTTPS
+                // ...
+                // admin.auth().verifyIdToken(idToken)
+                //     .then(function(decodedToken) {
+                //         console.log(decodedToken)
+                //         auth.activeUser.decodedToken = decodedToken.uid;
+                //         // ...
+                //     }).catch(function(error) {
+                //         // Handle error
+                //         console.log("error verifying token")
+                //     });
+            }).catch(function(error) {
+                // Handle error
+                console.log("error getting idToken")
+            });
+        }
+    },
+    "adminSDKInit": {
+        value: function () {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: "https://personal-site-60774.firebaseio.com"
+            });
+        }
+    },
     "logout": {
         value: function () {
             firebase.auth().signOut().then(function() {
@@ -78,51 +112,3 @@ const auth = Object.create(null, {
 
 module.exports = auth
 
-
-
-
-// function validateUser() {
-    
-//     firebase.auth().onAuthStateChanged(function (user) {
-//         const loggedInUser = user
-//         if (loggedInUser) {
-//             // User is signed in.
-//             var displayName = user.displayName;
-//             var email = user.email;
-//             var emailVerified = user.emailVerified;
-//             var photoURL = user.photoURL;
-//             var isAnonymous = user.isAnonymous;
-//             var uid = user.uid;
-//             var providerData = user.providerData;
-//             console.log(loggedInUser.uid)
-
-//             // hide the login form
-//             // document.getElementById("adminLogin").classList.add("hidden")
-//             // display the logout button
-//             // document.getElementById("logout").classList.remove("hidden")
-            
-//             // check if the user is authorized to use blog entry form
-//             // if (user.uid === "OmaxzFwI2yMWWSuKVuMOwzqKG173") {
-//             //     // create and display blog entry form
-//             //     adminController()
-//             // } else {
-//             //     // post message to DOM that states the user does not have authorization to view this page. 
-//             //     document.getElementById("blogEntry").innerHTML = "<h4>You are not authorized to view this page.</h4>"
-//             // }
-
-            
-
-//         } else {
-//             console.log("user is signed out")
-//             // document.getElementById("logout").classList.add("hidden")
-            
-//             // // clear out contents of the admin form DOM element.
-//             // document.getElementById("blogEntry").innerHTML = ""
-
-//             // return null since no current user
-//         }
-//         return loggedInUser
-//     });
-// }
-
-// module.exports = validateUser

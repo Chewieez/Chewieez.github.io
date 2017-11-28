@@ -1,5 +1,5 @@
 // creates a blog object that will hold blog entries and contains methods that pertain to handling blog entries
-
+//const auth = require("../admin/validateUser")
 const populate = require("./populate")
 
 const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
@@ -11,10 +11,10 @@ const blogFactory = Object.create(null, {
         "writable": true
     },
     "write": {
-        "value": function (blog) {
+        "value": function (blog, auth) {
             // insert function to write new blog to Firebase
             return $.ajax({
-                "url": `${firebaseURL}/.json`,
+                "url": `${firebaseURL}/.json?auth=${auth.activeUser.idToken}`,
                 "method": "POST",
                 "data": JSON.stringify(blog)
             })
@@ -40,10 +40,10 @@ const blogFactory = Object.create(null, {
         "value": populate
     },
     "edit": {
-        "value": function (blog, id){
+        "value": function (blog, id, auth){
             // insert function to edit a blog post on Firebase
             return $.ajax({
-                "url": `${firebaseURL}/${id}/.json`,
+                "url": `${firebaseURL}/${id}/.json?auth=${auth.activeUser.idToken}`,
                 "method": "PUT",
                 "data": JSON.stringify(blog)
             })

@@ -10,13 +10,16 @@ const observer = Object.create(null, {
                
                 if (user) {
                     auth.activeUser = user
+                    
+                    // get user token for writing prividges 
+                    auth.getToken()
 
                     document.getElementById("adminLogin").classList.add("hidden")
                     document.getElementById("logout").classList.remove("hidden")
 
                     if (user.uid === "OmaxzFwI2yMWWSuKVuMOwzqKG173") {
                         // create and display blog entry form
-                        adminController()
+                        adminController(auth)
                     } else {
                         // post message to DOM that states the user does not have authorization to view this page.
                     

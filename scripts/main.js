@@ -5,4 +5,4 @@ const auth = require("./admin/validateUser")
 addListenersNav()
 createLogin()
 auth.init()
-
+auth.adminSDKInit()

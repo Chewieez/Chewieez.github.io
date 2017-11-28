@@ -9,7 +9,7 @@ let editMode = {
 }
 
 
-function createBlogEntryForm() {
+function createBlogEntryForm(auth) {
     
     // get control of section to place the create blog form
     const blogEntrySectionEl = document.getElementById("blogEntry")
@@ -66,11 +66,11 @@ function createBlogEntryForm() {
             // check what mode EDIT object is in to know whether to create a new blog post or edit an existing post
             if (editMode.flag === false) {
                 // create a POST request to Firebase to store the new blog post
-                blogFactory.write(blogPost)
+                blogFactory.write(blogPost, auth)
                 
             } else {
                 // use the edit function on the blogFactory to replace the file in firebase
-                blogFactory.edit(blogPost, editMode.currentBlogId)
+                blogFactory.edit(blogPost, editMode.currentBlogId, auth)
             }
             
             // clear out contents of blog entry form

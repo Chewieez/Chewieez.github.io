@@ -34,6 +34,8 @@
     "grunt-notify": "^0.4.5"
   },
   "dependencies": {
-    "firebase": "^4.6.2"
+    "fast-crc32c": "^1.0.4",
+    "firebase": "^4.6.2",
+    "firebase-admin": "^5.5.1"
   }
 }
