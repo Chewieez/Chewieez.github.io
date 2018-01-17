@@ -3,24 +3,27 @@ function populateResume() {
     // pull professionalHistory Database from local storage
     // const professionalHistoryD = JSON.parse(localStorage.getItem("professionalHistoryString"));
 
+    // get control of container to place job history with document.getElementById
+    const profHistoryEl = document.getElementById("professional-history");
+    
+    // create variable to hold Resume content from db
+    let profHistoryArray = null;
+
     // pull professionalHistory from Firebase
     $.ajax({
         "url": "https://personal-site-60774.firebaseio.com/professionalHistoryArray.json"
     }).then((professionalHistory) => {
-        let profHistoryArray = professionalHistory
+        // assign the returned value from Firebase (full of professional history) a variable
+        profHistoryArray = professionalHistory
+        
+        // create an empty string to start building up to eventually place in DOM.
+        let resumeString = "";
 
-        // get control of container to place job history with document.getElementById
-        const profHistoryEl = document.getElementById("professional-history");
-        
-        // // assign professionalHistoryArray that is inside the professionalHistory object to a variable
-        // const profHistoryArray = professionalHistory.professionalHistoryArray;
-        
-        
         //loop through array and populate the <section id-"professional-history"> container with each array item (job).
         for (let i = 0; i < profHistoryArray.length; i++) {
             let job = profHistoryArray[i];
         
-            profHistoryEl.innerHTML += `
+            resumeString += `
                 <article class="job-info">
                     <h4>${job.title}</h4>
                     <h5>${job.company}</h5>
@@ -30,9 +33,10 @@ function populateResume() {
                 </article>
                 <hr>
                 `
-        
         }
+        profHistoryEl.innerHTML = resumeString
     })
+
 }
 
 module.exports = populateResume

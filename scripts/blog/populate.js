@@ -48,8 +48,8 @@ const populate = (blogEntries) => {
     })
 
     // Print blog content and data info to DOM
-    blogViewEl.innerHTML += blogViewContentString
-    blogEntriesEl.innerHTML += blogEntriesListString
+    blogViewEl.innerHTML = blogViewContentString
+    blogEntriesEl.innerHTML = blogEntriesListString
 
    
 }

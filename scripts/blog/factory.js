@@ -9,7 +9,8 @@ const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
 const blogFactory = Object.create(null, {
     "blogCache": {
         "value": {},
-        "writable": true
+        "writable": true,
+        "enumerable": true
     },
     "write": {
         "value": function (blog) {

@@ -25546,23 +25546,25 @@ const blogFactory = require("./factory")
 const populate = require("./populate")
 const addListeners = require("./addListeners")
 
+
 const blogController = Object.create(null, {
     "init": {
         value: function () {
             
             blogFactory.retrieveAll().then(blogs => {
-                console.log(blogs)
+        
                 blogs.sort((a, b) => {
                     return b.published - a.published
                 })
                 populate(blogs)
-                addListeners(blogs)
+                addListeners()
                 // paginate.itemsToPaginate = blogs
                 // paginate.start(".blog__paginator", ".blog__articles", blogComponent)
             })
             //filter.init()
         }
     }
+    // create methods for pagination here or create a separate pagination controller
 })
 
 module.exports = blogController
@@ -25578,7 +25580,8 @@ const firebaseURL = "https://personal-site-60774.firebaseio.com/blogArray"
 const blogFactory = Object.create(null, {
     "blogCache": {
         "value": {},
-        "writable": true
+        "writable": true,
+        "enumerable": true
     },
     "write": {
         "value": function (blog) {
@@ -25687,8 +25690,8 @@ const populate = (blogEntries) => {
     })
 
     // Print blog content and data info to DOM
-    blogViewEl.innerHTML += blogViewContentString
-    blogEntriesEl.innerHTML += blogEntriesListString
+    blogViewEl.innerHTML = blogViewContentString
+    blogEntriesEl.innerHTML = blogEntriesListString
 
    
 }
@@ -25696,37 +25699,41 @@ const populate = (blogEntries) => {
 
 module.exports = populate
 },{}],170:[function(require,module,exports){
-const contactInfo = {};
+// create variable to hold the contact info retreived from Firebase
+let retrievedContactInfo;
 
-const twitterInfo = {
-    "socialPlatform": "Twitter",
-    "username": "@gregaudio",
-    "url": "http://www.twitter.com/gregaudio",
-    "icon": "/images/Twitter_Logo_Blue.png",
-}
+/* OLD CODE FROM BEFORE SWITCHING TO FIREBASE FOR DB */
+/*
+// const twitterInfo = {
+//     "socialPlatform": "Twitter",
+//     "username": "@gregaudio",
+//     "url": "http://www.twitter.com/gregaudio",
+//     "icon": "/images/Twitter_Logo_Blue.png",
+// }
 
-const linkedInInfo = {
-    "socialPlatform": "LinkedIn",
-    "username": "gregmlawrence",
-    "url": "https://www.linkedin.com/in/gregmlawrence/",
-    "icon": "/images/In-2C-54px-R.png",
-}
+// const linkedInInfo = {
+//     "socialPlatform": "LinkedIn",
+//     "username": "gregmlawrence",
+//     "url": "https://www.linkedin.com/in/gregmlawrence/",
+//     "icon": "/images/In-2C-54px-R.png",
+// }
 
-const githubInfo = {
-    "socialPlatform": "GitHub",
-    "username": "Chewieez",
-    "url": "https://github.com/Chewieez",
-    "icon": "/images/GitHub-Mark-64px.png"    
-}
+// const githubInfo = {
+//     "socialPlatform": "GitHub",
+//     "username": "Chewieez",
+//     "url": "https://github.com/Chewieez",
+//     "icon": "/images/GitHub-Mark-64px.png"    
+// }
 
-contactInfo.twitterInfo = twitterInfo;
-contactInfo.linkedInInfo = linkedInInfo;
-contactInfo.githubInfo = githubInfo;
+// contactInfo.twitterInfo = twitterInfo;
+// contactInfo.linkedInInfo = linkedInInfo;
+// contactInfo.githubInfo = githubInfo;
 
-// convert data object to string and store in local storage
-let contactInfoString = JSON.stringify(contactInfo);
-localStorage.setItem("contactInfo", contactInfoString);
+// // convert data object to string and store in local storage
+// let contactInfoString = JSON.stringify(contactInfo);
+// localStorage.setItem("contactInfo", contactInfoString);
 
+*/
 
 
 function populateContactInfo () {
@@ -25734,23 +25741,26 @@ function populateContactInfo () {
     $.ajax({
         "url": "https://personal-site-60774.firebaseio.com/contactInfo.json"
     }).then ((contactInfo) => {
-        let retrievedContactInfo = contactInfo
+        retrievedContactInfo = contactInfo
 
-        // get element from DOM to place contact data
-        let contactDomEl = document.getElementById("contact-list");
-        
+        // create a empty string to start building up with contact info, to later place in DOM
+        let contactInfoString = "";
+
         // loop through retreived data from local storage
         for (let key in retrievedContactInfo) {
             let individualContactInfo = retrievedContactInfo[key]
-        
-            contactDomEl.innerHTML += `
             
-                    <p><img src="${individualContactInfo.icon}" width="50px" alt="${individualContactInfo.socialPlatform} title="${individualContactInfo.socialPlatform}"/> <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
+            contactInfoString += `
             
+            <p><img src="${individualContactInfo.icon}" width="50px" alt="${individualContactInfo.socialPlatform} title="${individualContactInfo.socialPlatform}"/> <a href="${individualContactInfo.url}">${individualContactInfo.username}</a></p>
             `
             
         }
-
+        
+        // get element from DOM to place contact data
+        let contactDomEl = document.getElementById("contact-list");
+        // place the built contact Info string into DOM
+        contactDomEl.innerHTML = contactInfoString;
     })
 
 }
@@ -25810,24 +25820,27 @@ function populateResume() {
     // pull professionalHistory Database from local storage
     // const professionalHistoryD = JSON.parse(localStorage.getItem("professionalHistoryString"));
 
+    // get control of container to place job history with document.getElementById
+    const profHistoryEl = document.getElementById("professional-history");
+    
+    // create variable to hold Resume content from db
+    let profHistoryArray = null;
+
     // pull professionalHistory from Firebase
     $.ajax({
         "url": "https://personal-site-60774.firebaseio.com/professionalHistoryArray.json"
     }).then((professionalHistory) => {
-        let profHistoryArray = professionalHistory
+        // assign the returned value from Firebase (full of professional history) a variable
+        profHistoryArray = professionalHistory
+        
+        // create an empty string to start building up to eventually place in DOM.
+        let resumeString = "";
 
-        // get control of container to place job history with document.getElementById
-        const profHistoryEl = document.getElementById("professional-history");
-        
-        // // assign professionalHistoryArray that is inside the professionalHistory object to a variable
-        // const profHistoryArray = professionalHistory.professionalHistoryArray;
-        
-        
         //loop through array and populate the <section id-"professional-history"> container with each array item (job).
         for (let i = 0; i < profHistoryArray.length; i++) {
             let job = profHistoryArray[i];
         
-            profHistoryEl.innerHTML += `
+            resumeString += `
                 <article class="job-info">
                     <h4>${job.title}</h4>
                     <h5>${job.company}</h5>
@@ -25837,9 +25850,10 @@ function populateResume() {
                 </article>
                 <hr>
                 `
-        
         }
+        profHistoryEl.innerHTML = resumeString
     })
+
 }
 
 module.exports = populateResume
