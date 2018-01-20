@@ -9,8 +9,7 @@ const populate = (blogEntries) => {
 
     blogEntries.forEach(currentBlog => {
         // use Moment.js to format published date and store in a variable
-        //let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
-        let currentBlogPublishedDate = currentBlog.published
+        let currentBlogPublishedDate = moment(currentBlog.published).format("dddd, MMMM Do YYYY")
 
         blogViewContentString += `
             <article  id="blogPost-${currentBlog.id}">
