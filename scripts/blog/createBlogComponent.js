@@ -31,7 +31,7 @@ const createBlogComponent = Object.create(null, {
                     </article>
                     `
 
-            //document.getElementById(`#outputSelector`) = blogViewContentString
+            // document.getElementById(`#outputSelector`) = blogViewContentString
         }
     }
 })

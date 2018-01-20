@@ -205,13 +205,6 @@ footer p {
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* #h1 {
-    max-width: 1000px;
-    width: 90%;
-    font-size: 1.1em;
-    padding: 50px 10px;
-} */
-
 .invisible {
     visibility: hidden;
 }

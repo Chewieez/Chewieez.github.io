@@ -15,16 +15,19 @@ const blogFactory = Object.create(null, {
     "write": {
         "value": function (blog) {
             // insert function to write new blog to Firebase
-            return $.ajax({
-                "url": `${firebaseURL}/.json`,
-                "method": "POST",
-                "data": JSON.stringify(blog)
+            return firebase.auth().currentUser.getIdToken(true).then(idToken => {
+                debugger
+                return $.ajax({
+                    "url": `${firebaseURL}/.json?auth=${idToken}`,
+                    "method": "POST",
+                    "data": JSON.stringify(blog)
+                })
+                // .then((blogs)=>{
+                //     populate(blogs)
+                //     addListeners(blogs)
+                // })
             })
-            // .then((blogs)=>{
-            //     populate(blogs)
-            //     addListeners(blogs)
-            // })
-        },
+        }
     },
     "retrieveAll": {
         "value": function () {
@@ -40,17 +43,6 @@ const blogFactory = Object.create(null, {
                         return blogDatabase[key]
                     })
                 return this.blogCache
-
-                // I'm thinking this below could be callback hell
-                // // if a callback function is passed in, run it
-                // if (callback) {
-                //     callback(blogDatabase)
-                // }
-
-                // //if multiple callback functions are passed in, call each one
-                // if (callbacks.length > 0) {
-                //     callbacks.forEach(c => c())
-                // }
             })
         }
     },
@@ -66,5 +58,6 @@ const blogFactory = Object.create(null, {
         "value": addListeners
     }
 })
-//
+
+
 module.exports = blogFactory

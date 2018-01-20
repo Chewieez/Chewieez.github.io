@@ -25045,11 +25045,7 @@ const populateProjects = require("./projects/projects-controller")
 const blogController = require("./blog/blogController")
 const populateResume = require("./resume/resume-controller")
 const populateContactInfo = require("./contact/contact")
-// const auth = require("./admin/validateUser")
-// const createLogin = require("./admin/createLogin")
-// const loginAddListeners = require("./admin/loginAddListeners")
-// const adminController = require("./admin/adminController")
-// const observer = require("./admin/observer")
+
 
 function addListenersNav() {
     $("#myNavbar").on("click", e=>{
@@ -25586,16 +25582,19 @@ const blogFactory = Object.create(null, {
     "write": {
         "value": function (blog) {
             // insert function to write new blog to Firebase
-            return $.ajax({
-                "url": `${firebaseURL}/.json`,
-                "method": "POST",
-                "data": JSON.stringify(blog)
+            return firebase.auth().currentUser.getIdToken(true).then(idToken => {
+                debugger
+                return $.ajax({
+                    "url": `${firebaseURL}/.json?auth=${idToken}`,
+                    "method": "POST",
+                    "data": JSON.stringify(blog)
+                })
+                // .then((blogs)=>{
+                //     populate(blogs)
+                //     addListeners(blogs)
+                // })
             })
-            // .then((blogs)=>{
-            //     populate(blogs)
-            //     addListeners(blogs)
-            // })
-        },
+        }
     },
     "retrieveAll": {
         "value": function () {
@@ -25611,17 +25610,6 @@ const blogFactory = Object.create(null, {
                         return blogDatabase[key]
                     })
                 return this.blogCache
-
-                // I'm thinking this below could be callback hell
-                // // if a callback function is passed in, run it
-                // if (callback) {
-                //     callback(blogDatabase)
-                // }
-
-                // //if multiple callback functions are passed in, call each one
-                // if (callbacks.length > 0) {
-                //     callbacks.forEach(c => c())
-                // }
             })
         }
     },
@@ -25637,7 +25625,8 @@ const blogFactory = Object.create(null, {
         "value": addListeners
     }
 })
-//
+
+
 module.exports = blogFactory
 },{"./addListeners":166,"./populate":169}],169:[function(require,module,exports){
 
@@ -25779,6 +25768,16 @@ createLogin()
 auth.init()
 
 
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyDCcUjGA2Aucemv8DdP4HDz8a6bVYCXenE",
+    authDomain: "personal-site-60774.firebaseapp.com",
+    databaseURL: "https://personal-site-60774.firebaseio.com",
+    projectId: "personal-site-60774",
+    storageBucket: "personal-site-60774.appspot.com",
+    messagingSenderId: "674756866097"
+}
+
+firebase.initializeApp(FIREBASE_CONFIG)
 },{"./addListenersNav":159,"./admin/createLogin":161,"./admin/validateUser":165}],172:[function(require,module,exports){
 
 
