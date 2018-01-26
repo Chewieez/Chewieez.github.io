@@ -5,16 +5,21 @@
     <title>Welcome to my Personal Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet"> -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:200,300,500,700|Roboto+Condensed:300,700" rel="stylesheet">
     <link href="/styles/styles.css" rel="stylesheet">
+    <link href="/styles/projects-styles.css" rel="stylesheet">
+    <link href="/styles/contact-styles.css" rel="stylesheet">
+    <link href="/styles/blog-styles.css" rel="stylesheet">
+    <link href="/styles/pagination-styles.css" rel="stylesheet">
+    <link href="/styles/admin-styles.css" rel="stylesheet">
+    <link href="/styles/resume-styles.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="site-content">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="myNavbar">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -22,51 +27,128 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                    <a class="navbar-brand" href="/index.html">GML</a>
+                    <a class="navbar-brand nav__link--landingPage" href="#">GML</a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="myNavbar">
+                <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" role: "tablist">
 
-                        <li><a href="#bio">Bio</a></li>
-                        <li><a href="/projects/index.html">Projects</a></li>
-                        <li><a href="/blog/index.html">Blog</a></li>
-                        <li><a href="/resume/index.html">Resume</a></li>
-                        <li><a href="/contact/index.html">Contact</a></li>
-                        <li><a href="/admin/blog.html"><span class="invisible">Admin</span></a></li>
+                        <li class="nav__Link"><a href="#bio" class="nav__link--bio">Bio</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--projects">Projects</a></li>
+                        <li class="nav__Link hidden"><a href="#" class="nav__link--blog">Blog</a></li>
+                        <li class="nav__Link hidden"><a href="#" class="nav__link--resume">Resume</a></li>
+                        <li class="nav__Link"><a href="#" class="nav__link--contact">Contact</a></li>
+                        <button class="nav__Link hidden"><a href="#" class="nav__link--admin">Admin</a></button>
                     </ul>
                 </div>
             </div>
         </nav>
         
 
-<!-- classes I removed from header for redesign class="jumbotron jumbo-style left-pull" -->
-        <header id="intro">
-            <div class="header-content">
-                <div class="header-content-inner">
+        <section id="landingPage" class="mainSection">
+            <header id="intro">
+                <div class="header-content">
+                    <div class="header-content-inner">
 
-                    <h1 id= "homeHeading">Greg Lawrence</h1>
-                    <hr>
-                    <h6 class="lead">Web Developer / Audio Engineer</h6>
-                    <a href="#bio" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+                        <h1 id= "homeHeading">Greg Lawrence</h1>
+                        <hr>
+                        <h6 class="lead">Web Developer / Audio Engineer</h6>
+                        <a href="#bio" class="btn btn-primary btn-xl page-scroll">Learn More</a>
+                    </div>
                 </div>
-
-                <!-- <div class="col-xs-3"><img class="img-responsive img-circle img-shadow" src="https://drive.google.com/uc?id=0B73GTEesc6fzSVo0MW16Y0NYSXM" alt="Greg Headshot" width="180">
-                </div> -->
-            </div>
-        </header> <!-- /end of jumbotron -->
+            </header> <!-- /end of jumbotron -->
 
 
-        <article id="bio" class="container">
+            <article id="bio" class="container">
+                
+                <p>As an audio engineer, I developed an impeccable attention to detail, tenacious work ethic, and diverse problem solving skills. I’ve always loved blending creativity with technology and creating a tangible copy of a music performance has always been incredibly fulfilling. I love helping others and get excited when it involves learning something new.</p>
+                <p>Technology has always fascinated me since receiving my first computer as a young child. Always curious how things worked, I would endlessly tinker, experiment and read about computers, electric bass gear, or music recording equipment. I built my first website as a college freshman and was immediately enamored with the power and possibilities. Almost every job I’ve held has been related to technology, from recording music to digital photo editing to consulting businesses on how to use and leverage social media. As I pondered the next steps in my career, the Nashville Software School became the obvious choice since it mirrored my drive to dive deep into learning new things. I’ve loved the collaborative environment and being challenged every day. </p>
+                <p>The music recording industry drew me to Nashville and was my livelihood for over 15 years. Working my way up from studio intern to staff engineer and eventually freelance audio engineer instilled a great work ethic, perseverance, and attention to detail. Working with countless production teams allowed me to hone my teamwork skills and learn to adapt to different environments and meet challenging deadlines. Being a part of the industry while it began embracing computers and digital storage further ingrained my deep love of technology and lifelong learning. There is always something new to learn. The amount of crossover between the recording industry and software development is amazing, from breaking down projects into small achievable blocks, to communicating well on a team, and thinking outside the box to solve problems.</p>
+                <p>When I’m not coding I love to mountain bike, discover new craft beer, tinker with Android development and spend time with my family.</p>
             
-            <p>I have lived in Nashville, TN for over 15 years working in the music business as an audio engineer and am currently enrolled in the Nashville Software School. I have always enjoyed working with computers, android phones and technology. I've had several side jobs which involved different aspects of using digital tools such as tweaking websites, updating content on websites, editing photos in photoshop and consulting businesses on social media setup and management. I really enjoy problem solving, creating things and working on projects on a team. I am excited to learn as much as possible while attending NSS and grow my skills as a web developer.</p> 
-
-            <p>I also enjoy cycling, hiking, craft beer, working with my hands. I live in Nashville with my wife and two kids. </p>
+            </article>
+        </section>
         
-        </article>
+        <section class="mainSection hidden" id="projects">
+            <header class="page-header">
+                <h1>Projects</h1>
+            </header>
 
-      
+            <section id="portfolio" class="container-fluid text-center">
+            </section>
+        </section>  <!-- End of Project Page -->
+        
+        <section class="mainSection hidden" id="contact">
+            <header class="page-header"> 
+                <h1>Connect With Me!</h1>  
+            </header>
+            
+            <article class="container">
+                <section class="contacts" id="contact-list" >
+                </section>
+            </article> 
+        </section>  <!-- End of Contact page -->
+
+        <section class="mainSection hidden" id="resume">
+            <header class="page-header">
+                    <h1> Professional History </h1>
+            </header> 
+        
+            <section id="professional-history" class="article container-fluid">
+            </section>
+        </section>  <!-- End of Resume page -->
+
+        <section class="mainSection hidden" id="blog">
+
+            <header id="blog-header" class="blog-header page-header">
+                    <h1>Thoughts of a NSS Student</h1>
+            </header> 
+        
+        
+            <div class="container-fluid">
+                <div class="row center-block">
+                    <!-- change bootstrap classes as viewport shrinks -->
+                    <section id="blog-search" class="col-xs-12 col-sm-4 col-md-3 pull-right">
+                        <label>Search: </label>
+                        <input type="text" id="search-input" class="blog-search__input form-control" placeholder="Search Blog Posts">
+                    </section>
+                </div>
+                
+                <div class="row">
+                    <!-- Blog entries will populate this <section> -->
+                    <section id="blog-view" class="col-sm-9">
+                        
+                    </section>
+                    
+                    <!-- This is also populated via the js file. This is the list of all blog entries. Currently displaying the publication date of each. -->
+                    <aside id="blog-list" class="col-sm-3">
+                        <div class="text-center">
+                            <h4>Blog Entries</h4>
+                            <section id="blog-entries-list">
+                                
+                            </section> 
+                        </div>  
+                    </aside>
+                </div>
+            </div>
+            <!-- This is where the pagination code is being placed. -->
+            <section id="blogPaginator">
+                
+            </section>
+        </section>     <!-- End of Blog Page -->
+
+        <section class="mainSection hidden" id="admin">
+            <section id="loggingInOutControls">
+                
+            </section>  <!-- end of loggingInOutControls -->
+
+            <!-- The admin form will be populated below when user is successfully logged in -->
+            <section class="" id="blogEntry">
+                
+            </section> 
+        </section>   <!-- end of Admin page -->
     </div>
+    
     <!-- /end of site-content -->
 
     
@@ -83,10 +165,14 @@
         </div>
     </footer>
 
-
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+    <!-- <script src="./app/app.Config.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.19.1/moment.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/build/bundle.js"></script>
 </body>
 
 </html>

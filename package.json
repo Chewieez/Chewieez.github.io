@@ -27,9 +27,13 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
     "grunt-contrib-uglify": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-eslint": "^20.1.0"
+    "grunt-eslint": "^20.1.0",
+    "grunt-notify": "^0.4.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "firebase": "^4.6.2"
+  }
 }

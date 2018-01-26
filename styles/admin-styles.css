@@ -14,8 +14,13 @@ input, textarea {
     margin: 0 auto;
 }
 
-#admin-blog-entry label {
+#admin-blog-entry label, #adminLogin label {
     margin-bottom: .1em
+}
+
+#adminLogin {
+    max-width: 300px;
+    margin: 0 2em;
 }
 
 #new-button {

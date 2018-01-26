@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .page-header {
-    padding: 0;
+    padding: 1.5em .2em .2em .5em;
 }
 
 
@@ -43,7 +43,6 @@ header#intro {
     background-image: url('/images/pexels-photo_darker_web.jpg');
     text-align: center;
     color: white;
-    
 } 
 
 header .header-content {
@@ -53,27 +52,6 @@ header .header-content {
     width: 100%;
   }
 
-/* header .header-content {
-    position: relative;
-    height: 100%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0 50px;
-  }
-
-header .header-content-inner {
-    padding-top: 250px;
-} */
-
-/* header .header-content {
-    position: absolute;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding: 0 50px;
-  } */
 
 header .header-content-inner hr {
     margin: .7em auto;
@@ -95,17 +73,6 @@ header .header-content .header-content-inner p {
     margin-bottom: 50px;
     padding-bottom: 50px;
 }
-
-/* .jumbo-style {
-    margin-top: -30px;
-    padding-left: 1.4em;
-    padding-right: 1.4em;   
-    padding-bottom: 17px;
-    background-color: #1A2930;
-    color: #E3E3E3;
-    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
-    width:  
-} */
 
 .navbar-header {
     margin-bottom: 0;
@@ -132,6 +99,7 @@ header .header-content .header-content-inner p {
     padding-bottom: 4em;
     font-size: 1.2em;
 }
+
 
 .footer-grid {
     display: grid;
@@ -205,15 +173,12 @@ footer p {
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* #h1 {
-    max-width: 1000px;
-    width: 90%;
-    font-size: 1.1em;
-    padding: 50px 10px;
-} */
-
 .invisible {
     visibility: hidden;
+}
+
+.hidden {
+    display: none;
 }
 
 /* This changes overall look of form fields on site. Narrows the height and makes the form fields not display: block */
@@ -233,6 +198,10 @@ footer p {
   
   #bio {
       padding-bottom: 0;
+  }
+
+  .hidden {
+      display: none;
   }
   
 @media screen and (max-width: 441px){
