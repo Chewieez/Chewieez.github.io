@@ -206,7 +206,8 @@ footer p {
 }
 
 .invisible {
-    visibility: hidden;
+    /* visibility: hidden; */
+    opacity: 0;
 }
 
 /* This changes overall look of form fields on site. Narrows the height and makes the form fields not display: block */

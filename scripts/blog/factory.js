@@ -16,16 +16,11 @@ const blogFactory = Object.create(null, {
         "value": function (blog) {
             // insert function to write new blog to Firebase
             return firebase.auth().currentUser.getIdToken(true).then(idToken => {
-                debugger
                 return $.ajax({
                     "url": `${firebaseURL}/.json?auth=${idToken}`,
                     "method": "POST",
                     "data": JSON.stringify(blog)
                 })
-                // .then((blogs)=>{
-                //     populate(blogs)
-                //     addListeners(blogs)
-                // })
             })
         }
     },
@@ -36,7 +31,6 @@ const blogFactory = Object.create(null, {
                 "url": `${firebaseURL}.json`
             }).then( blogDatabase => {
                 // assign blog posts to this object
-                //this.blogCache = blogDatabase
                 this.blogCache = Object.keys(blogDatabase)
                     .map(key => {
                         blogDatabase[key].id = key
