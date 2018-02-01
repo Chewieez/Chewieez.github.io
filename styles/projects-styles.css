@@ -13,3 +13,8 @@
 h4 {
     margin: .2em 0;
 }
+
+.thumbnail__image {
+    width: 75%;
+    height: auto;
+}
