@@ -20,7 +20,10 @@ function populateProjects() {
                             <div class="caption">
                             <h4>${project.name}</h4>
                             <p><span class="important-text">Date completed:</span> ${project.date} &nbsp; &nbsp; <span class="important-text">Teammates:</span> ${project.teammates}</p>
+                            <p>${project.summary}</p>
+                            Deployed: <a href="${project.deployed}" target="_blank>http://trackd.me</a>
                             <p><span class="important-text">Technologies used:</span> ${project.technologies}</p>
+                            
                             </div>
                         </a>
                     </div>
