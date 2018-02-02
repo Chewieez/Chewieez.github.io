@@ -11,42 +11,48 @@ function addListenersNav() {
         // check if the user clicked a nav link that is NOT bio. 
         // if (!e.target.className.includes("nav__link--bio")) {
 
+
         // find out what link was clicked on
         let targetClasses = Array.from(e.target.classList)
-
-        let sectionName = targetClasses.find(clazz => {
+            
+        if (targetClasses.find(clazz => {
             return clazz.startsWith("nav__link")
-        }).split("--")[1]
-
-        // Add `hidden` class to all main sections
-        Array.from(document.getElementsByClassName("mainSection"))
-            .forEach(section => section.classList.add("hidden"))
-
-            // unhide the section clicked
-        $(`#${sectionName}`).removeClass("hidden")
+        })) {
+                
+            let sectionName = targetClasses.find(clazz => {
+                return clazz.startsWith("nav__link")
+            }).split("--")[1]
         
-        // initialize the page that was clicked
-        switch (sectionName) {
-        case "bio":
-            $(`#${"landingPage"}`).removeClass("hidden")
-            break;
-        case "projects":
-            populateProjects();
-            break;
-        case "blog":
-            blogController.init();
-            break;
-        case "resume":
-            populateResume();
-            break;
-        case "contact":
-            populateContactInfo();
-            break;
-            // case "admin":
-            //     createLogin()
-            //     // loginAddListeners()
-            //     auth.init();
-            //     break;
+            // Add `hidden` class to all main sections
+            Array.from(document.getElementsByClassName("mainSection"))
+                .forEach(section => section.classList.add("hidden"))
+        
+            // unhide the section clicked
+            $(`#${sectionName}`).removeClass("hidden")
+                
+            // initialize the page that was clicked
+            switch (sectionName) {
+            case "bio":
+                $(`#${"landingPage"}`).removeClass("hidden")
+                break;
+            case "projects":
+                populateProjects();
+                break;
+            case "blog":
+                blogController.init();
+                break;
+            case "resume":
+                populateResume();
+                break;
+            case "contact":
+                populateContactInfo();
+                break;
+                    // case "admin":
+                    //     createLogin()
+                    //     // loginAddListeners()
+                    //     auth.init();
+                    //     break;
+            }
         }
         // }
     })
