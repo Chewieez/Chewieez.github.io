@@ -14,7 +14,41 @@ h4 {
     margin: .2em 0;
 }
 
+.bold {
+    font-weight: 600;
+}
+
 .thumbnail__image {
+    padding-top: .35em;
     width: 75%;
     height: auto;
+    border-radius: 6px;
+}
+
+.project__thumbnail {
+    background-color: rgb(66, 66, 66);
+}
+
+.thumbnail__caption {
+    color: lightgray !important;
+}
+
+.thumbnail__caption a,
+.thumbnail__caption a:active,
+.thumbnail__caption a:visited  {
+    color: lightgray;
+    text-decoration: none;
+}
+
+.thumbnail__caption a:hover {
+    color: gray;
+}
+
+.caption__details {
+    padding-top: .25em;
+}
+
+.caption__header {
+    padding-top: .25em;
+    color: rgb(151, 151, 151);
 }
