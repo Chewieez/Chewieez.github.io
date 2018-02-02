@@ -14,7 +14,7 @@ function populateProjects() {
         projectsArray.forEach(project => {
             // populate html container variable with project content
             portfolioString += `
-                <article class="col-sm-6">
+                <article class="col-xm-8 col-sm-6 col-md-4">
                     <div class="thumbnail project__thumbnail">
                         <a href="${project.deployed}" target="_blank"><img src="${project.image}" class="thumbnail__image img-responsive" alt="${project.name}"></a>
                         <div class="thumbnail__caption caption">
