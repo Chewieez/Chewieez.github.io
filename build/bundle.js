@@ -25793,17 +25793,20 @@ function populateProjects() {
             // populate html container variable with project content
             portfolioString += `
                 <article class="col-sm-6">
-                    <div class="thumbnail">
-                        <a href="${project.image}" target="_blank"><img src="${project.image}" class="thumbnail__image img-responsive" alt="${project.name}">
-                            <div class="caption">
-                            <h4>${project.name}</h4>
-                            <p><span class="important-text">Date completed:</span> ${project.date} &nbsp; &nbsp; <span class="important-text">Teammates:</span> ${project.teammates}</p>
+                    <div class="thumbnail project__thumbnail">
+                        <a href="${project.deployed}" target="_blank"><img src="${project.image}" class="thumbnail__image img-responsive" alt="${project.name}"></a>
+                        <div class="thumbnail__caption caption">
+                            <h3>${project.name}</h3>
                             <p>${project.summary}</p>
-                            Deployed: <a href="${project.deployed}" target="_blank>http://trackd.me</a>
-                            <p><span class="important-text">Technologies used:</span> ${project.technologies}</p>
-                            
+                            <div class="caption__details">  
+                                <h4 class="caption__header">Deployed</h4>
+                                <p class="important-text"><a href="${project.deployed}" target="_blank">${project.deployed}</a></p>
+                                <h4 class="caption__header">Github </h4>
+                                <p class="important-text"><a href="${project.github}" target="_blank">${project.github}</a><p>
+                                <h4 class="caption__header">Technologies </h4>
+                                <p>${project.technologies}</p>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </article>
             `
